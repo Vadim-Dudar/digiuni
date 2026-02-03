@@ -4,12 +4,12 @@ public class Student extends Person {
 
     private final int studentId;
     private int course;
-    private String group;
+    private Group group;
     private int yearOfEntry;
     private StudyForm studyForm;
     private StudentStatus status;
 
-    public Student(String name, String surname, String midleName, String dayOfBirth, String phone, String email, int studentId, int course, String group, int yearOfEntry, StudyForm studyForm, StudentStatus status) {
+    public Student(String name, String surname, String midleName, String dayOfBirth, String phone, String email, int studentId, int course, Group group, int yearOfEntry, StudyForm studyForm, StudentStatus status) {
         super(name, surname, midleName, dayOfBirth, phone, email);
         this.studentId = studentId;
         this.group = group;
