@@ -5,7 +5,7 @@ public class Student extends Person {
     private final int studentId;
     private int course;
     private Group group;
-    private int yearOfEntry;
+    private final int yearOfEntry;
     private StudyForm studyForm;
     private StudentStatus status;
 
@@ -15,7 +15,10 @@ public class Student extends Person {
         this.group = group;
         this.studyForm = studyForm;
         this.status = status;
+
         if (yearOfEntry > 2026 || yearOfEntry < 1991) this.yearOfEntry = yearOfEntry;
+        else throw new IllegalArgumentException("Unrealistic year of entry!");
+
         if (course > 0 && course < 7) this.course = course;
         else throw new IllegalArgumentException("Course is between 1 and 6");
     }
@@ -45,6 +48,14 @@ public class Student extends Person {
     }
 
     /**
+     * Get student group.
+     * @return Current group of the student.
+     */
+    public Group getGroup() {
+        return group;
+    }
+
+    /**
      * Change student status.
      * @param status New status for the student.
      */
@@ -53,10 +64,42 @@ public class Student extends Person {
     }
 
     /**
+     * Get student study form.
+     * @return Current study form of the student.
+     */
+    public StudyForm getStudyForm() {
+        return studyForm;
+    }
+
+    /**
      * Change student study form.
      * @param studyForm New study form for the student.
      */
     public void changeStudyForm(StudyForm studyForm){
         this.studyForm = studyForm;
+    }
+
+    /**
+     * Get student status.
+     * @return Current status of the student.
+     */
+    public StudentStatus getStatus() {
+        return status;
+    }
+
+    /**
+     * Get year of entry.
+     * @return Year when the student entered the university.
+     */
+    public int getYearOfEntry() {
+        return yearOfEntry;
+    }
+
+    /**
+     * Get current course of the student.
+     * @return Current course of the student.
+     */
+    public int getCourse() {
+        return course;
     }
 }

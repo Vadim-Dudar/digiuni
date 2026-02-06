@@ -7,6 +7,9 @@ public class Teacher extends Person{
     private final String dateOfHiring;
     private int rate;
 
+    /**
+     * Constructor for Teacher class.
+     */
     public Teacher(String name, String surname, String midleName, String dayOfBirth, String phone, String email, TeacherPosition position, AcademicDegree degree, AcademicStage stage, String dateOfHiring, int rate) {
         super(name, surname, midleName, dayOfBirth, phone, email);
         this.position = position;
@@ -33,6 +36,13 @@ public class Teacher extends Person{
     }
 
     /**
+     * Getters for Teacher position.
+     */
+    public TeacherPosition getPosition() {
+        return position;
+    }
+
+    /**
      * Setters for Teacher academic degree.
      */
     public void setDegree(AcademicDegree degree) {
@@ -40,10 +50,24 @@ public class Teacher extends Person{
     }
 
     /**
+     * Getters for Teacher academic degree.
+     */
+    public AcademicDegree getDegree() {
+        return degree;
+    }
+
+    /**
      * Setters for Teacher academic stage.
      */
     public void setStage(AcademicStage stage) {
         this.stage = stage;
+    }
+
+    /**
+     * Getters for Teacher academic stage.
+     */
+    public AcademicStage getStage() {
+        return stage;
     }
 
     @Override
