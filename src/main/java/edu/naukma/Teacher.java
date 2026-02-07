@@ -1,6 +1,7 @@
 package edu.naukma;
 
 public class Teacher extends Person{
+    private final int teacherId;
     private TeacherPosition position;
     private AcademicDegree degree;
     private AcademicStage stage;
@@ -10,8 +11,9 @@ public class Teacher extends Person{
     /**
      * Constructor for Teacher class.
      */
-    public Teacher(String name, String surname, String midleName, String dayOfBirth, String phone, String email, TeacherPosition position, AcademicDegree degree, AcademicStage stage, String dateOfHiring, int rate) {
+    public Teacher(String name, String surname, String midleName, String dayOfBirth, String phone, String email, int teacherId, TeacherPosition position, AcademicDegree degree, AcademicStage stage, String dateOfHiring, int rate) {
         super(name, surname, midleName, dayOfBirth, phone, email);
+        this.teacherId = teacherId;
         this.position = position;
         this.degree = degree;
         this.stage = stage;

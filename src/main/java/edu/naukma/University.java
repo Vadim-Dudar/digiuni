@@ -3,6 +3,7 @@ package edu.naukma;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class University {
 
@@ -72,6 +73,29 @@ public class University {
                 return f;
         }
         return null;
+    }
+
+    public Faculty createFaculty(Department department) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Введіть код факультету: ");
+        String code = scanner.nextLine();
+
+        System.out.println("Введіть повну назву факультету: ");
+        String fullName = scanner.nextLine();
+
+        System.out.println("Введіть абревіатуру факультету: ");
+        String shortName = scanner.nextLine();
+
+        System.out.println("Введіть контакти факультету: ");
+        String contacts = scanner.nextLine();
+
+        System.out.println("Введіть id декана факультету: ");
+        int deanId = scanner.nextInt();
+
+        Teacher dean = department.findTeacherById(deanId);
+
+        return new Faculty(code, fullName, shortName, dean, contacts);
     }
 
     public List<Faculty> getFaculties() {

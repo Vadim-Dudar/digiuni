@@ -3,6 +3,7 @@ package edu.naukma;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Faculty {
 
@@ -14,7 +15,7 @@ public class Faculty {
 
     private List<Department> departments;
 
-    public Faculty(String code, String name, String shortName, String contacts) {
+    public Faculty(String code, String name, String shortName, Teacher dean, String contacts) {
         validateString(code, "Код факультету");
         validateString(name, "Назва факультету");
         validateString(shortName, "Скорочена назва факультету");
@@ -23,6 +24,7 @@ public class Faculty {
         this.code = code;
         this.name = name;
         this.shortName = shortName;
+        this.dean = dean;
         this.contacts = contacts;
         this.departments = new ArrayList<>();
     }
@@ -31,6 +33,29 @@ public class Faculty {
         if (department == null)
             throw new IllegalArgumentException("Назва кафедри не може бути порожньою!");
         departments.add(department);
+    }
+
+    public Department createDepartment(University university, Department department) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Введіть код кафедри: ");
+        String code = scanner.nextLine();
+
+        System.out.println("Введіть назву кафедри: ");
+        String name = scanner.nextLine();
+
+        System.out.println("Введіть id факультету кафедри: ");
+        String facId = scanner.nextLine();
+        Faculty faculty = university.findFacultyByCode(facId);
+
+        System.out.println("Введіть id завідувача кафедри: ");
+        int headId = scanner.nextInt();
+        Teacher head = department.findTeacherById(headId);
+
+        System.out.println("Введіть локацію (корпус/кабінет) кафедри: ");
+        String location = scanner.nextLine();
+
+        return new Department(code, name, faculty, head, location);
     }
 
     public boolean removeDepartmentByCode(String code) {
