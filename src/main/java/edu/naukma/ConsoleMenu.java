@@ -7,10 +7,18 @@ public class ConsoleMenu {
     private University university;
     private Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Creates a console menu for the given university.
+     *
+     * @param university university instance to manage
+     */
     public ConsoleMenu(University university) {
         this.university = university;
     }
 
+    /**
+     * Starts the main application loop and displays the main menu.
+     */
     public void start() {
         boolean running = true;
 
@@ -34,6 +42,9 @@ public class ConsoleMenu {
         }
     }
 
+    /**
+     * Displays the main menu options.
+     */
     private void showMainMenu() {
         System.out.println("\n===== ГОЛОВНЕ МЕНЮ (" + university.getFaculties().size() + " факультетів) =====");
         System.out.println("1 - Керування факультетами");
@@ -45,6 +56,9 @@ public class ConsoleMenu {
         System.out.print("Ваш вибір: ");
     }
 
+    /**
+     * Displays and handles the faculties management menu.
+     */
     private void facultiesMenu() {
         System.out.println("\n--- ФАКУЛЬТЕТИ ---");
         System.out.println("1 - Створити факультет");
@@ -63,8 +77,10 @@ public class ConsoleMenu {
             case 2:
                 System.out.print("Введіть код факультету для видалення: ");
                 String code = scanner.nextLine();
-                if (university.removeFacultyByCode(code)) System.out.println("Видалено.");
-                else System.out.println("Помилка: код не знайдено.");
+                if (university.removeFacultyByCode(code))
+                    System.out.println("Видалено.");
+                else
+                    System.out.println("Помилка: код не знайдено.");
                 break;
             case 3:
                 showFaculties();
@@ -77,6 +93,9 @@ public class ConsoleMenu {
         }
     }
 
+    /**
+     * Displays and handles the departments management menu.
+     */
     private void departmentsMenu() {
         Faculty faculty = chooseFaculty();
         if (faculty == null) return;
@@ -98,13 +117,14 @@ public class ConsoleMenu {
             case 2:
                 System.out.print("Введіть код кафедри: ");
                 String code = scanner.nextLine();
-                if (faculty.removeDepartmentByCode(code)) System.out.println("Видалено.");
-                else System.out.println("Кафедру не знайдено.");
+                if (faculty.removeDepartmentByCode(code))
+                    System.out.println("Видалено.");
+                else
+                    System.out.println("Кафедру не знайдено.");
                 break;
             case 3:
-                for (Department d : faculty.getDepartments()) {
+                for (Department d : faculty.getDepartments())
                     System.out.println(d.getCode() + " - " + d.getName());
-                }
                 break;
             case 4:
                 System.out.println("Введіть код кафедри, дані якої потрібно відредагувати: ");
@@ -114,6 +134,9 @@ public class ConsoleMenu {
         }
     }
 
+    /**
+     * Displays and handles the students management menu.
+     */
     private void studentsMenu() {
         Department dep = chooseDepartment();
         if (dep == null) return;
@@ -134,12 +157,16 @@ public class ConsoleMenu {
             case 2:
                 System.out.print("Введіть ID студента для видалення: ");
                 int idDel = readInt();
-                if (dep.removeStudentById(idDel)) System.out.println("Студента видалено.");
-                else System.out.println("ID не знайдено.");
+                if (dep.removeStudentById(idDel))
+                    System.out.println("Студента видалено.");
+                else
+                    System.out.println("ID не знайдено.");
                 break;
             case 3:
-                if (dep.getStudents().isEmpty()) System.out.println("Список порожній.");
-                for (Student s : dep.getStudents()) System.out.println(s);
+                if (dep.getStudents().isEmpty())
+                    System.out.println("Список порожній.");
+                for (Student s : dep.getStudents())
+                    System.out.println(s);
                 break;
             case 4:
                 System.out.print("Введіть ID студента для редагування: ");
@@ -149,6 +176,9 @@ public class ConsoleMenu {
         }
     }
 
+    /**
+     * Displays and handles the teachers management menu.
+     */
     private void teachersMenu() {
         Department dep = chooseDepartment();
         if (dep == null) return;
@@ -169,12 +199,16 @@ public class ConsoleMenu {
             case 2:
                 System.out.print("Введіть ID викладача для видалення: ");
                 int idDel = readInt();
-                if (dep.removeTeacherById(idDel)) System.out.println("Викладача видалено.");
-                else System.out.println("ID не знайдено.");
+                if (dep.removeTeacherById(idDel))
+                    System.out.println("Викладача видалено.");
+                else
+                    System.out.println("ID не знайдено.");
                 break;
             case 3:
-                if (dep.getTeachers().isEmpty()) System.out.println("Список порожній.");
-                for (Teacher t : dep.getTeachers()) System.out.println(t);
+                if (dep.getTeachers().isEmpty())
+                    System.out.println("Список порожній.");
+                for (Teacher t : dep.getTeachers())
+                    System.out.println(t);
                 break;
             case 4:
                 System.out.print("Введіть ID викладача для редагування: ");
@@ -184,6 +218,11 @@ public class ConsoleMenu {
         }
     }
 
+    /**
+     * Allows the user to select a faculty by its code.
+     *
+     * @return selected Faculty or null if not found
+     */
     private Faculty chooseFaculty() {
         showFaculties();
         if (university.getFaculties().isEmpty()) return null;
@@ -191,10 +230,16 @@ public class ConsoleMenu {
         System.out.print("Введіть код факультету: ");
         String code = scanner.nextLine();
         Faculty f = university.findFacultyByCode(code);
-        if (f == null) System.out.println("Помилка: факультет не знайдено.");
+        if (f == null)
+            System.out.println("Помилка: факультет не знайдено.");
         return f;
     }
 
+    /**
+     * Allows the user to select a department from a faculty.
+     *
+     * @return selected Department or null if not found
+     */
     private Department chooseDepartment() {
         Faculty f = chooseFaculty();
         if (f == null) return null;
@@ -205,15 +250,20 @@ public class ConsoleMenu {
         }
 
         System.out.println("Кафедри факультету " + f.getShortName() + ":");
-        for (Department d : f.getDepartments()) System.out.println("- " + d.getCode() + " (" + d.getName() + ")");
+        for (Department d : f.getDepartments())
+            System.out.println("- " + d.getCode() + " (" + d.getName() + ")" + " : " + d.getLocation());
 
         System.out.print("Введіть код кафедри: ");
         String code = scanner.nextLine();
         Department dep = f.findDepartmentByCode(code);
-        if (dep == null) System.out.println("Помилка: кафедру не знайдено.");
+        if (dep == null)
+            System.out.println("Помилка: кафедру не знайдено.");
         return dep;
     }
 
+    /**
+     * Displays the list of faculties.
+     */
     private void showFaculties() {
         if (university.getFaculties().isEmpty()) {
             System.out.println("Список факультетів порожній.");
@@ -221,20 +271,29 @@ public class ConsoleMenu {
         }
         System.out.println("Доступні факультети:");
         for (Faculty f : university.getFaculties()) {
-            System.out.println("[" + f.getCode() + "] " + f.getShortName());
+            System.out.println("[" + f.getCode() + "] " + f.getShortName() + " : " + f.getContacts());
         }
     }
 
+    /**
+     * Displays the full university structure.
+     */
     private void showAllInfo() {
         System.out.println("\n=== СТРУКТУРА УНІВЕРСИТЕТУ ===");
         for (Faculty f : university.getFaculties()) {
             System.out.println("Факультет: " + f.getShortName());
-            for (Department d : f.getDepartments()) {
-                System.out.println("  └── Кафедра: " + d.getName() + " (Студентів: " + d.getStudents().size() + ")");
-            }
+            for (Department d : f.getDepartments())
+                System.out.println("  └── Кафедра: " + d.getName() +
+                        " (Студентів: " + d.getStudents().size() + ") | " +
+                        "(Викладачів: " + d.getTeachers().size() + ")");
         }
     }
 
+    /**
+     * Safely reads an integer from console input.
+     *
+     * @return integer value entered by the user
+     */
     private int readInt() {
         while (true) {
             try {
