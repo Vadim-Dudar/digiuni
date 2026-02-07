@@ -35,7 +35,7 @@ public class Faculty {
         departments.add(department);
     }
 
-    public Department createDepartment(University university, Department department) {
+    public Department createDepartment(University university) { // Прибрали зайвий параметр
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Введіть код кафедри: ");
@@ -44,18 +44,10 @@ public class Faculty {
         System.out.println("Введіть назву кафедри: ");
         String name = scanner.nextLine();
 
-        System.out.println("Введіть id факультету кафедри: ");
-        String facId = scanner.nextLine();
-        Faculty faculty = university.findFacultyByCode(facId);
-
-        System.out.println("Введіть id завідувача кафедри: ");
-        int headId = scanner.nextInt();
-        Teacher head = department.findTeacherById(headId);
-
         System.out.println("Введіть локацію (корпус/кабінет) кафедри: ");
         String location = scanner.nextLine();
 
-        return new Department(code, name, faculty, head, location);
+        return new Department(code, name, this, null, location);
     }
 
     public boolean removeDepartmentByCode(String code) {

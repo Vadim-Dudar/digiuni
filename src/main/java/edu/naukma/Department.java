@@ -107,7 +107,7 @@ public class Department {
         System.out.println("Введіть по-батькові: ");
         String middleName = scanner.nextLine();
 
-        System.out.println("Введіть день народження: ");
+        System.out.println("Введіть день народження (ДД.ММ.РРРР): ");
         String dayOfBirth = scanner.nextLine();
 
         System.out.println("Введіть номер телефону: ");
@@ -117,17 +117,17 @@ public class Department {
         String email = scanner.nextLine();
 
         System.out.println("Введіть id вчителя: ");
-        int tId = scanner.nextInt();
+        int tId = Integer.parseInt(scanner.nextLine());
 
-        TeacherPosition tp = chooseFromEnum(TeacherPosition.values(), "Оберіть призначення викладача: ");
-        AcademicDegree ad = chooseFromEnum(AcademicDegree.values(), "оберіть ступінь викладача: ");
-        AcademicStage as = chooseFromEnum(AcademicStage.values(), "Оберіть академічний рівень викладача: ");
+        TeacherPosition tp = chooseFromEnum(TeacherPosition.values(), "Оберіть посаду: ");
+        AcademicDegree ad = chooseFromEnum(AcademicDegree.values(), "Оберіть ступінь: ");
+        AcademicStage as = chooseFromEnum(AcademicStage.values(), "Оберіть рівень: ");
 
-        System.out.println("Введіть дату прийняття вчителя на посаду: ");
+        System.out.println("Введіть дату прийняття (ДД.ММ.РРРР): ");
         String dateOfHiring = scanner.nextLine();
 
-        System.out.println("Введіть cтавку/навантаження вчителя: ");
-        int rate = scanner.nextInt();
+        System.out.println("Введіть ставку (100, 50...): ");
+        int rate = Integer.parseInt(scanner.nextLine());
 
         return new Teacher(name, surname, middleName, dayOfBirth, phone, email, tId, tp, ad, as, dateOfHiring, rate);
     }

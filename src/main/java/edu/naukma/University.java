@@ -53,6 +53,24 @@ public class University {
 
     }
 
+    public Faculty createFaculty() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Введіть код факультету: ");
+        String code = scanner.nextLine();
+
+        System.out.println("Введіть повну назву факультету: ");
+        String fullName = scanner.nextLine();
+
+        System.out.println("Введіть абревіатуру факультету: ");
+        String shortName = scanner.nextLine();
+
+        System.out.println("Введіть контакти факультету: ");
+        String contacts = scanner.nextLine();
+
+        return new Faculty(code, fullName, shortName, null, contacts);
+    }
+
     public boolean removeFacultyByCode(String code) {
         validateString(code, "Код факультету");
 
@@ -75,28 +93,7 @@ public class University {
         return null;
     }
 
-    public Faculty createFaculty(Department department) {
-        Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Введіть код факультету: ");
-        String code = scanner.nextLine();
-
-        System.out.println("Введіть повну назву факультету: ");
-        String fullName = scanner.nextLine();
-
-        System.out.println("Введіть абревіатуру факультету: ");
-        String shortName = scanner.nextLine();
-
-        System.out.println("Введіть контакти факультету: ");
-        String contacts = scanner.nextLine();
-
-        System.out.println("Введіть id декана факультету: ");
-        int deanId = scanner.nextInt();
-
-        Teacher dean = department.findTeacherById(deanId);
-
-        return new Faculty(code, fullName, shortName, dean, contacts);
-    }
 
     public List<Faculty> getFaculties() {
         return faculties;
