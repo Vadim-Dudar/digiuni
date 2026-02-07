@@ -14,6 +14,7 @@ public class Faculty {
     private String contacts;
 
     private List<Department> departments;
+    Scanner scanner = new Scanner(System.in);
 
     public Faculty(String code, String name, String shortName, Teacher dean, String contacts) {
         validateString(code, "Код факультету");
@@ -72,24 +73,33 @@ public class Faculty {
         return null;
     }
 
-    public void updateDepartmentByCode(String code, String newName, Faculty newFaculty, Teacher newDean, String newLocation) {
+    public void updateDepartmentByCode(String code) {
         Department department = findDepartmentByCode(code);
+        if (department == null) {
+            System.out.println("Помилка: Кафедру з кодом " + code + " не знайдено.");
+            return;
+        }
 
-        if (department == null)
-            throw new IllegalArgumentException();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Редагування кафедри: " + department.getName());
+        System.out.println("Натисніть Enter, щоб залишити без змін.");
 
-        if (newName != null && !newName.trim().isEmpty())
+        System.out.print("Новий код (поточний: " + department.getCode() + "): ");
+        String newCode = scanner.nextLine();
+        if (!newCode.trim().isEmpty())
+            department.setCode(newCode);
+
+        System.out.print("Нова назва: ");
+        String newName = scanner.nextLine();
+        if (!newName.trim().isEmpty())
             department.setName(newName);
 
-        if (newFaculty != null)
-            department.setFaculty(newFaculty);
-
-        if (newDean != null)
-            department.setHead(newDean);
-
-        if (newLocation != null && !newLocation.trim().isEmpty())
+        System.out.print("Нова локація: ");
+        String newLocation = scanner.nextLine();
+        if (!newLocation.trim().isEmpty())
             department.setLocation(newLocation);
 
+        System.out.println("Дані кафедри успішно оновлено.");
     }
 
 
@@ -117,7 +127,7 @@ public class Faculty {
     }
 
     public void setName(String newName) {
-        this.name = name;
+        this.name = newName;
     }
 
     public void setCode(String code) {

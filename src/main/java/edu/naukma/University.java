@@ -11,6 +11,7 @@ public class University {
     private String shortName;
     private String city;
     private String address;
+    Scanner scanner = new Scanner(System.in);
 
     private List<Faculty> faculties;
 
@@ -33,28 +34,39 @@ public class University {
         faculties.add(faculty);
     }
 
-    public void updateFacultyByCode(String code, String newName, String newShortName, Teacher newDean, String newContacts) {
+    public void updateFacultyByCode(String code) {
         Faculty faculty = findFacultyByCode(code);
+        if (faculty == null) {
+            System.out.println("Помилка: Факультет з кодом " + code + " не знайдено.");
+            return;
+        }
 
-        if (faculty == null)
-            throw new IllegalArgumentException();
+        System.out.println("Редагування факультету: " + faculty.getShortName());
+        System.out.println("Якщо дані не потрібно змінювати — просто натисніть Enter.");
 
-        if (newName != null && !newName.trim().isEmpty())
+        System.out.print("Введіть новий код факультету (поточний: " + faculty.getCode() + "): ");
+        String newCode = scanner.nextLine();
+        if (!newCode.trim().isEmpty())
+            faculty.setCode(newCode);
+
+        System.out.print("Введіть нову назву факультету: ");
+        String newName = scanner.nextLine();
+        if (!newName.trim().isEmpty())
             faculty.setName(newName);
 
-        if (newShortName != null && !newShortName.trim().isEmpty())
+        System.out.print("Введіть нову абревіатуру: ");
+        String newShortName = scanner.nextLine();
+        if (!newShortName.trim().isEmpty())
             faculty.setShortName(newShortName);
 
-        if (newDean != null)
-            faculty.setDean(newDean);
-
-        if (newContacts != null && !newContacts.trim().isEmpty())
+        System.out.print("Введіть нові контакти: ");
+        String newContacts = scanner.nextLine();
+        if (!newContacts.trim().isEmpty())
             faculty.setContacts(newContacts);
-
+        System.out.println("Дані успішно оновлено.");
     }
 
     public Faculty createFaculty() {
-        Scanner scanner = new Scanner(System.in);
 
         System.out.println("Введіть код факультету: ");
         String code = scanner.nextLine();

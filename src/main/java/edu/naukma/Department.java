@@ -150,6 +150,74 @@ public class Department {
         return null;
     }
 
+    public void updateStudentById(int id) {
+        Student student = null;
+        for (Student s : students) {
+            if (s.getId() == id) {
+                student = s;
+                break;
+            }
+        }
+
+        if (student == null) {
+            System.out.println("Помилка: Студента з ID " + id + " не знайдено на цій кафедрі.");
+            return;
+        }
+
+        System.out.println("Редагування студента: " + student.getSurname() + " " + student.getName());
+        System.out.println("Залиште поле порожнім, щоб не змінювати його.");
+
+        System.out.print("Прізвище (поточне: " + student.getSurname() + "): ");
+        String newSurname = scanner.nextLine();
+        if (!newSurname.trim().isEmpty()) student.setSurname(newSurname);
+
+        System.out.print("Курс (поточний: " + student.getCourse() + "): ");
+        String newCourseStr = scanner.nextLine();
+        if (!newCourseStr.trim().isEmpty()) {
+            student.moveToNextYear();
+        }
+
+        System.out.println("Бажаєте змінити групу? (д/н): ");
+        if (scanner.nextLine().equalsIgnoreCase("д")) {
+            student.changeGroup(chooseFromEnum(Group.values(), "Оберіть нову групу:"));
+        }
+
+        System.out.println("Дані студента оновлено.");
+    }
+
+    public void updateTeacherById(int id) {
+        Teacher teacher = findTeacherById(id);
+
+        if (teacher == null) {
+            System.out.println("Помилка: Викладача з ID " + id + " не знайдено.");
+            return;
+        }
+
+        System.out.println("Редагування викладача: " + teacher.getSurname() + " " + teacher.getName());
+        System.out.println("Залиште поле порожнім, щоб не змінювати його.");
+
+        System.out.print("Прізвище: ");
+        String newSurname = scanner.nextLine();
+        if (!newSurname.trim().isEmpty()) teacher.setSurname(newSurname);
+
+        System.out.print("Номер телефону: ");
+        String newPhone = scanner.nextLine();
+        if (!newPhone.trim().isEmpty()) teacher.setPhone(newPhone);
+
+        System.out.print("Ставка (поточна: " + teacher.getStage() + "): ");
+        String newRateStr = scanner.nextLine();
+        if (!newRateStr.trim().isEmpty()) {
+            teacher.setRate(Integer.parseInt(newRateStr));
+        }
+
+        System.out.println("Бажаєте змінити посаду? (д/н): ");
+        if (scanner.nextLine().equalsIgnoreCase("д")) {
+            teacher.setPosition(chooseFromEnum(TeacherPosition.values(), "Оберіть нову посаду:"));
+        }
+
+        System.out.println("Дані викладача оновлено.");
+    }
+
     public String getCode() {
         return code;
     }

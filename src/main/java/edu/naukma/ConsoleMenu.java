@@ -52,6 +52,7 @@ public class ConsoleMenu {
         System.out.println("1 - Створити факультет");
         System.out.println("2 - Видалити факультет");
         System.out.println("3 - Список факультетів");
+        System.out.println("4 - Редагувати факультет");
         System.out.println("0 - Назад");
 
         int choice = readInt();
@@ -70,6 +71,11 @@ public class ConsoleMenu {
             case 3:
                 showFaculties();
                 break;
+            case 4:
+                System.out.println("Введіть код факультету, дані якого потрібно відредагувати: ");
+                String code1 = scanner.nextLine();
+                university.updateFacultyByCode(code1);
+                break;
         }
     }
 
@@ -83,6 +89,7 @@ public class ConsoleMenu {
         System.out.println("1 - Створити кафедру");
         System.out.println("2 - Видалити кафедру");
         System.out.println("3 - Список кафедр");
+        System.out.println("4 - Редагувати кафедру");
         System.out.println("0 - Назад");
 
         int choice = readInt();
@@ -103,6 +110,11 @@ public class ConsoleMenu {
                     System.out.println(d.getCode() + " - " + d.getName());
                 }
                 break;
+            case 4:
+                System.out.println("Введіть код кафедри, дані якої потрібно відредагувати: ");
+                String code1 = scanner.nextLine();
+                faculty.updateDepartmentByCode(code1);
+                break;
         }
     }
 
@@ -116,6 +128,7 @@ public class ConsoleMenu {
         System.out.println("1 - Додати студента");
         System.out.println("2 - Видалити студента (за ID)");
         System.out.println("3 - Список студентів");
+        System.out.println("4 - Редагувати студента");
         System.out.println("0 - Назад");
 
         int choice = readInt();
@@ -133,6 +146,11 @@ public class ConsoleMenu {
             case 3:
                 for (Student s : dep.getStudents()) System.out.println(s);
                 break;
+            case 4:
+                System.out.println("Введіть ID студента, дані якого потрібно відредагувати: ");
+                String sId = scanner.nextLine();
+                university.updateFacultyByCode(sId);
+                break;
         }
     }
 
@@ -146,6 +164,7 @@ public class ConsoleMenu {
         System.out.println("1 - Додати викладача");
         System.out.println("2 - Видалити викладача (за ID)");
         System.out.println("3 - Список викладачів");
+        System.out.println("4 - Редагувати викладача");
         System.out.println("0 - Назад");
 
         int choice = readInt();
@@ -162,6 +181,11 @@ public class ConsoleMenu {
                 break;
             case 3:
                 for (Teacher t : dep.getTeachers()) System.out.println(t);
+                break;
+            case 4:
+                System.out.println("Введіть ID викладача, дані якого потрібно відредагувати: ");
+                String tId = scanner.nextLine();
+                university.updateFacultyByCode(tId);
                 break;
         }
     }

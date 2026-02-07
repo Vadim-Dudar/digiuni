@@ -4,9 +4,9 @@ public class Person {
     private static int lastId = 0;
 
     private final int id;
-    private final String name;
-    private final String surname;
-    private final String midleName;
+    private String name;
+    private String surname;
+    private String midleName;
     private final String dayOfBirth;
     private String phone;
     private String email;
@@ -57,6 +57,38 @@ public class Person {
 
     public int getId() {
         return id;
+    }
+
+    public static void setLastId(int lastId) {
+        Person.lastId = lastId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setMidleName(String midleName) {
+        this.midleName = midleName;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public String getMidleName() {
+        return midleName;
+    }
+
+    public String getDayOfBirth() {
+        return dayOfBirth;
     }
 
     @Override
