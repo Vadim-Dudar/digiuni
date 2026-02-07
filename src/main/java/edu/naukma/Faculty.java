@@ -1,6 +1,5 @@
 package edu.naukma;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,14 +13,9 @@ public class Faculty {
     private String contacts;
 
     private List<Department> departments;
-    Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
 
     public Faculty(String code, String name, String shortName, Teacher dean, String contacts) {
-        validateString(code, "Код факультету");
-        validateString(name, "Назва факультету");
-        validateString(shortName, "Скорочена назва факультету");
-        validateString(contacts, "Контакти факультету");
-
         this.code = code;
         this.name = name;
         this.shortName = shortName;
@@ -30,29 +24,37 @@ public class Faculty {
         this.departments = new ArrayList<>();
     }
 
-    public void addDepartment(Department department) {
-        if (department == null)
-            throw new IllegalArgumentException("Назва кафедри не може бути порожньою!");
-        departments.add(department);
+    private String readRequiredString(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine();
+            if (input != null && !input.trim().isEmpty()) {
+                return input;
+            }
+            System.out.println("Помилка: це поле обов'язкове для заповнення.");
+        }
     }
 
-    public Department createDepartment(University university) { // Прибрали зайвий параметр
-        Scanner scanner = new Scanner(System.in);
+    public void addDepartment(Department department) {
+        if (department != null) {
+            departments.add(department);
+        } else {
+            System.out.println("Помилка: неможливо додати порожню кафедру.");
+        }
+    }
 
-        System.out.println("Введіть код кафедри: ");
-        String code = scanner.nextLine();
+    public Department createDepartment(University university) {
+        System.out.println("--- Створення нової кафедри ---");
 
-        System.out.println("Введіть назву кафедри: ");
-        String name = scanner.nextLine();
-
-        System.out.println("Введіть локацію (корпус/кабінет) кафедри: ");
-        String location = scanner.nextLine();
+        String code = readRequiredString("Введіть код кафедри: ");
+        String name = readRequiredString("Введіть назву кафедри: ");
+        String location = readRequiredString("Введіть локацію (корпус/кабінет) кафедри: ");
 
         return new Department(code, name, this, null, location);
     }
 
     public boolean removeDepartmentByCode(String code) {
-        validateString(code, "Код кафедри");
+        if (code == null || code.trim().isEmpty()) return false;
 
         for (int i = 0; i < departments.size(); i++) {
             if (departments.get(i).getCode().equals(code)) {
@@ -64,7 +66,7 @@ public class Faculty {
     }
 
     public Department findDepartmentByCode(String code) {
-        validateString(code, "Код кафедри");
+        if (code == null || code.trim().isEmpty()) return null;
 
         for (Department d : departments) {
             if (d.getCode().equals(code))
@@ -80,7 +82,6 @@ public class Faculty {
             return;
         }
 
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Редагування кафедри: " + department.getName());
         System.out.println("Натисніть Enter, щоб залишити без змін.");
 
@@ -102,63 +103,36 @@ public class Faculty {
         System.out.println("Дані кафедри успішно оновлено.");
     }
 
-
-    public String getCode() {
-        return code;
-    }
-
-    public List<Department> getDepartments() {
-        return departments;
-    }
-
-    public Teacher getDean() {
-        return dean;
-    }
-
     public void setDean(Teacher dean) {
-        if (dean == null)
-            throw new IllegalArgumentException("Декан не може бути null");
-        this.dean = dean;
-    }
-
-    private void validateString(String value, String fieldName) {
-        if (value == null || value.trim().isEmpty())
-            throw new IllegalArgumentException(fieldName + " не може бути порожнім");
+        if (dean != null) {
+            this.dean = dean;
+        }
     }
 
     public void setName(String newName) {
-        this.name = newName;
+        if (newName != null && !newName.trim().isEmpty()) this.name = newName;
     }
 
     public void setCode(String code) {
-        this.code = code;
+        if (code != null && !code.trim().isEmpty()) this.code = code;
     }
 
     public void setShortName(String shortName) {
-        this.shortName = shortName;
+        if (shortName != null && !shortName.trim().isEmpty()) this.shortName = shortName;
     }
 
     public void setContacts(String contacts) {
-        this.contacts = contacts;
+        if (contacts != null && !contacts.trim().isEmpty()) this.contacts = contacts;
     }
 
-    public String getShortName() {
-        return shortName;
-    }
-
-    public String getContacts() {
-        return contacts;
-    }
+    public String getCode() { return code; }
+    public List<Department> getDepartments() { return departments; }
+    public Teacher getDean() { return dean; }
+    public String getShortName() { return shortName; }
+    public String getContacts() { return contacts; }
 
     @Override
     public String toString() {
-        return "Faculty{" +
-                "code='" + code + '\'' +
-                ", name='" + name + '\'' +
-                ", shortName='" + shortName + '\'' +
-                ", dean=" + dean +
-                ", contacts='" + contacts + '\'' +
-                ", departments=" + departments +
-                '}';
+        return "Факультет: " + name + " [" + shortName + "], Код: " + code + ", Декан: " + dean;
     }
 }

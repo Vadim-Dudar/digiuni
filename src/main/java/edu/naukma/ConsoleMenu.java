@@ -23,7 +23,7 @@ public class ConsoleMenu {
                 case 2: departmentsMenu(); break;
                 case 3: studentsMenu(); break;
                 case 4: teachersMenu(); break;
-                case 5: showAllInfo(); break; // Додав зручний перегляд
+                case 5: showAllInfo(); break;
                 case 0:
                     running = false;
                     System.out.println("Вихід з програми...");
@@ -44,8 +44,6 @@ public class ConsoleMenu {
         System.out.println("0 - Вихід");
         System.out.print("Ваш вибір: ");
     }
-
-    /* ================= ФАКУЛЬТЕТИ ================= */
 
     private void facultiesMenu() {
         System.out.println("\n--- ФАКУЛЬТЕТИ ---");
@@ -78,8 +76,6 @@ public class ConsoleMenu {
                 break;
         }
     }
-
-    /* ================= КАФЕДРИ ================= */
 
     private void departmentsMenu() {
         Faculty faculty = chooseFaculty();
@@ -118,8 +114,6 @@ public class ConsoleMenu {
         }
     }
 
-    /* ================= СТУДЕНТИ ================= */
-
     private void studentsMenu() {
         Department dep = chooseDepartment();
         if (dep == null) return;
@@ -138,23 +132,22 @@ public class ConsoleMenu {
                 System.out.println("Студента зараховано.");
                 break;
             case 2:
-                System.out.print("Введіть ID студента: ");
-                int id = readInt();
-                if (dep.removeStudentById(id)) System.out.println("Студента видалено.");
+                System.out.print("Введіть ID студента для видалення: ");
+                int idDel = readInt();
+                if (dep.removeStudentById(idDel)) System.out.println("Студента видалено.");
                 else System.out.println("ID не знайдено.");
                 break;
             case 3:
+                if (dep.getStudents().isEmpty()) System.out.println("Список порожній.");
                 for (Student s : dep.getStudents()) System.out.println(s);
                 break;
             case 4:
-                System.out.println("Введіть ID студента, дані якого потрібно відредагувати: ");
-                String sId = scanner.nextLine();
-                university.updateFacultyByCode(sId);
+                System.out.print("Введіть ID студента для редагування: ");
+                int idEdit = readInt();
+                dep.updateStudentById(idEdit);
                 break;
         }
     }
-
-    /* ================= ВИКЛАДАЧІ ================= */
 
     private void teachersMenu() {
         Department dep = chooseDepartment();
@@ -174,23 +167,22 @@ public class ConsoleMenu {
                 System.out.println("Викладача додано.");
                 break;
             case 2:
-                System.out.print("Введіть ID викладача: ");
-                int id = readInt();
-                if (dep.removeTeacherById(id)) System.out.println("Викладача видалено.");
+                System.out.print("Введіть ID викладача для видалення: ");
+                int idDel = readInt();
+                if (dep.removeTeacherById(idDel)) System.out.println("Викладача видалено.");
                 else System.out.println("ID не знайдено.");
                 break;
             case 3:
+                if (dep.getTeachers().isEmpty()) System.out.println("Список порожній.");
                 for (Teacher t : dep.getTeachers()) System.out.println(t);
                 break;
             case 4:
-                System.out.println("Введіть ID викладача, дані якого потрібно відредагувати: ");
-                String tId = scanner.nextLine();
-                university.updateFacultyByCode(tId);
+                System.out.print("Введіть ID викладача для редагування: ");
+                int idEdit = readInt();
+                dep.updateTeacherById(idEdit);
                 break;
         }
     }
-
-    /* ================= ДОПОМІЖНІ МЕТОДИ ================= */
 
     private Faculty chooseFaculty() {
         showFaculties();

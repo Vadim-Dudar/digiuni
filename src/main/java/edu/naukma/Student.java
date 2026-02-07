@@ -16,11 +16,15 @@ public class Student extends Person {
         this.studyForm = studyForm;
         this.status = status;
 
-        if (yearOfEntry > 2026 || yearOfEntry < 1991) this.yearOfEntry = yearOfEntry;
-        else throw new IllegalArgumentException("Unrealistic year of entry!");
+        if (yearOfEntry >= 1991 && yearOfEntry <= 2026)
+            this.yearOfEntry = yearOfEntry;
+        else
+            this.yearOfEntry = 2026;
 
-        if (course > 0 && course < 7) this.course = course;
-        else throw new IllegalArgumentException("Course is between 1 and 6");
+        if (course >= 1 && course <= 6)
+            this.course = course;
+        else
+            this.course = 1;
     }
 
     @Override
@@ -36,7 +40,7 @@ public class Student extends Person {
      */
     public void moveToNextYear(){
         if (course < 6) course++;
-        else throw new IllegalArgumentException("Max course is 6th");
+        else this.status = StudentStatus.values()[1];;
     }
 
     /**
@@ -53,6 +57,10 @@ public class Student extends Person {
      */
     public Group getGroup() {
         return group;
+    }
+
+    public int getId() {
+        return this.studentId;
     }
 
     /**

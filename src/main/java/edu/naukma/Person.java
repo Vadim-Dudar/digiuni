@@ -93,12 +93,12 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person #" + id +
-                name +
-                surname +
-                midleName +
-                dayOfBirth +
-                phone +
+        return "Person #" + id + ". " +
+                name + ". " +
+                surname + ". " +
+                midleName + ". " +
+                dayOfBirth + ". " +
+                phone + ". " +
                 email;
     }
 }

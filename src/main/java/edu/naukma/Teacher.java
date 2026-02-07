@@ -18,16 +18,26 @@ public class Teacher extends Person{
         this.degree = degree;
         this.stage = stage;
         this.dateOfHiring = dateOfHiring;
-        if (rate > 0) this.rate = rate;
-        else throw new IllegalArgumentException("Rate can't be less than zero!");
+        if (rate > 0) {
+            this.rate = rate;
+        } else {
+            this.rate = 10;
+        }
+    }
+
+    public int getId() {
+        return teacherId;
     }
 
     /**
      * Setters for Teacher rate of salary.
      */
     public void setRate(int rate) {
-        if (rate > 0) this.rate = rate;
-        else throw new IllegalArgumentException("Rate can't be less than zero!");
+        if (rate > 0) {
+            this.rate = rate;
+        } else {
+            System.out.println("Помилка: ставка повинна бути більше 0");
+        }
     }
 
     /**
@@ -74,7 +84,8 @@ public class Teacher extends Person{
 
     @Override
     public String toString() {
-        return getId() + " Teacher -> " + getFullName() + dateOfHiring +
-                position + degree + stage + getEmail() + getPhone();
+        return getId() + " Teacher -> " + getFullName() + " | Hiring Date: " + dateOfHiring +
+                " | Position: " + position + " | Degree: " + degree + " | Stage: " + stage +
+                " | Email: " + getEmail() + " | Phone: " + getPhone();
     }
 }
