@@ -163,6 +163,12 @@ public class University {
         return null;
     }
 
+    public Student getStudent(String fullName) {
+        for (Student student: students) if (student.getFullName().equals(fullName)) return student;
+
+        return null;
+    }
+
     /**
      * Returns the list of students of the university.
      *
@@ -170,6 +176,34 @@ public class University {
      */
     public List<Student> getStudents() {
         return List.copyOf(students);
+    }
+
+    public List<Student> getStudents(Faculty faculty) {
+        List<Student> result = new ArrayList<>();
+
+        for (Student student: students) if (student.getFaculty() == faculty) result.add(student);
+
+        return result;
+    }
+
+    public List<Student> getStudentsByCourse(int course) {
+        List<Student> result= new ArrayList<>();
+
+        for (Student student: students) {
+            if (student.getCourse() == course) result.add(student);
+        }
+
+        return result;
+    }
+
+    public List<Student> getStudentsByGroup(int group) {
+        List<Student> result= new ArrayList<>();
+
+        for (Student student: students) {
+            if (student.getGroup() == group) result.add(student);
+        }
+
+        return result;
     }
 
     /** Adds a teacher to the university.

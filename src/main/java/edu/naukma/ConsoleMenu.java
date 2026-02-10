@@ -24,7 +24,16 @@ public class ConsoleMenu {
         boolean running = true;
 
         while (running) {
-            showMainMenu();
+
+            System.out.println("\n===== ГОЛОВНЕ МЕНЮ =====");
+            System.out.println("1 - Керування факультетами");
+            System.out.println("2 - Керування кафедрами");
+            System.out.println("3 - Керування студентами");
+            System.out.println("4 - Керування викладачами");
+            System.out.println("5 - Reports");
+            System.out.println("0 - Вихід");
+            System.out.print("Ваш вибір: ");
+
             int choice = readInt();
 
             switch (choice) {
@@ -40,6 +49,9 @@ public class ConsoleMenu {
                 case 4:
                     teachersMenu();
                     break;
+                case 5:
+                    reportsMenu();
+                    break;
                 case 0:
                     running = false;
                     System.out.println("Вихід з програми...");
@@ -48,19 +60,6 @@ public class ConsoleMenu {
                     System.out.println("Невірний вибір. Спробуйте ще раз.");
             }
         }
-    }
-
-    /**
-     * Displays the main menu options.
-     */
-    private void showMainMenu() {
-        System.out.println("\n===== ГОЛОВНЕ МЕНЮ (" + university.getFaculties().size() + " факультетів) =====");
-        System.out.println("1 - Керування факультетами");
-        System.out.println("2 - Керування кафедрами");
-        System.out.println("3 - Керування студентами");
-        System.out.println("4 - Керування викладачами");
-        System.out.println("0 - Вихід");
-        System.out.print("Ваш вибір: ");
     }
 
     /**
@@ -450,6 +449,22 @@ public class ConsoleMenu {
 
                 for (Teacher teacher: university.getTeachers(department)) System.out.println(teacher);
 
+        }
+    }
+
+    private void reportsMenu() {
+        System.out.println("\n--- REPORTS ---");
+        System.out.println("1 - Students in faculties");
+        System.out.println("0 - Exit");
+
+        switch (readInt()) {
+            case 1:
+                for (Faculty faculty: university.getFaculties()) {
+                    List<Student> students = university.getStudents(faculty);
+                    System.out.println(faculty.getName() + ": " + students.size() + " students");
+                }
+
+                break;
         }
     }
 

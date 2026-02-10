@@ -96,6 +96,10 @@ public class Faculty {
             this.name = newName;
     }
 
+    public String getName() {
+        return name;
+    }
+
     /**
      * Sets the faculty short name.
      *
