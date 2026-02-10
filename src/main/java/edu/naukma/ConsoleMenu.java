@@ -438,6 +438,11 @@ public class ConsoleMenu {
         }
     }
 
+    /**
+     * Allows the user to select an academic degree from the available options.
+     *
+     * @return selected AcademicDegree
+     */
     private AcademicDegree chooseAcademicDegree() {
         AcademicDegree[] degrees = AcademicDegree.values();
 
@@ -455,6 +460,11 @@ public class ConsoleMenu {
         }
     }
 
+    /**
+     * Allows the user to select an academic stage from the available options.
+     *
+     * @return selected AcademicStage
+     */
     private AcademicStage chooseAcademicStage() {
         AcademicStage[] academicStages = AcademicStage.values();
 
@@ -473,6 +483,11 @@ public class ConsoleMenu {
         }
     }
 
+    /**
+     * Allows the user to select a teacher position from the available options.
+     *
+     * @return selected TeacherPosition
+     */
     private TeacherPosition chooseTeacherPositon() {
         TeacherPosition[] positions = TeacherPosition.values();
 

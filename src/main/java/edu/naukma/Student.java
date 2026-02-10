@@ -115,14 +115,26 @@ public class Student extends Person {
         return course;
     }
 
+    /**
+     * Set current course of the student.
+     * @param course New course for the student.
+     */
     public void setCourse(int course) {
         this.course = course;
     }
 
+    /**
+     * Set student faculty.
+     * @param faculty New faculty for the student.
+     */
     public void setFaculty(Faculty faculty) {
         this.faculty = faculty;
     }
 
+    /**
+     * Get student faculty.
+     * @return Current faculty of the student.
+     */
     public Faculty getFaculty() {
         return faculty;
     }
