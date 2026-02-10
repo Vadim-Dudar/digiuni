@@ -25,7 +25,7 @@ public class Teacher extends Person{
         }
     }
 
-    public int getId() {
+    public int getTeacherId() {
         return teacherId;
     }
 
@@ -84,7 +84,7 @@ public class Teacher extends Person{
 
     @Override
     public String toString() {
-        return getId() + " Teacher -> " + getFullName() + " | Hiring Date: " + dateOfHiring +
+        return getTeacherId() + " Teacher -> " + getFullName() + " | Hiring Date: " + dateOfHiring +
                 " | Position: " + position + " | Degree: " + degree + " | Stage: " + stage +
                 " | Email: " + getEmail() + " | Phone: " + getPhone();
     }

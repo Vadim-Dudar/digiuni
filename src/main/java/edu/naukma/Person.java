@@ -12,12 +12,6 @@ public class Person {
     private String email;
 
     public Person(String name, String surname, String midleName, String dayOfBirth, String phone, String email) {
-        if (name == null || surname == null || midleName == null || dayOfBirth == null
-                || name.isEmpty() || surname.isEmpty() || midleName.isEmpty() || dayOfBirth.isEmpty()
-                || phone == null || phone.isEmpty() || email == null || email.isEmpty()) {
-            throw new IllegalArgumentException("Arguments cannot be null or empty");
-        }
-
         this.id = ++lastId;
         this.name = name;
         this.surname = surname;

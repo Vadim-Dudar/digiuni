@@ -6,14 +6,13 @@ import java.util.Scanner;
 
 public class Faculty {
 
-    private String code;
+    private final int code;
     private String name;
     private String shortName;
     private Teacher dean;
     private String contacts;
 
     private List<Department> departments;
-    private Scanner scanner = new Scanner(System.in);
 
     /**
      * Creates a Faculty object and initializes the departments list.
@@ -24,7 +23,7 @@ public class Faculty {
      * @param dean faculty dean
      * @param contacts contact information
      */
-    public Faculty(String code, String name, String shortName, Teacher dean, String contacts) {
+    public Faculty(int code, String name, String shortName, Teacher dean, String contacts) {
         this.code = code;
         this.name = name;
         this.shortName = shortName;
@@ -32,24 +31,7 @@ public class Faculty {
         this.contacts = contacts;
         this.departments = new ArrayList<>();
     }
-
-    /**
-     * Reads a required string value from console input.
-     * Repeats input until a non-empty value is entered.
-     *
-     * @param prompt message shown to the user
-     * @return non-empty input string
-     */
-    private String readRequiredString(String prompt) {
-        while (true) {
-            System.out.print(prompt);
-            String input = scanner.nextLine();
-            if (input != null && !input.trim().isEmpty())
-                return input;
-            System.out.println("Помилка: це поле обов'язкове для заповнення.");
-        }
-    }
-
+    
     /**
      * Adds a department to the faculty.
      *
@@ -63,33 +45,15 @@ public class Faculty {
     }
 
     /**
-     * Creates a new department using user input.
-     *
-     * @param university university to which the department belongs
-     * @return created Department object
-     */
-    public Department createDepartment(University university) {
-        System.out.println("--- Створення нової кафедри ---");
-
-        String code = readRequiredString("Введіть код кафедри: ");
-        String name = readRequiredString("Введіть назву кафедри: ");
-        String location = readRequiredString("Введіть локацію (корпус/кабінет) кафедри: ");
-
-        return new Department(code, name, this, null, location);
-    }
-
-    /**
      * Removes a department by its code.
      *
      * @param code department code
      * @return true if removed, false otherwise
      */
-    public boolean removeDepartmentByCode(String code) {
-        if (code == null || code.trim().isEmpty())
-            return false;
+    public boolean removeDepartmentByCode(int code) {
 
         for (int i = 0; i < departments.size(); i++) {
-            if (departments.get(i).getCode().equals(code)) {
+            if (departments.get(i).getCode() == code) {
                 departments.remove(i);
                 return true;
             }
@@ -103,51 +67,15 @@ public class Faculty {
      * @param code department code
      * @return department if found, otherwise null
      */
-    public Department findDepartmentByCode(String code) {
-        if (code == null || code.trim().isEmpty())
-            return null;
+    public Department findDepartmentByCode(int code) {
 
         for (Department d : departments) {
-            if (d.getCode().equals(code))
+            if (d.getCode() == code)
                 return d;
         }
         return null;
     }
-
-    /**
-     * Updates department data by its code.
-     * Empty input values are ignored.
-     *
-     * @param code department code
-     */
-    public void updateDepartmentByCode(String code) {
-        Department department = findDepartmentByCode(code);
-        if (department == null) {
-            System.out.println("Помилка: Кафедру з кодом " + code + " не знайдено.");
-            return;
-        }
-
-        System.out.println("Редагування кафедри: " + department.getName());
-        System.out.println("Натисніть Enter, щоб залишити без змін.");
-
-        System.out.print("Новий код (поточний: " + department.getCode() + "): ");
-        String newCode = scanner.nextLine();
-        if (!newCode.trim().isEmpty())
-            department.setCode(newCode);
-
-        System.out.print("Нова назва: ");
-        String newName = scanner.nextLine();
-        if (!newName.trim().isEmpty())
-            department.setName(newName);
-
-        System.out.print("Нова локація: ");
-        String newLocation = scanner.nextLine();
-        if (!newLocation.trim().isEmpty())
-            department.setLocation(newLocation);
-
-        System.out.println("Дані кафедри успішно оновлено.");
-    }
-
+    
     /**
      * Sets the faculty dean.
      *
@@ -166,16 +94,6 @@ public class Faculty {
     public void setName(String newName) {
         if (newName != null && !newName.trim().isEmpty())
             this.name = newName;
-    }
-
-    /**
-     * Sets the faculty code.
-     *
-     * @param code new faculty code
-     */
-    public void setCode(String code) {
-        if (code != null && !code.trim().isEmpty())
-            this.code = code;
     }
 
     /**
@@ -203,7 +121,7 @@ public class Faculty {
      *
      * @return faculty code
      */
-    public String getCode() {
+    public int getCode() {
         return code;
     }
 
@@ -213,7 +131,7 @@ public class Faculty {
      * @return departments list
      */
     public List<Department> getDepartments() {
-        return departments;
+        return List.copyOf(departments);
     }
 
     /**

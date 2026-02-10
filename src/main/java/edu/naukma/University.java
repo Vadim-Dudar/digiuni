@@ -2,7 +2,6 @@ package edu.naukma;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class University {
 
@@ -10,8 +9,9 @@ public class University {
     private String shortName;
     private String city;
     private String address;
-    private Scanner scanner = new Scanner(System.in);
     private List<Faculty> faculties;
+    private List<Student> students;
+    private List<Teacher> teachers;
 
     /**
      * Creates a University object and initializes the faculties list.
@@ -27,23 +27,8 @@ public class University {
         this.city = city;
         this.address = address;
         this.faculties = new ArrayList<>();
-    }
-
-    /**
-     * Reads a required string from console input.
-     * Repeats input until a non-empty value is provided.
-     *
-     * @param prompt message shown to the user
-     * @return non-empty input string
-     */
-    private String readRequiredString(String prompt) {
-        while (true) {
-            System.out.print(prompt);
-            String input = scanner.nextLine();
-            if (input != null && !input.trim().isEmpty())
-                return input;
-            System.out.println("Помилка: це поле є обов'язковим. Спробуйте ще раз.");
-        }
+        this.students = new ArrayList<>();
+        this.teachers = new ArrayList<>();
     }
 
     /**
@@ -59,70 +44,14 @@ public class University {
     }
 
     /**
-     * Updates faculty data by its code.
-     * Empty input values are ignored.
-     *
-     * @param code faculty code
-     */
-    public void updateFacultyByCode(String code) {
-        Faculty faculty = findFacultyByCode(code);
-        if (faculty == null) {
-            System.out.println("Помилка: Факультет з кодом " + code + " не знайдено.");
-            return;
-        }
-
-        System.out.println("Редагування факультету: " + faculty.getShortName());
-        System.out.println("Якщо дані не потрібно змінювати — просто натисніть Enter.");
-
-        System.out.print("Новий код (поточний: " + faculty.getCode() + "): ");
-        String newCode = scanner.nextLine();
-        if (!newCode.trim().isEmpty())
-            faculty.setCode(newCode);
-
-        System.out.print("Нова назва: ");
-        String newName = scanner.nextLine();
-        if (!newName.trim().isEmpty())
-            faculty.setName(newName);
-
-        System.out.print("Нова абревіатура: ");
-        String newShortName = scanner.nextLine();
-        if (!newShortName.trim().isEmpty())
-            faculty.setShortName(newShortName);
-
-        System.out.print("Нові контакти: ");
-        String newContacts = scanner.nextLine();
-        if (!newContacts.trim().isEmpty())
-            faculty.setContacts(newContacts);
-
-        System.out.println("Дані успішно оновлено.");
-    }
-
-    /**
-     * Creates a new Faculty object using user input.
-     *
-     * @return created Faculty object
-     */
-    public Faculty createFaculty() {
-        String code = readRequiredString("Введіть код факультету: ");
-        String fullName = readRequiredString("Введіть повну назву факультету: ");
-        String shortName = readRequiredString("Введіть абревіатуру факультету: ");
-        String contacts = readRequiredString("Введіть контакти факультету: ");
-
-        return new Faculty(code, fullName, shortName, null, contacts);
-    }
-
-    /**
      * Removes a faculty by its code.
      *
      * @param code faculty code
      * @return true if the faculty was removed, false otherwise
      */
-    public boolean removeFacultyByCode(String code) {
-        if (code == null || code.trim().isEmpty())
-            return false;
-
+    public boolean removeFacultyByCode(int code) {
         for (int i = 0; i < faculties.size(); i++) {
-            if (faculties.get(i).getCode().equals(code)) {
+            if (faculties.get(i).getCode() == code) {
                 faculties.remove(i);
                 return true;
             }
@@ -136,12 +65,9 @@ public class University {
      * @param code faculty code
      * @return faculty if found, otherwise null
      */
-    public Faculty findFacultyByCode(String code) {
-        if (code == null || code.trim().isEmpty())
-            return null;
-
+    public Faculty getFaculty(int code) {
         for (Faculty f : faculties) {
-            if (f.getCode().equals(code))
+            if (f.getCode() == code)
                 return f;
         }
         return null;
@@ -153,7 +79,84 @@ public class University {
      * @return list of faculties
      */
     public List<Faculty> getFaculties() {
-        return faculties;
+        return List.copyOf(faculties);
     }
 
+    public Faculty getFaculty(Department department) {
+        for (Faculty faculty: faculties) {
+            for (Department d: faculty.getDepartments()) if (d.getCode() == department.getCode()) return faculty;
+        }
+
+        return null;
+    }
+
+    public List<Department> getDepartments() {
+        List<Department> departments = new ArrayList<>();
+
+        for (Faculty faculty: faculties) {
+            departments.addAll(faculty.getDepartments());
+        }
+
+        return departments;
+    }
+
+    public Department getDepartment(int code) {
+        List<Department> departments = getDepartments();
+
+        for (Department department: departments) if (department.getCode() == code) return department;
+
+        return null;
+    }
+
+    public void addStudent(Student student) {
+        students.add(student);
+    }
+
+    public boolean removeStudent(int code) {
+        for (Student student: students) {
+            if (student.getId() == code) {
+                students.remove(student);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Student getStudent(int code) {
+        for (Student student: students){
+            if (student.getId() == code) return student;
+        }
+
+        return null;
+    }
+
+    public List<Student> getStudents() {
+        return List.copyOf(students);
+    }
+
+    public void addTeacher(Teacher teacher){
+        teachers.add(teacher);
+    }
+
+    public boolean removeTeacher(int code) {
+        for (Teacher teacher: teachers) {
+            if (teacher.getId() == code) {
+                teachers.remove(teacher);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Teacher getTeacher(int id) {
+        for (Teacher teacher: teachers) {
+            if (teacher.getTeacherId() == id) return teacher;
+        }
+
+        return null;
+    }
+
+    public List<Teacher> getTeachers() {
+        return List.copyOf(teachers);
+    }
 }

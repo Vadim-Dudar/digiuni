@@ -3,28 +3,22 @@ package edu.naukma;
 public class Student extends Person {
 
     private final int studentId;
+    private Faculty faculty;
     private int course;
-    private Group group;
+    private int group;
     private final int yearOfEntry;
     private StudyForm studyForm;
     private StudentStatus status;
 
-    public Student(String name, String surname, String midleName, String dayOfBirth, String phone, String email, int studentId, int course, Group group, int yearOfEntry, StudyForm studyForm, StudentStatus status) {
+    public Student(String name, String surname, String midleName, String dayOfBirth, String phone, String email, int studentId, int course, Faculty faculty, int group, int yearOfEntry, StudyForm studyForm, StudentStatus status) {
         super(name, surname, midleName, dayOfBirth, phone, email);
         this.studentId = studentId;
         this.group = group;
         this.studyForm = studyForm;
         this.status = status;
-
-        if (yearOfEntry >= 1991 && yearOfEntry <= 2026)
-            this.yearOfEntry = yearOfEntry;
-        else
-            this.yearOfEntry = 2026;
-
-        if (course >= 1 && course <= 6)
-            this.course = course;
-        else
-            this.course = 1;
+        this.yearOfEntry = yearOfEntry;
+        this.course = course;
+        this.faculty = faculty;
     }
 
     @Override
@@ -36,18 +30,16 @@ public class Student extends Person {
 
     /**
      * Move student to the next year of study.
-     * If the student is already in the 6th year, an exception is thrown.
      */
     public void moveToNextYear(){
-        if (course < 6) course++;
-        else this.status = StudentStatus.values()[1];;
+        course++;
     }
 
     /**
      * Change student group.
      * @param group New group for the student.
      */
-    public void changeGroup(Group group){
+    public void changeGroup(int group){
         this.group = group;
     }
 
@@ -55,8 +47,12 @@ public class Student extends Person {
      * Get student group.
      * @return Current group of the student.
      */
-    public Group getGroup() {
+    public int getGroup() {
         return group;
+    }
+
+    public void setGroup(int group) {
+        this.group = group;
     }
 
     public int getId() {
@@ -79,6 +75,10 @@ public class Student extends Person {
         return studyForm;
     }
 
+    public void setStudyForm(StudyForm studyForm) {
+        this.studyForm = studyForm;
+    }
+
     /**
      * Change student study form.
      * @param studyForm New study form for the student.
@@ -95,6 +95,10 @@ public class Student extends Person {
         return status;
     }
 
+    public void setStatus(StudentStatus status) {
+        this.status = status;
+    }
+
     /**
      * Get year of entry.
      * @return Year when the student entered the university.
@@ -109,6 +113,18 @@ public class Student extends Person {
      */
     public int getCourse() {
         return course;
+    }
+
+    public void setCourse(int course) {
+        this.course = course;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
+    }
+
+    public Faculty getFaculty() {
+        return faculty;
     }
 
 }
