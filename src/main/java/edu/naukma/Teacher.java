@@ -7,11 +7,12 @@ public class Teacher extends Person{
     private AcademicStage stage;
     private final String dateOfHiring;
     private int rate;
+    private Department department;
 
     /**
      * Constructor for Teacher class.
      */
-    public Teacher(String name, String surname, String midleName, String dayOfBirth, String phone, String email, int teacherId, TeacherPosition position, AcademicDegree degree, AcademicStage stage, String dateOfHiring, int rate) {
+    public Teacher(String name, String surname, String midleName, String dayOfBirth, String phone, String email, int teacherId, TeacherPosition position, AcademicDegree degree, AcademicStage stage, String dateOfHiring, int rate, Department department) {
         super(name, surname, midleName, dayOfBirth, phone, email);
         this.teacherId = teacherId;
         this.position = position;
@@ -23,6 +24,7 @@ public class Teacher extends Person{
         } else {
             this.rate = 10;
         }
+        this.department = department;
     }
 
     public int getTeacherId() {
@@ -82,9 +84,17 @@ public class Teacher extends Person{
         return stage;
     }
 
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
     @Override
     public String toString() {
-        return getTeacherId() + " Teacher -> " + getFullName() + " | Hiring Date: " + dateOfHiring +
+        return getTeacherId() + " Teacher -> " + getFullName() + " | Department: " + department.getName() + " | Hiring Date: " + dateOfHiring +
                 " | Position: " + position + " | Degree: " + degree + " | Stage: " + stage +
                 " | Email: " + getEmail() + " | Phone: " + getPhone();
     }

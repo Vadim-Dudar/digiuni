@@ -381,7 +381,10 @@ public class ConsoleMenu {
                 System.out.println("Enter rate:");
                 int rate = readInt();
 
-                university.addTeacher(new Teacher(name, surname, midlename, dayOfBirth, phone, email, teacherId, position, degree, stage, dateOfHiring, rate));
+                System.out.println("Choose department:");
+                Department department = chooseDepartment();
+
+                university.addTeacher(new Teacher(name, surname, midlename, dayOfBirth, phone, email, teacherId, position, degree, stage, dateOfHiring, rate, department));
 
                 System.out.println("Викладача додано.");
                 break;
@@ -433,6 +436,9 @@ public class ConsoleMenu {
 
                 System.out.println("Enter rate:");
                 teacher.setRate(readInt());
+
+                System.out.println("Choose department:");
+                teacher.setDepartment(chooseDepartment());
 
                 break;
         }
@@ -520,6 +526,24 @@ public class ConsoleMenu {
             if (f == null)
                 System.out.println("Помилка: факультет не знайдено.");
             return f;
+        }
+    }
+
+    /**
+     * Allows the user to select a department by its code.
+     *
+     * @return selected Department or null if not found
+     */
+    private Department chooseDepartment() {
+        while (true) {
+            for (Department d : university.getDepartments())
+                System.out.println(d.getCode() + " - " + d.getName());
+
+            int code = readInt();
+            Department d = university.getDepartment(code);
+            if (d == null)
+                System.out.println("Помилка: кафедру не знайдено.");
+            return d;
         }
     }
 
