@@ -1,6 +1,6 @@
 package edu.naukma;
 
-public class Teacher extends Person{
+public class Teacher extends Person {
     private final int teacherId;
     private TeacherPosition position;
     private AcademicDegree degree;
@@ -84,14 +84,25 @@ public class Teacher extends Person{
         return stage;
     }
 
+    /**
+     * Getters for Teacher department.
+     */
     public Department getDepartment() {
         return department;
     }
 
+    /**
+     * Setters for Teacher department.
+     */
     public void setDepartment(Department department) {
         this.department = department;
     }
 
+    /**
+     * Returns string representation of the teacher.
+     *
+     * @return teacher description
+     */
     @Override
     public String toString() {
         return getTeacherId() + " Teacher -> " + getFullName() + " | Department: " + department.getName() + " | Hiring Date: " + dateOfHiring +

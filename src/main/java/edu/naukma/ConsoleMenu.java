@@ -447,11 +447,14 @@ public class ConsoleMenu {
                 System.out.println("Choose department:");
                 Department department = chooseDepartment();
 
-                for (Teacher teacher: university.getTeachers(department)) System.out.println(teacher);
+                for (Teacher teacher : university.getTeachers(department)) System.out.println(teacher);
 
         }
     }
 
+    /**
+     * Displays and handles the reports menu.
+     */
     private void reportsMenu() {
         System.out.println("\n--- REPORTS ---");
         System.out.println("1 - Students in faculties");
@@ -459,7 +462,7 @@ public class ConsoleMenu {
 
         switch (readInt()) {
             case 1:
-                for (Faculty faculty: university.getFaculties()) {
+                for (Faculty faculty : university.getFaculties()) {
                     List<Student> students = university.getStudents(faculty);
                     System.out.println(faculty.getName() + ": " + students.size() + " students");
                 }
@@ -478,14 +481,14 @@ public class ConsoleMenu {
 
         while (true) {
             for (int i = 0; i < degrees.length; i++) {
-                System.out.println((i+1) + " - " + degrees[i]);
+                System.out.println((i + 1) + " - " + degrees[i]);
             }
 
             System.out.println("Enter number: ");
             int choise = scanner.nextInt();
             scanner.nextLine(); // to clear enter without this next call of scanner will end
 
-            if (choise > 0 && choise <= degrees.length) return degrees[choise-1];
+            if (choise > 0 && choise <= degrees.length) return degrees[choise - 1];
             else System.out.println("[Enter proper variant!]");
         }
     }
@@ -501,14 +504,14 @@ public class ConsoleMenu {
 
         while (true) {
             for (int i = 0; i < academicStages.length; i++) {
-                System.out.println((i+1) + " - " + academicStages[i]);
+                System.out.println((i + 1) + " - " + academicStages[i]);
             }
 
             System.out.println("Enter number: ");
             int choise = scanner.nextInt();
             scanner.nextLine(); // to clear enter without this next call of scanner will end
 
-            if (choise > 0 && choise <= academicStages.length) return academicStages[choise-1];
+            if (choise > 0 && choise <= academicStages.length) return academicStages[choise - 1];
             else System.out.println("[Enter proper variant!]");
         }
     }
@@ -523,14 +526,14 @@ public class ConsoleMenu {
 
         while (true) {
             for (int i = 0; i < positions.length; i++) {
-                System.out.println((i+1) + " - " + positions[i]);
+                System.out.println((i + 1) + " - " + positions[i]);
             }
 
             System.out.println("Enter number: ");
             int choise = scanner.nextInt();
             scanner.nextLine(); // to clear enter without this next call of scanner will end
 
-            if (choise > 0 && choise <= positions.length) return positions[choise-1];
+            if (choise > 0 && choise <= positions.length) return positions[choise - 1];
             else System.out.println("[Enter proper variant!]");
         }
     }

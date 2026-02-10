@@ -21,6 +21,11 @@ public class Student extends Person {
         this.faculty = faculty;
     }
 
+    /**
+     * Returns string representation of the student.
+     *
+     * @return student description
+     */
     @Override
     public String toString() {
         return "Student: " + studentId + " " + getFullName() + " " + group + " " + yearOfEntry + " " +
@@ -31,20 +36,22 @@ public class Student extends Person {
     /**
      * Move student to the next year of study.
      */
-    public void moveToNextYear(){
+    public void moveToNextYear() {
         course++;
     }
 
     /**
      * Change student group.
+     *
      * @param group New group for the student.
      */
-    public void changeGroup(int group){
+    public void changeGroup(int group) {
         this.group = group;
     }
 
     /**
      * Get student group.
+     *
      * @return Current group of the student.
      */
     public int getGroup() {
@@ -55,20 +62,27 @@ public class Student extends Person {
         this.group = group;
     }
 
+    /**
+     * Get student ID.
+     *
+     * @return Student ID.
+     */
     public int getId() {
         return this.studentId;
     }
 
     /**
      * Change student status.
+     *
      * @param status New status for the student.
      */
-    public void changeStatus(StudentStatus status){
+    public void changeStatus(StudentStatus status) {
         this.status = status;
     }
 
     /**
      * Get student study form.
+     *
      * @return Current study form of the student.
      */
     public StudyForm getStudyForm() {
@@ -81,14 +95,16 @@ public class Student extends Person {
 
     /**
      * Change student study form.
+     *
      * @param studyForm New study form for the student.
      */
-    public void changeStudyForm(StudyForm studyForm){
+    public void changeStudyForm(StudyForm studyForm) {
         this.studyForm = studyForm;
     }
 
     /**
      * Get student status.
+     *
      * @return Current status of the student.
      */
     public StudentStatus getStatus() {
@@ -101,6 +117,7 @@ public class Student extends Person {
 
     /**
      * Get year of entry.
+     *
      * @return Year when the student entered the university.
      */
     public int getYearOfEntry() {
@@ -109,6 +126,7 @@ public class Student extends Person {
 
     /**
      * Get current course of the student.
+     *
      * @return Current course of the student.
      */
     public int getCourse() {
@@ -117,6 +135,7 @@ public class Student extends Person {
 
     /**
      * Set current course of the student.
+     *
      * @param course New course for the student.
      */
     public void setCourse(int course) {
@@ -125,6 +144,7 @@ public class Student extends Person {
 
     /**
      * Set student faculty.
+     *
      * @param faculty New faculty for the student.
      */
     public void setFaculty(Faculty faculty) {
@@ -133,6 +153,7 @@ public class Student extends Person {
 
     /**
      * Get student faculty.
+     *
      * @return Current faculty of the student.
      */
     public Faculty getFaculty() {
