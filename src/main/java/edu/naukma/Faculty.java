@@ -17,11 +17,11 @@ public class Faculty {
     /**
      * Creates a Faculty object and initializes the departments list.
      *
-     * @param code faculty code
-     * @param name full faculty name
+     * @param code      faculty code
+     * @param name      full faculty name
      * @param shortName faculty abbreviation
-     * @param dean faculty dean
-     * @param contacts contact information
+     * @param dean      faculty dean
+     * @param contacts  contact information
      */
     public Faculty(int code, String name, String shortName, Teacher dean, String contacts) {
         this.code = code;
@@ -31,7 +31,7 @@ public class Faculty {
         this.contacts = contacts;
         this.departments = new ArrayList<>();
     }
-    
+
     /**
      * Adds a department to the faculty.
      *
@@ -75,7 +75,7 @@ public class Faculty {
         }
         return null;
     }
-    
+
     /**
      * Sets the faculty dean.
      *
@@ -94,6 +94,15 @@ public class Faculty {
     public void setName(String newName) {
         if (newName != null && !newName.trim().isEmpty())
             this.name = newName;
+    }
+
+    /**
+     * Returns the faculty name.
+     *
+     * @return faculty name
+     */
+    public String getName() {
+        return name;
     }
 
     /**

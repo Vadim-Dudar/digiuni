@@ -1,6 +1,7 @@
 package edu.naukma;
 
 import java.util.ArrayList;
+import java.util.Formattable;
 import java.util.List;
 
 public class University {
@@ -16,10 +17,10 @@ public class University {
     /**
      * Creates a University object and initializes the faculties list.
      *
-     * @param fullName full name of the university
+     * @param fullName  full name of the university
      * @param shortName short name of the university
-     * @param city city where the university is located
-     * @param address university address
+     * @param city      city where the university is located
+     * @param address   university address
      */
     public University(String fullName, String shortName, String city, String address) {
         this.fullName = fullName;
@@ -89,8 +90,8 @@ public class University {
      * @return faculty if found, otherwise null
      */
     public Faculty getFaculty(Department department) {
-        for (Faculty faculty: faculties) {
-            for (Department d: faculty.getDepartments()) if (d.getCode() == department.getCode()) return faculty;
+        for (Faculty faculty : faculties) {
+            for (Department d : faculty.getDepartments()) if (d.getCode() == department.getCode()) return faculty;
         }
 
         return null;
@@ -104,7 +105,7 @@ public class University {
     public List<Department> getDepartments() {
         List<Department> departments = new ArrayList<>();
 
-        for (Faculty faculty: faculties) {
+        for (Faculty faculty : faculties) {
             departments.addAll(faculty.getDepartments());
         }
 
@@ -120,26 +121,28 @@ public class University {
     public Department getDepartment(int code) {
         List<Department> departments = getDepartments();
 
-        for (Department department: departments) if (department.getCode() == code) return department;
+        for (Department department : departments) if (department.getCode() == code) return department;
 
         return null;
     }
 
-    /** Adds a student to the university.
-    *
-    * @param student student object to add
-    */
+    /**
+     * Adds a student to the university.
+     *
+     * @param student student object to add
+     */
     public void addStudent(Student student) {
         students.add(student);
     }
 
-    /** Removes a student by their ID.
+    /**
+     * Removes a student by their ID.
      *
      * @param code student ID
      * @return true if the student was removed, false otherwise
      */
     public boolean removeStudent(int code) {
-        for (Student student: students) {
+        for (Student student : students) {
             if (student.getId() == code) {
                 students.remove(student);
                 return true;
@@ -155,9 +158,21 @@ public class University {
      * @return student if found, otherwise null
      */
     public Student getStudent(int code) {
-        for (Student student: students){
+        for (Student student : students) {
             if (student.getId() == code) return student;
         }
+
+        return null;
+    }
+
+    /**
+     * Finds a student by their full name.
+     *
+     * @param fullName student full name
+     * @return student if found, otherwise null
+     */
+    public Student getStudent(String fullName) {
+        for (Student student : students) if (student.getFullName().equals(fullName)) return student;
 
         return null;
     }
@@ -171,21 +186,69 @@ public class University {
         return List.copyOf(students);
     }
 
-    /** Adds a teacher to the university.
+    /**
+     * Finds the students of a given faculty.
+     *
+     * @param faculty faculty to find the students for
+     * @return list of students in the faculty
+     */
+    public List<Student> getStudents(Faculty faculty) {
+        List<Student> result = new ArrayList<>();
+
+        for (Student student : students) if (student.getFaculty() == faculty) result.add(student);
+
+        return result;
+    }
+
+    /**
+     * Finds the students of a given course.
+     *
+     * @param course course to find the students for
+     * @return list of students in the course
+     */
+    public List<Student> getStudentsByCourse(int course) {
+        List<Student> result = new ArrayList<>();
+
+        for (Student student : students) {
+            if (student.getCourse() == course) result.add(student);
+        }
+
+        return result;
+    }
+
+    /**
+     * Finds the students of a given group.
+     *
+     * @param group group to find the students for
+     * @return list of students in the group
+     */
+    public List<Student> getStudentsByGroup(int group) {
+        List<Student> result = new ArrayList<>();
+
+        for (Student student : students) {
+            if (student.getGroup() == group) result.add(student);
+        }
+
+        return result;
+    }
+
+    /**
+     * Adds a teacher to the university.
      *
      * @param teacher teacher object to add
      */
-    public void addTeacher(Teacher teacher){
+    public void addTeacher(Teacher teacher) {
         teachers.add(teacher);
     }
 
-    /** Removes a teacher by their ID.
+    /**
+     * Removes a teacher by their ID.
      *
      * @param code teacher ID
      * @return true if the teacher was removed, false otherwise
      */
     public boolean removeTeacher(int code) {
-        for (Teacher teacher: teachers) {
+        for (Teacher teacher : teachers) {
             if (teacher.getId() == code) {
                 teachers.remove(teacher);
                 return true;
@@ -201,7 +264,7 @@ public class University {
      * @return teacher if found, otherwise null
      */
     public Teacher getTeacher(int id) {
-        for (Teacher teacher: teachers) {
+        for (Teacher teacher : teachers) {
             if (teacher.getTeacherId() == id) return teacher;
         }
 
@@ -215,5 +278,21 @@ public class University {
      */
     public List<Teacher> getTeachers() {
         return List.copyOf(teachers);
+    }
+
+    /**
+     * Finds the teachers of a given department.
+     *
+     * @param department department to find the teachers for
+     * @return list of teachers in the department
+     */
+    public List<Teacher> getTeachers(Department department) {
+        List<Teacher> result = new ArrayList<Teacher>();
+
+        for (Teacher teacher : teachers) {
+            if (teacher.getDepartment() == department) result.add(teacher);
+        }
+
+        return result;
     }
 }
