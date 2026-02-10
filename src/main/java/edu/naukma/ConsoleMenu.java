@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class ConsoleMenu {
 
-    private University university;
-    private Scanner scanner = new Scanner(System.in);
+    private final University university;
+    private final Scanner scanner = new Scanner(System.in);
 
     /**
      * Creates a console menu for the given university.
@@ -210,6 +210,9 @@ public class ConsoleMenu {
         System.out.println("2 - Видалити студента (за ID)");
         System.out.println("3 - Список студентів");
         System.out.println("4 - Редагувати студента");
+        System.out.println("5 - Find by full name");
+        System.out.println("6 - Find by course");
+        System.out.println("7 - Find by group");
         System.out.println("0 - Назад");
 
         int choice = readInt();
@@ -266,7 +269,7 @@ public class ConsoleMenu {
                 Student student = new Student(name, surname, midlename, dayOfBirth, phone, email, studentId, course, faculty, group, yearOfEntry, studyForm, studentStatus);
                 break;
             }
-            case 2:
+            case 2: {
                 System.out.print("Введіть ID студента для видалення: ");
                 int idDel = readInt();
                 if (university.removeStudent(idDel))
@@ -274,7 +277,8 @@ public class ConsoleMenu {
                 else
                     System.out.println("ID не знайдено.");
                 break;
-            case 3:
+            }
+            case 3: {
                 List<Student> students = university.getStudents();
 
                 if (students.isEmpty())
@@ -282,7 +286,8 @@ public class ConsoleMenu {
                 for (Student s : students)
                     System.out.println(s);
                 break;
-            case 4:
+            }
+            case 4: {
                 System.out.print("Введіть ID студента для редагування: ");
                 int idEdit = readInt();
                 Student student = university.getStudent(idEdit);
@@ -327,6 +332,34 @@ public class ConsoleMenu {
                 student.setStatus(studentStatus);
 
                 break;
+            }
+            case 5: {
+                System.out.println("Enter full name: ");
+                String fullName = scanner.nextLine();
+
+                System.out.println(university.getStudent(fullName));
+                break;
+            }
+            case 6: {
+                System.out.println("Enter course: ");
+                int cource = readInt();
+
+                List<Student> students = university.getStudentsByCourse(cource);
+                if (!students.isEmpty()) for (Student student: students) System.out.println(student);
+                else System.out.println("Has no student with this course.");
+
+                break;
+            }
+            case 7: {
+                System.out.println("Enter group: ");
+                int group = readInt();
+
+                List<Student> students = university.getStudentsByGroup(group);
+                if (!students.isEmpty()) for (Student student: students) System.out.println(student);
+                else System.out.println("Has no student with this course.");
+
+                break;
+            }
         }
     }
 
