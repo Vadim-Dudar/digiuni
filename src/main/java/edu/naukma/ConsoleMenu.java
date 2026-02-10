@@ -340,11 +340,12 @@ public class ConsoleMenu {
         System.out.println("2 - Видалити викладача (за ID)");
         System.out.println("3 - Список викладачів");
         System.out.println("4 - Редагувати викладача");
+        System.out.println("5 - Find teachers by Department");
         System.out.println("0 - Назад");
 
         int choice = readInt();
         switch (choice) {
-            case 1:
+            case 1: {
                 System.out.println("Enter name:");
                 String name = scanner.nextLine();
 
@@ -388,6 +389,7 @@ public class ConsoleMenu {
 
                 System.out.println("Викладача додано.");
                 break;
+            }
             case 2:
                 System.out.print("Введіть ID викладача для видалення: ");
                 int idDel = readInt();
@@ -404,7 +406,7 @@ public class ConsoleMenu {
                 for (Teacher t : teachers)
                     System.out.println(t);
                 break;
-            case 4:
+            case 4: {
                 System.out.print("Введіть ID викладача для редагування: ");
                 int idEdit = readInt();
 
@@ -441,6 +443,13 @@ public class ConsoleMenu {
                 teacher.setDepartment(chooseDepartment());
 
                 break;
+            }
+            case 5:
+                System.out.println("Choose department:");
+                Department department = chooseDepartment();
+
+                for (Teacher teacher: university.getTeachers(department)) System.out.println(teacher);
+
         }
     }
 

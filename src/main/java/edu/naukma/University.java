@@ -1,6 +1,7 @@
 package edu.naukma;
 
 import java.util.ArrayList;
+import java.util.Formattable;
 import java.util.List;
 
 public class University {
@@ -215,5 +216,21 @@ public class University {
      */
     public List<Teacher> getTeachers() {
         return List.copyOf(teachers);
+    }
+
+    /**
+     * Finds the teachers of a given department.
+     *
+     * @param department department to find the teachers for
+     * @return list of teachers in the department
+     */
+    public List<Teacher> getTeachers(Department department) {
+        List<Teacher> result = new ArrayList<Teacher>();
+
+        for (Teacher teacher: teachers) {
+            if (teacher.getDepartment() == department ) result.add(teacher);
+        }
+
+        return result;
     }
 }
