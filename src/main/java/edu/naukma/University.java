@@ -23,6 +23,13 @@ public class University {
      * @param address   university address
      */
     public University(String fullName, String shortName, String city, String address) {
+        if (fullName == null || fullName.trim().isEmpty()
+                || shortName == null || shortName.trim().isEmpty() ||
+                city == null || city.trim().isEmpty()
+                || address == null || address.trim().isEmpty())
+            throw new IllegalArgumentException("University full name cannot be null or empty.");
+
+
         this.fullName = fullName;
         this.shortName = shortName;
         this.city = city;
@@ -182,7 +189,7 @@ public class University {
      * @return list of students
      */
     public List<Student> getStudents() {
-        return List.copyOf(students);
+        return students;
     }
 
     /**

@@ -276,6 +276,10 @@ public class ConsoleMenu {
 
                 System.out.println("Enter group:");
                 int group = readInt();
+                if (group < 1) {
+                    System.out.println("Group number must be positive.");
+                    return;
+                }
 
                 System.out.println("Enter year of entry:");
                 int yearOfEntry = readInt();
@@ -350,7 +354,12 @@ public class ConsoleMenu {
 
 
                 System.out.println("Enter group:");
-                student.setGroup(readInt());
+                int group = readInt();
+                if (group < 1) {
+                    System.out.println("Group number must be positive.");
+                    return;
+                }
+                student.setGroup(group);
 
                 System.out.println("Enter form of study (1 - STATE_FUNDED / 2 - CONTRACT)");
                 StudyForm studyForm;
