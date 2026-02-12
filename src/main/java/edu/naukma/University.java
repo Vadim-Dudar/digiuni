@@ -1,6 +1,7 @@
 package edu.naukma;
 
 import java.util.ArrayList;
+import java.util.Formattable;
 import java.util.List;
 
 public class University {

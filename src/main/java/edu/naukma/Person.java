@@ -6,7 +6,7 @@ public class Person {
     private final int id;
     private String name;
     private String surname;
-    private String midleName;
+    private String middleName;
     private final String dayOfBirth;
     private String phone;
     private String email;
@@ -16,21 +16,21 @@ public class Person {
      *
      * @param name       The first name of the person.
      * @param surname    The last name of the person.
-     * @param midleName  The middle name of the person.
+     * @param middleName  The middle name of the person.
      * @param dayOfBirth The date of birth of the person in the format "dd.MM.yyyy".
      * @param phone      The phone number of the person.
      * @param email      The email address of the person.
      * @throws IllegalArgumentException if any of the parameters are null or empty.
      */
-    public Person(String name, String surname, String midleName, String dayOfBirth, String phone, String email) {
-        if (name == null || surname == null || midleName == null || dayOfBirth == null || phone == null || email == null ||
-                name.isEmpty() || surname.isEmpty() || midleName.isEmpty() || dayOfBirth.isEmpty() || phone.isEmpty() || email.isEmpty())
+    public Person(String name, String surname, String middleName, String dayOfBirth, String phone, String email) {
+        if (name == null || surname == null || middleName == null || dayOfBirth == null || phone == null || email == null ||
+                name.isEmpty() || surname.isEmpty() || middleName.isEmpty() || dayOfBirth.isEmpty() || phone.isEmpty() || email.isEmpty())
             throw new IllegalArgumentException("Person field can't be null or empty!");
 
         this.id = ++lastId;
         this.name = name;
         this.surname = surname;
-        this.midleName = midleName;
+        this.middleName = middleName;
         this.dayOfBirth = dayOfBirth;
         this.phone = phone;
         this.email = email;
@@ -46,12 +46,12 @@ public class Person {
     }
 
     /**
-     * Get the full name of the person in the format "Name Surname MidleName".
+     * Get the full name of the person in the format "Name Surname MiddleName".
      *
      * @return The full name of the person.
      */
     public String getFullName() {
-        return surname + " " + name + " " + midleName;
+        return surname + " " + name + " " + middleName;
     }
 
     /**
@@ -128,12 +128,12 @@ public class Person {
     /**
      * Set the person's middle name.
      *
-     * @param midleName The new middle name to set.
+     * @param middleName The new middle name to set.
      */
-    public void setMidleName(String midleName) {
-        if (midleName == null || midleName.isEmpty()) throw new IllegalArgumentException("Middle name cannot be null or empty");
+    public void setMiddleName(String middleName) {
+        if (middleName == null || middleName.isEmpty()) throw new IllegalArgumentException("Middle name cannot be null or empty");
 
-        this.midleName = midleName;
+        this.middleName = middleName;
     }
 
     /**
@@ -170,8 +170,8 @@ public class Person {
      *
      * @return The middle name of the person.
      */
-    public String getMidleName() {
-        return midleName;
+    public String getMiddleName() {
+        return middleName;
     }
 
     /**
@@ -193,7 +193,7 @@ public class Person {
         return "Person #" + id + ". " +
                 name + ". " +
                 surname + ". " +
-                midleName + ". " +
+                middleName + ". " +
                 dayOfBirth + ". " +
                 phone + ". " +
                 email;

@@ -1,6 +1,5 @@
 package edu.naukma;
 
-import java.lang.invoke.StringConcatException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,7 +24,7 @@ public class ConsoleMenu {
         System.out.println("*   ╚═════╝ ╚═╝ ╚═════╝ ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝   *");
         System.out.println("*                                                   *");
         System.out.println("*         Welcome to the University Manager         *");
-        System.out.println("*      Created by: Dudar Vadim & Demkiv Maksym      *");
+        System.out.println("*        Created by: Dudar Vadim & Demkiv Max       *");
         System.out.println("*                                                   *");
         System.out.println("*****************************************************");
 
@@ -41,13 +40,13 @@ public class ConsoleMenu {
         while (running) {
 
             System.out.println("\n===== MAIN MENU =====");
-            System.out.println("1 - Керування факультетами");
-            System.out.println("2 - Керування кафедрами");
-            System.out.println("3 - Керування студентами");
-            System.out.println("4 - Керування викладачами");
+            System.out.println("1 - Manage Faculties");
+            System.out.println("2 - Manage Departments");
+            System.out.println("3 - Manage Students");
+            System.out.println("4 - Manage Teachers");
             System.out.println("5 - Reports");
-            System.out.println("0 - Вихід");
-            System.out.print("Ваш вибір: ");
+            System.out.println("0 - Exit");
+            System.out.print("Chose: ");
 
             int choice = readInt();
 
@@ -69,10 +68,10 @@ public class ConsoleMenu {
                     break;
                 case 0:
                     running = false;
-                    System.out.println("Вихід з програми...");
+                    System.out.println("Exiting... Goodbye!");
                     break;
                 default:
-                    System.out.println("Невірний вибір. Спробуйте ще раз.");
+                    System.out.println("Invalid choice. Please enter a number from the menu.");
             }
         }
     }
@@ -81,12 +80,13 @@ public class ConsoleMenu {
      * Displays and handles the faculties management menu.
      */
     private void facultiesMenu() {
-        System.out.println("\n--- ФАКУЛЬТЕТИ ---");
-        System.out.println("1 - Створити факультет");
-        System.out.println("2 - Видалити факультет");
-        System.out.println("3 - Список факультетів");
-        System.out.println("4 - Редагувати факультет");
-        System.out.println("0 - Назад");
+        System.out.println("\n--- FACULTIES ---");
+        System.out.println("1 - Create new faculty");
+        System.out.println("2 - Delete faculty (by code)");
+        System.out.println("3 - List faculties");
+        System.out.println("4 - Edit faculty");
+        System.out.println("0 - Back");
+        System.out.print("Chose: ");
 
         int choice = readInt();
         switch (choice) {
@@ -97,53 +97,58 @@ public class ConsoleMenu {
                 int code = readInt();
 
                 System.out.println("Enter full name:");
-                String name = scanner.nextLine();
+                String name = readString();
 
                 System.out.println("Enter short name:");
-                String shortName = scanner.nextLine();
+                String shortName = readString();
 
                 System.out.println("Enter dean ID:");
-                String teacherIdStr = scanner.nextLine();
+                String teacherIdStr = readString();
                 int teacherId = Integer.parseInt(teacherIdStr);
                 Teacher teacher = university.getTeacher(teacherId);
 
                 System.out.println("Enter contacts:");
-                String contacts = scanner.nextLine();
+                String contacts = readString();
 
                 Faculty f = new Faculty(code, name, shortName, teacher, contacts);
                 university.addFaculty(f);
-                System.out.println("Faculty added successfully!");
+                System.out.println("Faculty added -> " + f);
                 break;
             }
             case 2: {
-                System.out.print("Введіть код факультету для видалення: ");
+                System.out.print("Enter faculty code to delete: ");
                 int code = readInt();
                 if (university.removeFacultyByCode(code))
-                    System.out.println("Видалено.");
+                    System.out.println("Deleted.");
                 else
-                    System.out.println("Помилка: код не знайдено.");
+                    System.out.println("Faculty not found.");
                 break;
             }
             case 3:
                 showFaculties();
                 break;
             case 4: {
-                System.out.println("Введіть код факультету, дані якого потрібно відредагувати: ");
+                System.out.println("Enter faculty code to edit: ");
                 int code = readInt();
                 Faculty faculty = university.getFaculty(code);
 
+                if (faculty == null) {
+                    System.out.println("Faculty not found.");
+                    return;
+                }
+
                 System.out.println("Enter new name: ");
-                faculty.setName(scanner.nextLine());
+                faculty.setName(readString());
 
                 System.out.println("Enter new short name: ");
-                faculty.setShortName(scanner.nextLine());
+                faculty.setShortName(readString());
 
                 System.out.println("Enter teacher code of new dean");
                 int teacherId = readInt();
                 faculty.setDean(university.getTeacher(teacherId));
 
                 System.out.println("Enter new contacts: ");
-                faculty.setContacts(scanner.nextLine());
+                faculty.setContacts(readString());
 
                 break;
             }
@@ -154,12 +159,13 @@ public class ConsoleMenu {
      * Displays and handles the departments management menu.
      */
     private void departmentsMenu() {
-        System.out.println("\n--- КАФЕДРИ ФАКУЛЬТЕТУ ---");
-        System.out.println("1 - Створити кафедру");
-        System.out.println("2 - Видалити кафедру");
-        System.out.println("3 - Список кафедр");
-        System.out.println("4 - Редагувати кафедру");
-        System.out.println("0 - Назад");
+        System.out.println("\n--- DEPARTMENTS ---");
+        System.out.println("1 - Create new department");
+        System.out.println("2 - Delete department (by code)");
+        System.out.println("3 - List departments");
+        System.out.println("4 - Edit department");
+        System.out.println("0 - Back");
+        System.out.print("Chose: ");
 
         int choice = readInt();
         switch (choice) {
@@ -168,12 +174,12 @@ public class ConsoleMenu {
                 int code = readInt();
 
                 System.out.println("Enter name:");
-                String name = scanner.nextLine();
+                String name = readString();
 
-                System.out.print("Введіть код факультету: ");
+                System.out.print("Enter faculty code: ");
                 Faculty faculty = chooseFaculty();
                 if (faculty == null) {
-                    System.out.println("Create faculty first!");
+                    System.out.println("Cannot create department without faculty. Please create a faculty first.");
                     return;
                 }
 
@@ -182,23 +188,23 @@ public class ConsoleMenu {
                 Teacher head = university.getTeacher(teacherId);
 
                 System.out.println("Enter location:");
-                String location = scanner.nextLine();
+                String location = readString();
 
                 Department dep = new Department(code, name, faculty, head, location);
                 faculty.addDepartment(dep);
 
-                System.out.println("Кафедру створено та додано до факультету " + faculty.getShortName());
+                System.out.println("Department created ->" + dep);
                 break;
             }
             case 2: {
-                System.out.print("Введіть код кафедри: ");
+                System.out.print("Enter department code to delete: ");
                 int code = readInt();
                 Department department = university.getDepartment(code);
                 Faculty faculty = university.getFaculty(department);
                 if (faculty.removeDepartmentByCode(code))
-                    System.out.println("Видалено.");
+                    System.out.println("Deleted.");
                 else
-                    System.out.println("Кафедру не знайдено.");
+                    System.out.println("Department not found.");
                 break;
             }
             case 3:
@@ -220,38 +226,39 @@ public class ConsoleMenu {
      * Displays and handles the students management menu.
      */
     private void studentsMenu() {
-        System.out.println("\n--- СТУДЕНТИ: ---");
-        System.out.println("1 - Додати студента");
-        System.out.println("2 - Видалити студента (за ID)");
-        System.out.println("3 - Список студентів");
-        System.out.println("4 - Редагувати студента");
-        System.out.println("5 - Find by full name");
+        System.out.println("\n--- STUDENTS ---");
+        System.out.println("1 - Create new student");
+        System.out.println("2 - Delete student (by ID)");
+        System.out.println("3 - Student list");
+        System.out.println("4 - Edit student");
+        System.out.println("5 - Find student by full name");
         System.out.println("6 - Find by course");
         System.out.println("7 - Find by group");
-        System.out.println("0 - Назад");
+        System.out.println("0 - Back");
+        System.out.print("Chose: ");
 
         int choice = readInt();
         switch (choice) {
             case 1: {
-                System.out.println("--Add new student");
+                System.out.println("\n--Add new student");
 
                 System.out.println("Enter name:");
-                String name = scanner.nextLine();
+                String name = readString();
 
                 System.out.println("Enter surname:");
-                String surname = scanner.nextLine();
+                String surname = readString();
 
-                System.out.println("Enter midlename:");
-                String midlename = scanner.nextLine();
+                System.out.println("Enter middle name:");
+                String middleName = readString();
 
                 System.out.println("Enter day of birth:");
-                String dayOfBirth = scanner.nextLine();
+                String dayOfBirth = readString();
 
                 System.out.println("Enter phone:");
-                String phone = scanner.nextLine();
+                String phone = readString();
 
                 System.out.println("Enter email:");
-                String email = scanner.nextLine();
+                String email = readString();
 
                 System.out.println("Enter student id:");
                 int studentId = readInt();
@@ -262,6 +269,10 @@ public class ConsoleMenu {
 
                 System.out.println("Enter course:");
                 int course = readInt();
+                if (course < 1 || course > 6) {
+                    System.out.println("Course must be between 1 and 6.");
+                    return;
+                }
 
                 System.out.println("Enter group:");
                 int group = readInt();
@@ -281,54 +292,62 @@ public class ConsoleMenu {
                 else if (c == 2) studentStatus = StudentStatus.ACADEMIC_LEAVE;
                 else studentStatus = StudentStatus.EXPELLED;
 
-                university.addStudent(new Student(name, surname, midlename, dayOfBirth, phone, email, studentId, course, faculty, group, yearOfEntry, studyForm, studentStatus));
+                Student student = new Student(name, surname, middleName, dayOfBirth, phone, email, studentId, course, faculty, group, yearOfEntry, studyForm, studentStatus);
+                university.addStudent(student);
 
+                System.out.println("Student added -> " + student);
                 break;
             }
             case 2: {
-                System.out.print("Введіть ID студента для видалення: ");
+                System.out.print("Enter student ID to delete: ");
                 int idDel = readInt();
                 if (university.removeStudent(idDel))
-                    System.out.println("Студента видалено.");
+                    System.out.println("Student deleted.");
                 else
-                    System.out.println("ID не знайдено.");
+                    System.out.println("Student ID not found.");
                 break;
             }
             case 3: {
                 List<Student> students = university.getStudents();
 
                 if (students.isEmpty())
-                    System.out.println("Список порожній.");
+                    System.out.println("Student list is empty.");
                 for (Student s : students)
                     System.out.println(s);
                 break;
             }
             case 4: {
-                System.out.print("Введіть ID студента для редагування: ");
+                System.out.print("Enter student ID to edit: ");
                 int idEdit = readInt();
                 Student student = university.getStudent(idEdit);
 
                 System.out.println("Enter name:");
-                student.setName(scanner.nextLine());
+                student.setName(readString());
 
                 System.out.println("Enter surname:");
-                student.setSurname(scanner.nextLine());
+                student.setSurname(readString());
 
-                System.out.println("Enter midlename:");
-                student.setMidleName(scanner.nextLine());
+                System.out.println("Enter middle name:");
+                student.setMiddleName(readString());
 
                 System.out.println("Enter phone:");
-                student.setPhone(scanner.nextLine());
+                student.setPhone(readString());
 
                 System.out.println("Enter email:");
-                student.setEmail(scanner.nextLine());
+                student.setEmail(readString());
 
                 System.out.println("Enter faculty id: ");
                 int facultyId = readInt();
                 student.setFaculty(university.getFaculty(facultyId));
 
                 System.out.println("Enter course:");
-                student.setCourse(readInt());
+                int course = readInt();
+                if (course < 1 || course > 6) {
+                    System.out.println("Course must be between 1 and 6.");
+                    return;
+                }
+                student.setCourse(course);
+
 
                 System.out.println("Enter group:");
                 student.setGroup(readInt());
@@ -347,20 +366,21 @@ public class ConsoleMenu {
                 else studentStatus = StudentStatus.EXPELLED;
                 student.setStatus(studentStatus);
 
+                System.out.println("Student updated -> " + student);
                 break;
             }
             case 5: {
                 System.out.println("Enter full name: ");
-                String fullName = scanner.nextLine();
+                String fullName = readString();
 
                 System.out.println(university.getStudent(fullName));
                 break;
             }
             case 6: {
                 System.out.println("Enter course: ");
-                int cource = readInt();
+                int course = readInt();
 
-                List<Student> students = university.getStudentsByCourse(cource);
+                List<Student> students = university.getStudentsByCourse(course);
                 if (!students.isEmpty()) for (Student student : students) System.out.println(student);
                 else System.out.println("Has no student with this course.");
 
@@ -383,34 +403,35 @@ public class ConsoleMenu {
      * Displays and handles the teachers management menu.
      */
     private void teachersMenu() {
-        System.out.println("\n--- ВИКЛАДАЧІ ---");
-        System.out.println("1 - Додати викладача");
-        System.out.println("2 - Видалити викладача (за ID)");
-        System.out.println("3 - Список викладачів");
-        System.out.println("4 - Редагувати викладача");
-        System.out.println("5 - Find teachers by Department");
-        System.out.println("0 - Назад");
+        System.out.println("\n--- TEACHERS ---");
+        System.out.println("1 - Create new teacher");
+        System.out.println("2 - Delete teacher (by ID)");
+        System.out.println("3 - List teachers");
+        System.out.println("4 - Edit teacher");
+        System.out.println("5 - Find teachers by department");
+        System.out.println("0 - Back");
+        System.out.print("Chose: ");
 
         int choice = readInt();
         switch (choice) {
             case 1: {
                 System.out.println("Enter name:");
-                String name = scanner.nextLine();
+                String name = readString();
 
                 System.out.println("Enter surname:");
-                String surname = scanner.nextLine();
+                String surname = readString();
 
-                System.out.println("Enter midlename:");
-                String midlename = scanner.nextLine();
+                System.out.println("Enter middle name:");
+                String middleName = readString();
 
                 System.out.println("Enter day of birth:");
-                String dayOfBirth = scanner.nextLine();
+                String dayOfBirth = readString();
 
                 System.out.println("Enter phone:");
-                String phone = scanner.nextLine();
+                String phone = readString();
 
                 System.out.println("Enter email:");
-                String email = scanner.nextLine();
+                String email = readString();
 
                 System.out.println("Enter teacher id: ");
                 int teacherId = readInt();
@@ -425,7 +446,7 @@ public class ConsoleMenu {
                 AcademicStage stage = chooseAcademicStage();
 
                 System.out.println("Enter date of hiring:");
-                String dateOfHiring = scanner.nextLine();
+                String dateOfHiring = readString();
 
                 System.out.println("Enter rate:");
                 int rate = readInt();
@@ -433,47 +454,48 @@ public class ConsoleMenu {
                 System.out.println("Choose department:");
                 Department department = chooseDepartment();
 
-                university.addTeacher(new Teacher(name, surname, midlename, dayOfBirth, phone, email, teacherId, position, degree, stage, dateOfHiring, rate, department));
+                Teacher teacher = new Teacher(name, surname, middleName, dayOfBirth, phone, email, teacherId, position, degree, stage, dateOfHiring, rate, department);
+                university.addTeacher(teacher);
 
-                System.out.println("Викладача додано.");
+                System.out.println("Teacher added -> " + teacher);
                 break;
             }
             case 2:
-                System.out.print("Введіть ID викладача для видалення: ");
+                System.out.print("Enter teacher ID to delete: ");
                 int idDel = readInt();
                 if (university.removeTeacher(idDel))
-                    System.out.println("Викладача видалено.");
+                    System.out.println("Teacher deleted.");
                 else
-                    System.out.println("ID не знайдено.");
+                    System.out.println("Teacher ID not found.");
                 break;
             case 3:
                 List<Teacher> teachers = university.getTeachers();
 
                 if (teachers.isEmpty())
-                    System.out.println("Список порожній.");
+                    System.out.println("Teacher list is empty.");
                 for (Teacher t : teachers)
                     System.out.println(t);
                 break;
             case 4: {
-                System.out.print("Введіть ID викладача для редагування: ");
+                System.out.print("Enter teacher ID to edit: ");
                 int idEdit = readInt();
 
                 Teacher teacher = university.getTeacher(idEdit);
 
                 System.out.println("Enter name:");
-                teacher.setName(scanner.nextLine());
+                teacher.setName(readString());
 
                 System.out.println("Enter surname:");
-                teacher.setSurname(scanner.nextLine());
+                teacher.setSurname(readString());
 
-                System.out.println("Enter midlename:");
-                teacher.setMidleName(scanner.nextLine());
+                System.out.println("Enter middle name:");
+                teacher.setMiddleName(readString());
 
                 System.out.println("Enter phone:");
-                teacher.setPhone(scanner.nextLine());
+                teacher.setPhone(readString());
 
                 System.out.println("Enter email:");
-                teacher.setEmail(scanner.nextLine());
+                teacher.setEmail(readString());
 
                 System.out.println("Choose teacher position: ");
                 teacher.setPosition(chooseTeacherPositon());
@@ -490,6 +512,7 @@ public class ConsoleMenu {
                 System.out.println("Choose department:");
                 teacher.setDepartment(chooseDepartment());
 
+                System.out.println("Teacher updated -> " + teacher);
                 break;
             }
             case 5:
@@ -515,7 +538,6 @@ public class ConsoleMenu {
                     List<Student> students = university.getStudents(faculty);
                     System.out.println(faculty.getName() + ": " + students.size() + " students");
                 }
-
                 break;
         }
     }
@@ -534,10 +556,10 @@ public class ConsoleMenu {
             }
 
             System.out.println("Enter number: ");
-            int choise = scanner.nextInt();
+            int choice = scanner.nextInt();
             scanner.nextLine(); // to clear enter without this next call of scanner will end
 
-            if (choise > 0 && choise <= degrees.length) return degrees[choise - 1];
+            if (choice > 0 && choice <= degrees.length) return degrees[choice - 1];
             else System.out.println("[Enter proper variant!]");
         }
     }
@@ -557,10 +579,10 @@ public class ConsoleMenu {
             }
 
             System.out.println("Enter number: ");
-            int choise = scanner.nextInt();
+            int choice = scanner.nextInt();
             scanner.nextLine(); // to clear enter without this next call of scanner will end
 
-            if (choise > 0 && choise <= academicStages.length) return academicStages[choise - 1];
+            if (choice > 0 && choice <= academicStages.length) return academicStages[choice - 1];
             else System.out.println("[Enter proper variant!]");
         }
     }
@@ -579,10 +601,10 @@ public class ConsoleMenu {
             }
 
             System.out.println("Enter number: ");
-            int choise = scanner.nextInt();
+            int choice = scanner.nextInt();
             scanner.nextLine(); // to clear enter without this next call of scanner will end
 
-            if (choise > 0 && choise <= positions.length) return positions[choise - 1];
+            if (choice > 0 && choice <= positions.length) return positions[choice - 1];
             else System.out.println("[Enter proper variant!]");
         }
     }
@@ -599,8 +621,10 @@ public class ConsoleMenu {
 
             int code = readInt();
             Faculty f = university.getFaculty(code);
-            if (f == null)
+            if (f == null) {
                 System.out.println("Помилка: факультет не знайдено.");
+                continue;
+            }
             return f;
         }
     }
@@ -617,8 +641,10 @@ public class ConsoleMenu {
 
             int code = readInt();
             Department d = university.getDepartment(code);
-            if (d == null)
+            if (d == null) {
                 System.out.println("Помилка: кафедру не знайдено.");
+                continue;
+            }
             return d;
         }
     }
