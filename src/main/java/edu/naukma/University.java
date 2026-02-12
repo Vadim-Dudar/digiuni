@@ -38,10 +38,8 @@ public class University {
      * @param faculty faculty object to add
      */
     public void addFaculty(Faculty faculty) {
-        if (faculty != null)
-            faculties.add(faculty);
-        else
-            System.out.println("Помилка: неможливо додати порожній об'єкт факультету.");
+        if (faculty == null) throw new IllegalArgumentException("Faculty cannot be null.");
+        faculties.add(faculty);
     }
 
     /**
@@ -132,6 +130,7 @@ public class University {
      * @param student student object to add
      */
     public void addStudent(Student student) {
+        if (student == null) throw new IllegalArgumentException("Student cannot be null.");
         students.add(student);
     }
 
@@ -238,6 +237,7 @@ public class University {
      * @param teacher teacher object to add
      */
     public void addTeacher(Teacher teacher) {
+        if (teacher == null) throw new IllegalArgumentException("Teacher cannot be null.");
         teachers.add(teacher);
     }
 

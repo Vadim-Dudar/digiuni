@@ -630,10 +630,14 @@ public class ConsoleMenu {
     private int readInt() {
         while (true) {
             try {
-                String input = scanner.nextLine();
-                return Integer.parseInt(input);
+                int result = Integer.parseInt(scanner.nextLine());
+                if (result < 0) {
+                    System.out.print("Please enter a non-negative number: ");
+                    continue;
+                }
+                return result;
             } catch (NumberFormatException e) {
-                System.out.print("Будь ласка, введіть число: ");
+                System.out.print("Please enter valid number: ");
             }
         }
     }

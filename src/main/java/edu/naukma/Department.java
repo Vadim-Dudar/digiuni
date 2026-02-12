@@ -30,28 +30,32 @@ public class Department {
      * Sets the department head.
      */
     public void setHead(Teacher head) {
-        if (head != null) this.head = head;
+        if (head == null) throw new IllegalArgumentException("Department head cannot be null.");
+        this.head = head;
     }
 
     /**
      * Sets the department name.
      */
     public void setName(String name) {
-        if (name != null && !name.trim().isEmpty()) this.name = name;
+        if (name == null || name.trim().isEmpty()) throw new IllegalArgumentException("Department name cannot be null or empty.");
+        this.name = name;
     }
 
     /**
      * Sets the faculty of the department.
      */
     public void setFaculty(Faculty faculty) {
-        if (faculty != null) this.faculty = faculty;
+        if (faculty == null) throw new IllegalArgumentException("Faculty cannot be null.");
+        this.faculty = faculty;
     }
 
     /**
      * Sets the department location.
      */
     public void setLocation(String location) {
-        if (location != null && !location.trim().isEmpty()) this.location = location;
+        if (location == null || location.trim().isEmpty()) throw new IllegalArgumentException("Department location cannot be null or empty.");
+        this.location = location;
     }
 
     /**

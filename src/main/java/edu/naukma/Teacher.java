@@ -14,16 +14,17 @@ public class Teacher extends Person {
      */
     public Teacher(String name, String surname, String midleName, String dayOfBirth, String phone, String email, int teacherId, TeacherPosition position, AcademicDegree degree, AcademicStage stage, String dateOfHiring, int rate, Department department) {
         super(name, surname, midleName, dayOfBirth, phone, email);
+
+        if (dateOfHiring == null || dateOfHiring.isEmpty()) throw new IllegalArgumentException("Date of hiring can't be null or empty.");
+        if (teacherId < 1) throw new IllegalArgumentException("Teacher ID must be positive.");
+        if (rate < 0) throw new IllegalArgumentException("Rate must be non-negative.");
+
         this.teacherId = teacherId;
         this.position = position;
         this.degree = degree;
         this.stage = stage;
         this.dateOfHiring = dateOfHiring;
-        if (rate > 0) {
-            this.rate = rate;
-        } else {
-            this.rate = 10;
-        }
+        this.rate = rate;
         this.department = department;
     }
 
