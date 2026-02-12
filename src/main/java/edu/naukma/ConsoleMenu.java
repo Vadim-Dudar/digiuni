@@ -44,7 +44,8 @@ public class ConsoleMenu {
             System.out.println("2 - Manage Departments");
             System.out.println("3 - Manage Students");
             System.out.println("4 - Manage Teachers");
-            System.out.println("5 - Reports");
+            System.out.println("5 - Manage University");
+            System.out.println("6 - Reports");
             System.out.println("0 - Exit");
             System.out.print("Chose: ");
 
@@ -64,6 +65,9 @@ public class ConsoleMenu {
                     teachersMenu();
                     break;
                 case 5:
+                    universityMenu();
+                    break;
+                case 6:
                     reportsMenu();
                     break;
                 case 0:
@@ -75,6 +79,38 @@ public class ConsoleMenu {
             }
         }
     }
+
+    /**
+     * Displays and handles university editing menu.
+     */
+    private void universityMenu() {
+        System.out.println("\n--- UNIVERSITY MENU ---");
+        System.out.println("1 - edit University");
+        System.out.println("2 - show University");
+        System.out.println("0 - Back");
+
+        int choice = readInt();
+        switch (choice) {
+            case 1:
+                System.out.println("Enter new full name:");
+                university.setFullName(readString());
+
+                System.out.println("Enter new short name:");
+                university.setShortName(readString());
+
+                System.out.println("Enter new city:");
+                university.setCity(readString());
+
+                System.out.println("Enter new address:");
+                university.setAddress(readString());
+                break;
+            case 2:
+                System.out.println(university.getFullName() + " (" + university.getShortName()
+                        + "); Address: " + university.getCity() + " " + university.getAddress());
+                break;
+        }
+    }
+
 
     /**
      * Displays and handles the faculties management menu.
@@ -539,6 +575,7 @@ public class ConsoleMenu {
     private void reportsMenu() {
         System.out.println("\n--- REPORTS ---");
         System.out.println("1 - Students in faculties");
+        System.out.println("2 - ");
         System.out.println("0 - Exit");
 
         switch (readInt()) {

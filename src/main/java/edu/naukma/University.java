@@ -29,7 +29,6 @@ public class University {
                 || address == null || address.trim().isEmpty())
             throw new IllegalArgumentException("University full name cannot be null or empty.");
 
-
         this.fullName = fullName;
         this.shortName = shortName;
         this.city = city;
@@ -297,9 +296,81 @@ public class University {
         List<Teacher> result = new ArrayList<Teacher>();
 
         for (Teacher teacher : teachers) {
-            if (teacher.getDepartment() == department) result.add(teacher);
+            if (teacher.getDepartment() == department)
+                result.add(teacher);
         }
-
         return result;
     }
+    /**
+     * Sets the full name of the university.
+     *
+     * @param fullName new full name of the university
+     */
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    /**
+     * Sets the short name of the university.
+     *
+     * @param shortName new short name of the university
+     */
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
+    }
+
+    /**
+     * Sets the city where the university is located.
+     *
+     * @param city city name
+     */
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    /**
+     * Sets the address of the university.
+     *
+     * @param address university address
+     */
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    /**
+     * Returns the full name of the university.
+     *
+     * @return full name
+     */
+    public String getFullName() {
+        return fullName;
+    }
+
+    /**
+     * Returns the short name of the university.
+     *
+     * @return short name
+     */
+    public String getShortName() {
+        return shortName;
+    }
+
+    /**
+     * Returns the city where the university is located.
+     *
+     * @return city name
+     */
+    public String getCity() {
+        return city;
+    }
+
+    /**
+     * Returns the address of the university.
+     *
+     * @return university address
+     */
+    public String getAddress() {
+        return address;
+    }
+
 }
