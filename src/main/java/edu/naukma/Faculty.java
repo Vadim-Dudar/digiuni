@@ -38,10 +38,8 @@ public class Faculty {
      * @param department department to add
      */
     public void addDepartment(Department department) {
-        if (department != null)
-            departments.add(department);
-        else
-            System.out.println("Помилка: неможливо додати порожню кафедру.");
+        if (department == null) throw new IllegalArgumentException("Department cannot be null.");
+        departments.add(department);
     }
 
     /**
@@ -51,7 +49,6 @@ public class Faculty {
      * @return true if removed, false otherwise
      */
     public boolean removeDepartmentByCode(int code) {
-
         for (int i = 0; i < departments.size(); i++) {
             if (departments.get(i).getCode() == code) {
                 departments.remove(i);
@@ -68,7 +65,6 @@ public class Faculty {
      * @return department if found, otherwise null
      */
     public Department findDepartmentByCode(int code) {
-
         for (Department d : departments) {
             if (d.getCode() == code)
                 return d;
@@ -82,8 +78,8 @@ public class Faculty {
      * @param dean dean to assign
      */
     public void setDean(Teacher dean) {
-        if (dean != null)
-            this.dean = dean;
+        if (dean == null) throw new IllegalArgumentException("Dean cannot be null.");
+        this.dean = dean;
     }
 
     /**
@@ -92,8 +88,9 @@ public class Faculty {
      * @param newName new faculty name
      */
     public void setName(String newName) {
-        if (newName != null && !newName.trim().isEmpty())
-            this.name = newName;
+        if (name == null || name.trim().isEmpty())
+            throw new IllegalArgumentException("Faculty name cannot be null or empty.");
+        this.name = newName;
     }
 
     /**
@@ -111,8 +108,9 @@ public class Faculty {
      * @param shortName new short name
      */
     public void setShortName(String shortName) {
-        if (shortName != null && !shortName.trim().isEmpty())
-            this.shortName = shortName;
+        if (shortName == null || shortName.trim().isEmpty())
+            throw new IllegalArgumentException("Faculty short name cannot be null or empty.");
+        this.shortName = shortName;
     }
 
     /**
@@ -121,8 +119,9 @@ public class Faculty {
      * @param contacts contact data
      */
     public void setContacts(String contacts) {
-        if (contacts != null && !contacts.trim().isEmpty())
-            this.contacts = contacts;
+        if (contacts == null || contacts.trim().isEmpty())
+            throw new IllegalArgumentException("Faculty contacts cannot be null or empty.");
+        this.contacts = contacts;
     }
 
     /**

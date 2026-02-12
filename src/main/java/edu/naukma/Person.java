@@ -6,16 +6,31 @@ public class Person {
     private final int id;
     private String name;
     private String surname;
-    private String midleName;
+    private String middleName;
     private final String dayOfBirth;
     private String phone;
     private String email;
 
-    public Person(String name, String surname, String midleName, String dayOfBirth, String phone, String email) {
+    /**
+     * Constructor for Person class. It initializes all fields and assigns a unique ID to each person.
+     *
+     * @param name       The first name of the person.
+     * @param surname    The last name of the person.
+     * @param middleName  The middle name of the person.
+     * @param dayOfBirth The date of birth of the person in the format "dd.MM.yyyy".
+     * @param phone      The phone number of the person.
+     * @param email      The email address of the person.
+     * @throws IllegalArgumentException if any of the parameters are null or empty.
+     */
+    public Person(String name, String surname, String middleName, String dayOfBirth, String phone, String email) {
+        if (name == null || surname == null || middleName == null || dayOfBirth == null || phone == null || email == null ||
+                name.isEmpty() || surname.isEmpty() || middleName.isEmpty() || dayOfBirth.isEmpty() || phone.isEmpty() || email.isEmpty())
+            throw new IllegalArgumentException("Person field can't be null or empty!");
+
         this.id = ++lastId;
         this.name = name;
         this.surname = surname;
-        this.midleName = midleName;
+        this.middleName = middleName;
         this.dayOfBirth = dayOfBirth;
         this.phone = phone;
         this.email = email;
@@ -26,17 +41,17 @@ public class Person {
      *
      * @return The last assigned ID.
      */
-    public static int getLastId() {
+    private static int getLastId() {
         return lastId;
     }
 
     /**
-     * Get the full name of the person in the format "Name Surname MidleName".
+     * Get the full name of the person in the format "Name Surname MiddleName".
      *
      * @return The full name of the person.
      */
     public String getFullName() {
-        return name + " " + surname + " " + midleName;
+        return surname + " " + name + " " + middleName;
     }
 
     /**
@@ -95,7 +110,7 @@ public class Person {
      *
      * @param lastId The new last assigned ID to set.
      */
-    public static void setLastId(int lastId) {
+    private static void setLastId(int lastId) {
         Person.lastId = lastId;
     }
 
@@ -105,16 +120,20 @@ public class Person {
      * @param name The new name to set.
      */
     public void setName(String name) {
+        if (name == null || name.isEmpty()) throw new IllegalArgumentException("Name cannot be null or empty");
+
         this.name = name;
     }
 
     /**
      * Set the person's middle name.
      *
-     * @param midleName The new middle name to set.
+     * @param middleName The new middle name to set.
      */
-    public void setMidleName(String midleName) {
-        this.midleName = midleName;
+    public void setMiddleName(String middleName) {
+        if (middleName == null || middleName.isEmpty()) throw new IllegalArgumentException("Middle name cannot be null or empty");
+
+        this.middleName = middleName;
     }
 
     /**
@@ -123,6 +142,8 @@ public class Person {
      * @param surname The new surname to set.
      */
     public void setSurname(String surname) {
+        if (surname == null || surname.isEmpty()) throw new IllegalArgumentException("Surname cannot be null or empty");
+
         this.surname = surname;
     }
 
@@ -149,8 +170,8 @@ public class Person {
      *
      * @return The middle name of the person.
      */
-    public String getMidleName() {
-        return midleName;
+    public String getMiddleName() {
+        return middleName;
     }
 
     /**
@@ -172,7 +193,7 @@ public class Person {
         return "Person #" + id + ". " +
                 name + ". " +
                 surname + ". " +
-                midleName + ". " +
+                middleName + ". " +
                 dayOfBirth + ". " +
                 phone + ". " +
                 email;

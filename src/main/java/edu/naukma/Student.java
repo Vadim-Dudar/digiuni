@@ -12,6 +12,11 @@ public class Student extends Person {
 
     public Student(String name, String surname, String midleName, String dayOfBirth, String phone, String email, int studentId, int course, Faculty faculty, int group, int yearOfEntry, StudyForm studyForm, StudentStatus status) {
         super(name, surname, midleName, dayOfBirth, phone, email);
+
+        if (studentId < 1) throw new IllegalArgumentException("Student ID must be positive.");
+        if (course < 1 || course > 6) throw new IllegalArgumentException("Course must be positive and less than or equal to 6.");
+        if (group < 1) throw new IllegalArgumentException("Group number must be positive.");
+
         this.studentId = studentId;
         this.group = group;
         this.studyForm = studyForm;
@@ -41,15 +46,6 @@ public class Student extends Person {
     }
 
     /**
-     * Change student group.
-     *
-     * @param group New group for the student.
-     */
-    public void changeGroup(int group) {
-        this.group = group;
-    }
-
-    /**
      * Get student group.
      *
      * @return Current group of the student.
@@ -59,6 +55,8 @@ public class Student extends Person {
     }
 
     public void setGroup(int group) {
+        if (group < 1) throw new IllegalArgumentException("Group number must be positive.");
+
         this.group = group;
     }
 
@@ -72,15 +70,6 @@ public class Student extends Person {
     }
 
     /**
-     * Change student status.
-     *
-     * @param status New status for the student.
-     */
-    public void changeStatus(StudentStatus status) {
-        this.status = status;
-    }
-
-    /**
      * Get student study form.
      *
      * @return Current study form of the student.
@@ -90,15 +79,6 @@ public class Student extends Person {
     }
 
     public void setStudyForm(StudyForm studyForm) {
-        this.studyForm = studyForm;
-    }
-
-    /**
-     * Change student study form.
-     *
-     * @param studyForm New study form for the student.
-     */
-    public void changeStudyForm(StudyForm studyForm) {
         this.studyForm = studyForm;
     }
 
