@@ -266,7 +266,8 @@ public class ConsoleMenu {
                 else if (c == 2) studentStatus = StudentStatus.ACADEMIC_LEAVE;
                 else studentStatus = StudentStatus.EXPELLED;
 
-                Student student = new Student(name, surname, midlename, dayOfBirth, phone, email, studentId, course, faculty, group, yearOfEntry, studyForm, studentStatus);
+                university.addStudent(new Student(name, surname, midlename, dayOfBirth, phone, email, studentId, course, faculty, group, yearOfEntry, studyForm, studentStatus));
+
                 break;
             }
             case 2: {
