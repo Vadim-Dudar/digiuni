@@ -15,6 +15,20 @@ public class ConsoleMenu {
      * @param university university instance to manage
      */
     public ConsoleMenu(University university) {
+        System.out.println("*****************************************************");
+        System.out.println("*                                                   *");
+        System.out.println("*   ██████╗ ██╗ ██████╗ ██╗██╗   ██╗███╗   ██╗██╗   *");
+        System.out.println("*   ██╔══██╗██║██╔════╝ ██║██║   ██║████╗  ██║██║   *");
+        System.out.println("*   ██║  ██║██║██║  ███╗██║██║   ██║██╔██╗ ██║██║   *");
+        System.out.println("*   ██║  ██║██║██║   ██║██║██║   ██║██║╚██╗██║██║   *");
+        System.out.println("*   ██████╔╝██║╚██████╔╝██║╚██████╔╝██║ ╚████║██║   *");
+        System.out.println("*   ╚═════╝ ╚═╝ ╚═════╝ ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝   *");
+        System.out.println("*                                                   *");
+        System.out.println("*         Welcome to the University Manager         *");
+        System.out.println("*      Created by: Dudar Vadim & Demkiv Maksym      *");
+        System.out.println("*                                                   *");
+        System.out.println("*****************************************************");
+
         this.university = university;
     }
 
