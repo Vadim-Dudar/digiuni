@@ -52,6 +52,20 @@ public class Main {
         university.addStudent(new Student("Інна", "Коваль", "Сергіївна", "11.11.2003", "+380501000004", "inna.koval@gmail.com", 5, 2, university.getFaculty(3), 126, 2025, StudyForm.STATE_FUNDED, StudentStatus.ACADEMIC_LEAVE));
         university.addStudent(new Student("Дмитро", "Бабенко", "Петрович", "25.12.2000", "+380501000005", "dmytro.babenko@gmail.com", 6, 4, university.getFaculty(1), 127, 2022, StudyForm.CONTRACT, StudentStatus.EXPELLED));
 
+        System.out.println("********************************************************");
+        System.out.println("*                                                      *");
+        System.out.println("*   ██████╗ ██╗ ██████╗ ██╗██╗   ██╗███╗   ██╗██╗██╗   *");
+        System.out.println("*   ██╔══██╗██║██╔════╝ ██║██║   ██║████╗  ██║██║██║   *");
+        System.out.println("*   ██║  ██║██║██║  ███╗██║██║   ██║██╔██╗ ██║██║██║   *");
+        System.out.println("*   ██║  ██║██║██║   ██║██║██║   ██║██║╚██╗██║██║██║   *");
+        System.out.println("*   ██████╔╝██║╚██████╔╝██║╚██████╔╝██║ ╚████║██║██║   *");
+        System.out.println("*   ╚═════╝ ╚═╝ ╚═════╝ ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝╚═╝   *");
+        System.out.println("*                                                      *");
+        System.out.println("*           Welcome to the University Manager          *");
+        System.out.println("*        Created by: Dudar Vadim & Demkiv Maksym       *");
+        System.out.println("*                                                      *");
+        System.out.println("********************************************************");
+
         ConsoleMenu menu = new ConsoleMenu(university);
         menu.start();
     }

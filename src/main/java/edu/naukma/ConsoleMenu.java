@@ -1,5 +1,6 @@
 package edu.naukma;
 
+import java.lang.invoke.StringConcatException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,7 +26,7 @@ public class ConsoleMenu {
 
         while (running) {
 
-            System.out.println("\n===== ГОЛОВНЕ МЕНЮ =====");
+            System.out.println("\n===== MAIN MENU =====");
             System.out.println("1 - Керування факультетами");
             System.out.println("2 - Керування кафедрами");
             System.out.println("3 - Керування студентами");
@@ -346,7 +347,7 @@ public class ConsoleMenu {
                 int cource = readInt();
 
                 List<Student> students = university.getStudentsByCourse(cource);
-                if (!students.isEmpty()) for (Student student: students) System.out.println(student);
+                if (!students.isEmpty()) for (Student student : students) System.out.println(student);
                 else System.out.println("Has no student with this course.");
 
                 break;
@@ -356,7 +357,7 @@ public class ConsoleMenu {
                 int group = readInt();
 
                 List<Student> students = university.getStudentsByGroup(group);
-                if (!students.isEmpty()) for (Student student: students) System.out.println(student);
+                if (!students.isEmpty()) for (Student student : students) System.out.println(student);
                 else System.out.println("Has no student with this course.");
 
                 break;
@@ -639,6 +640,22 @@ public class ConsoleMenu {
             } catch (NumberFormatException e) {
                 System.out.print("Please enter valid number: ");
             }
+        }
+    }
+
+    /**
+     * Safely reads a non-empty string from console input.
+     *
+     * @return non-empty string entered by the user
+     */
+    private String readString() {
+        while (true) {
+            String result = scanner.nextLine();
+            if (result.trim().isEmpty()) {
+                System.out.print("Input cannot be empty. Please enter a valid string: ");
+                continue;
+            }
+            return result;
         }
     }
 }
