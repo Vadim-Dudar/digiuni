@@ -38,13 +38,12 @@ public class ConsoleMenu {
         boolean running = true;
 
         while (running) {
-
             System.out.println("\n===== MAIN MENU =====");
-            System.out.println("1 - Manage Faculties");
-            System.out.println("2 - Manage Departments");
-            System.out.println("3 - Manage Students");
-            System.out.println("4 - Manage Teachers");
-            System.out.println("5 - Manage University");
+            System.out.println("1 - Manage University");
+            System.out.println("2 - Manage Faculties");
+            System.out.println("3 - Manage Departments");
+            System.out.println("4 - Manage Students");
+            System.out.println("5 - Manage Teachers");
             System.out.println("6 - Reports");
             System.out.println("0 - Exit");
             System.out.print("Chose: ");
@@ -53,19 +52,19 @@ public class ConsoleMenu {
 
             switch (choice) {
                 case 1:
-                    facultiesMenu();
+                    universityMenu();
                     break;
                 case 2:
-                    departmentsMenu();
+                    facultiesMenu();
                     break;
                 case 3:
-                    studentsMenu();
+                    departmentsMenu();
                     break;
                 case 4:
-                    teachersMenu();
+                    studentsMenu();
                     break;
                 case 5:
-                    universityMenu();
+                    teachersMenu();
                     break;
                 case 6:
                     reportsMenu();
@@ -85,9 +84,10 @@ public class ConsoleMenu {
      */
     private void universityMenu() {
         System.out.println("\n--- UNIVERSITY MENU ---");
-        System.out.println("1 - edit University");
-        System.out.println("2 - show University");
+        System.out.println("1 - Edit University");
+        System.out.println("2 - Show University");
         System.out.println("0 - Back");
+        System.out.print("Chose: ");
 
         int choice = readInt();
         switch (choice) {
