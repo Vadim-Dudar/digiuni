@@ -32,6 +32,7 @@ public class ConsoleMenu {
         this.university = university;
         users.add(new User("admin", "1111", UserRole.ADMIN));
         users.add(new User("moder", "1234", UserRole.EXPLORER));
+        users.add(new User("super", "qwerty", UserRole.TECH_ADMIN));
     }
 
     /**
@@ -50,6 +51,9 @@ public class ConsoleMenu {
             System.out.println("4 - Manage Students");
             System.out.println("5 - Manage Teachers");
             System.out.println("6 - Reports");
+            if (isTechAdmin()) {
+                System.out.println("\n7 - Manage Users");
+            }
             System.out.println("0 - Exit");
             System.out.print("Chose: ");
 
@@ -74,6 +78,13 @@ public class ConsoleMenu {
                 case 6:
                     reportsMenu();
                     break;
+                case 7:
+                    if (!isTechAdmin()) {
+                        System.out.println("Invalid choice. Please enter a number from the menu.");
+                        return;
+                    }
+                    userMenu();
+                    break;
                 case 0:
                     System.out.print("Exit total (type 0) or exit from user (type 1): ");
                     choice = readInt();
@@ -92,10 +103,28 @@ public class ConsoleMenu {
         }
     }
 
+    /**
+     * Checks if the current user has the ADMIN role.
+     *
+     * @return true if the current user is an admin, false otherwise
+     */
     public boolean isAdmin() {
         return curentUser.getUserRole() == UserRole.ADMIN;
     }
 
+    /**
+     * Checks if the current user has the TECH_ADMIN role.
+     *
+     * @return true if the current user is a tech admin, false otherwise
+     */
+    public boolean isTechAdmin() {
+        return curentUser.getUserRole() == UserRole.TECH_ADMIN;
+    }
+
+    /**
+     * Handles the user login process, allowing users to enter their credentials and access the system.
+     * Continues to prompt until a valid login is provided.
+     */
     public void login() {
         while (true) {
             System.out.println("\n--- Enter to system ---");
@@ -131,10 +160,8 @@ public class ConsoleMenu {
             System.out.println("2 - Edit University");
         }
         System.out.println("0 - Back");
-        System.out.print("Chose: ");
 
-        int choice = readInt();
-        switch (choice) {
+        switch (readInt("Chose: ")) {
             case 2:
                 if (!isAdmin()) return;
 
@@ -168,10 +195,8 @@ public class ConsoleMenu {
             System.out.println("4 - Edit faculty");
         }
         System.out.println("0 - Back");
-        System.out.print("Chose: ");
 
-        int choice = readInt();
-        switch (choice) {
+        switch (readInt("Chose: ")) {
             case 2: {
                 if (!isAdmin()) return;
 
@@ -255,10 +280,8 @@ public class ConsoleMenu {
             System.out.println("4 - Edit department");
         }
         System.out.println("0 - Back");
-        System.out.print("Chose: ");
 
-        int choice = readInt();
-        switch (choice) {
+        switch (readInt("Chose: ")) {
             case 2: {
                 if (!isAdmin()) return;
 
@@ -335,10 +358,8 @@ public class ConsoleMenu {
         }
 
         System.out.println("0 - Back");
-        System.out.print("Chose: ");
 
-        int choice = readInt();
-        switch (choice) {
+        switch (readInt("Chose: ")) {
             case 5: {
                 if (!isAdmin()) return;
 
@@ -527,10 +548,8 @@ public class ConsoleMenu {
             System.out.println("5 - Edit teacher");
         }
         System.out.println("0 - Back");
-        System.out.print("Chose: ");
 
-        int choice = readInt();
-        switch (choice) {
+        switch (readInt("Chose:")) {
             case 4: {
                 System.out.println("Enter name:");
                 String name = readString();
@@ -664,6 +683,72 @@ public class ConsoleMenu {
     }
 
     /**
+     * Displays and handles the user management menu for tech admins.
+     */
+    private void userMenu() {
+        System.out.println("\n--- USERS ---");
+        System.out.println("1 - List users");
+        System.out.println("2 - Create User");
+        System.out.println("3 - Change password");
+        System.out.println("4 - Delete User");
+        System.out.println("0 - Exit");
+
+        switch (readInt("Chose: ")) {
+            case 1: {
+                for (User user : users) {
+                    System.out.println(user);
+                }
+                break;
+            }
+            case 2: {
+                String login = readString("Enter user login: ");
+                String password = readString("Enter user password: ");
+                UserRole userRole = chooseUserRole();
+
+                User user = new User(login, password, userRole);
+                users.add(user);
+                System.out.println("User added -> " + user);
+                break;
+            }
+            case 3: {
+                User user = askUser();
+
+                System.out.println("Enter old password: ");
+                String oldPassword = readString();
+
+                System.out.println("Enter new password: ");
+                String newPassword = readString();
+
+                try {
+                    user.changePassword(oldPassword, newPassword);
+                    System.out.println("Password successfully changed!");
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
+            }
+            case 4: {
+                users.remove(askUser());
+                System.out.println("User successfully removed!");
+                break;
+            }
+        }
+    }
+
+    private User askUser() {
+        String login;
+        while (true) {
+            login = readString("Enter user login: ");
+            if (users.contains(new User(login, "1111", UserRole.EXPLORER))) break;
+            System.out.println("User with login: " + login + " - not found!");
+        }
+        for (User user: users) {
+            if (user.login.equals(login)) return user;
+        }
+        return null;
+    }
+
+    /**
      * Allows the user to select an academic degree from the available options.
      *
      * @return selected AcademicDegree
@@ -692,7 +777,6 @@ public class ConsoleMenu {
      */
     private AcademicStage chooseAcademicStage() {
         AcademicStage[] academicStages = AcademicStage.values();
-
 
         while (true) {
             for (int i = 0; i < academicStages.length; i++) {
@@ -771,6 +855,28 @@ public class ConsoleMenu {
     }
 
     /**
+     * Allows the user to select a user role from the available options.
+     *
+     * @return selected UserRole
+     */
+    private UserRole chooseUserRole() {
+        UserRole[] roles = UserRole.values();
+
+        while (true) {
+            for (int i = 0; i < roles.length; i++) {
+                System.out.println((i + 1) + " - " + roles[i]);
+            }
+
+            System.out.println("Enter number: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // to clear enter without this next call of scanner will end
+
+            if (choice > 0 && choice <= roles.length) return roles[choice - 1];
+            else System.out.println("[Enter proper variant!]");
+        }
+    }
+
+    /**
      * Displays the list of faculties.
      */
     private void showFaculties() {
@@ -805,12 +911,53 @@ public class ConsoleMenu {
     }
 
     /**
+     * Safely reads an integer from console input with a prompt.
+     *
+     * @param prompt the message to display to the user before input
+     * @return integer value entered by the user
+     */
+    private int readInt(String prompt) {
+        while (true) {
+            try {
+                System.out.print(prompt);
+
+                int result = Integer.parseInt(scanner.nextLine());
+                if (result < 0) {
+                    System.out.print("Please enter a non-negative number: ");
+                    continue;
+                }
+                return result;
+            } catch (NumberFormatException e) {
+                System.out.print("Please enter valid number: ");
+            }
+        }
+    }
+
+    /**
      * Safely reads a non-empty string from console input.
      *
      * @return non-empty string entered by the user
      */
     private String readString() {
         while (true) {
+            String result = scanner.nextLine();
+            if (result.trim().isEmpty()) {
+                System.out.print("Input cannot be empty. Please enter a valid string: ");
+                continue;
+            }
+            return result;
+        }
+    }
+
+    /**
+     * Safely reads a non-empty string from console input with a prompt.
+     *
+     * @param prompt the message to display to the user before input
+     * @return non-empty string entered by the user
+     */
+    private String readString(String prompt) {
+        while (true) {
+            System.out.print(prompt);
             String result = scanner.nextLine();
             if (result.trim().isEmpty()) {
                 System.out.print("Input cannot be empty. Please enter a valid string: ");

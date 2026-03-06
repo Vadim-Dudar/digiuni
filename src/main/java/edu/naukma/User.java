@@ -1,4 +1,8 @@
 package edu.naukma;
+/**
+ * The User class represents a user in the system with a login, password, and user role.
+ * It provides methods for checking the password, changing the password, and managing the user role.
+ */
 
 public class User {
 
@@ -35,7 +39,21 @@ public class User {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof User){
+            User user = (User) obj;
+            return login.equals(user.login);
+        }
+        return false;
+    }
+
+    @Override
     public int hashCode() {
         return login.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "User: "+login+" | Password: "+password + " | Role: " + userRole;
     }
 }
