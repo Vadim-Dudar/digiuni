@@ -522,9 +522,9 @@ public class ConsoleMenu {
         System.out.println("1 - List teachers");
         System.out.println("2 - Find teachers by department");
         if (isAdmin()) {
-            System.out.println("3 - Edit teacher");
+            System.out.println("3 - Delete teacher (by ID)");
             System.out.println("4 - Create new teacher");
-            System.out.println("5 - Delete teacher (by ID)");
+            System.out.println("5 - Edit teacher");
         }
         System.out.println("0 - Back");
         System.out.print("Chose: ");
@@ -577,7 +577,7 @@ public class ConsoleMenu {
                 System.out.println("Teacher added -> " + teacher);
                 break;
             }
-            case 5: {
+            case 3: {
                 System.out.print("Enter teacher ID to delete: ");
                 int idDel = readInt();
                 if (university.removeTeacher(idDel))
@@ -595,7 +595,7 @@ public class ConsoleMenu {
                     System.out.println(t);
                 break;
             }
-            case 3: {
+            case 5: {
                 System.out.print("Enter teacher ID to edit: ");
                 int idEdit = readInt();
 
@@ -651,7 +651,6 @@ public class ConsoleMenu {
     private void reportsMenu() {
         System.out.println("\n--- REPORTS ---");
         System.out.println("1 - Students in faculties");
-        System.out.println("2 - ");
         System.out.println("0 - Exit");
 
         switch (readInt()) {
