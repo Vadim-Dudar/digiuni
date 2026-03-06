@@ -1,11 +1,12 @@
 package edu.naukma;
 
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class ConsoleMenu {
 
     private final University university;
+    private final Set<User> users = new HashSet<>();
+    private User curentUser = null;
     private final Scanner scanner = new Scanner(System.in);
 
     /**
@@ -29,6 +30,8 @@ public class ConsoleMenu {
         System.out.println("*****************************************************");
 
         this.university = university;
+        users.add(new User("admin", "1111", UserRole.ADMIN));
+        users.add(new User("moder", "1234", UserRole.EXPLORER));
     }
 
     /**
@@ -36,6 +39,8 @@ public class ConsoleMenu {
      */
     public void start() {
         boolean running = true;
+
+        login();
 
         while (running) {
             System.out.println("\n===== MAIN MENU =====");
@@ -76,6 +81,27 @@ public class ConsoleMenu {
                 default:
                     System.out.println("Invalid choice. Please enter a number from the menu.");
             }
+        }
+    }
+
+    public void login() {
+        while (true) {
+            System.out.println("\n--- Enter to system ---");
+
+            System.out.print("Login: ");
+            String login = scanner.nextLine();
+
+            for (User user : users) {
+                if (user.login.equals(login.trim())) {
+                    System.out.print("Password: ");
+                    String password = scanner.nextLine();
+
+                    if (user.checkPassword(password.trim())) return;
+                    System.out.println("[Password incorrect.]");
+                }
+            }
+
+            System.out.println("[Login failed! Try again.]");
         }
     }
 
