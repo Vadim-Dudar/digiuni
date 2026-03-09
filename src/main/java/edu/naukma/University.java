@@ -188,7 +188,7 @@ public class University {
      * @return list of students
      */
     public List<Student> getStudents() {
-        return students;
+        return List.copyOf(students);
     }
 
     /**

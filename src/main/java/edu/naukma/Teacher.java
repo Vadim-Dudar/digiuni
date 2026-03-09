@@ -7,12 +7,13 @@ public class Teacher extends Person {
     private AcademicStage stage;
     private final String dateOfHiring;
     private int rate;
+    private Faculty faculty;
     private Department department;
 
     /**
      * Constructor for Teacher class.
      */
-    public Teacher(String name, String surname, String midleName, String dayOfBirth, String phone, String email, int teacherId, TeacherPosition position, AcademicDegree degree, AcademicStage stage, String dateOfHiring, int rate, Department department) {
+    public Teacher(String name, String surname, String midleName, String dayOfBirth, String phone, String email, int teacherId, TeacherPosition position, AcademicDegree degree, AcademicStage stage, String dateOfHiring, int rate, Faculty faculty, Department department) {
         super(name, surname, midleName, dayOfBirth, phone, email);
 
         if (dateOfHiring == null || dateOfHiring.isEmpty()) throw new IllegalArgumentException("Date of hiring can't be null or empty.");
@@ -25,6 +26,7 @@ public class Teacher extends Person {
         this.stage = stage;
         this.dateOfHiring = dateOfHiring;
         this.rate = rate;
+        this.faculty = faculty;
         this.department = department;
     }
 
@@ -100,13 +102,31 @@ public class Teacher extends Person {
     }
 
     /**
+     * Get faculty of student
+     *
+     * @return current faculty of student
+     */
+    public Faculty getFaculty() {
+        return faculty;
+    }
+
+    /**
+     * Set faculty of student
+     * @param faculty new faculty of student
+     */
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
+    }
+
+    /**
      * Returns string representation of the teacher.
      *
      * @return teacher description
      */
     @Override
     public String toString() {
-        return getTeacherId() + " Teacher -> " + getFullName() + " | Department: " + department.getName() + " | Hiring Date: " + dateOfHiring +
+        return getTeacherId() + " Teacher -> " + getFullName() + " | Faculty: " + faculty.getName() +
+                " | Department: " + department.getName() + " | Hiring Date: " + dateOfHiring +
                 " | Position: " + position + " | Degree: " + degree + " | Stage: " + stage +
                 " | Email: " + getEmail() + " | Phone: " + getPhone();
     }

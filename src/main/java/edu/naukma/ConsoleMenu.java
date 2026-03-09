@@ -300,8 +300,10 @@ public class ConsoleMenu {
                 int studentId = readInt();
 
                 System.out.println("Enter faculty id: ");
-                int facultyId = readInt();
-                Faculty faculty = university.getFaculty(facultyId);
+                Faculty faculty = chooseFaculty();
+
+                System.out.println("Enter department id: ");
+                Department department = chooseDepartment();
 
                 System.out.println("Enter course:");
                 int course = readInt();
@@ -332,10 +334,10 @@ public class ConsoleMenu {
                 else if (c == 2) studentStatus = StudentStatus.ACADEMIC_LEAVE;
                 else studentStatus = StudentStatus.EXPELLED;
 
-                Student student = new Student(name, surname, middleName, dayOfBirth, phone, email, studentId, course, faculty, group, yearOfEntry, studyForm, studentStatus);
+                Student student = new Student(name, surname, middleName, dayOfBirth, phone, email, studentId, course, faculty, department, group, yearOfEntry, studyForm, studentStatus);
                 university.addStudent(student);
 
-                System.out.println("Student added -> " + student);
+                System.out.println("Student added -> " + student.toString());
                 break;
             }
             case 2: {
@@ -350,10 +352,12 @@ public class ConsoleMenu {
             case 3: {
                 List<Student> students = university.getStudents();
 
-                if (students.isEmpty())
+                if (students.isEmpty()) {
                     System.out.println("Student list is empty.");
-                for (Student s : students)
-                    System.out.println(s);
+                } else {
+                    for (Student s : students)
+                        System.out.println(s);
+                }
                 break;
             }
             case 4: {
@@ -496,10 +500,13 @@ public class ConsoleMenu {
                 System.out.println("Enter rate:");
                 int rate = readInt();
 
+                System.out.println("Choose faculty:");
+                Faculty faculty = chooseFaculty();
+
                 System.out.println("Choose department:");
                 Department department = chooseDepartment();
 
-                Teacher teacher = new Teacher(name, surname, middleName, dayOfBirth, phone, email, teacherId, position, degree, stage, dateOfHiring, rate, department);
+                Teacher teacher = new Teacher(name, surname, middleName, dayOfBirth, phone, email, teacherId, position, degree, stage, dateOfHiring, rate, faculty, department);
                 university.addTeacher(teacher);
 
                 System.out.println("Teacher added -> " + teacher);
