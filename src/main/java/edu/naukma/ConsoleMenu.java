@@ -1,5 +1,6 @@
 package edu.naukma;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -582,7 +583,8 @@ public class ConsoleMenu {
     private void reportsMenu() {
         System.out.println("\n--- REPORTS ---");
         System.out.println("1 - Students in faculties");
-        System.out.println("2 - ");
+        System.out.println("2 - Sort student");
+        System.out.println("3 - Sort teachers");
         System.out.println("0 - Exit");
 
         switch (readInt()) {
@@ -592,7 +594,108 @@ public class ConsoleMenu {
                     System.out.println(faculty.getName() + ": " + students.size() + " students");
                 }
                 break;
+            case 2:
+                sortStudentMenu();
+                break;
+            case 3:
+                sortTeachersMenu();
+                break;
         }
+    }
+
+    private void sortTeachersMenu() {
+    }
+
+    private void sortStudentMenu() {
+        System.out.println("---SORT STUDENTS---");
+        System.out.println("1 - sort all students by course");
+        System.out.println("2 - sort student in faculty by surname");
+        System.out.println("3 - sort student in department by course");
+        System.out.println("4 - sort student in department by surname");
+        System.out.println("5 - find student by course in department and sort by surname");
+        System.out.println("0 - Exit");
+
+        switch (readInt()) {
+            case 1: {
+                List<Student> sortedByCourse = StudentService.sortByCourse(university.getStudents());
+                for (Student s : sortedByCourse)
+                    System.out.println(s);
+                break;
+            }
+            case 2: {
+                List<Student> studentsInFaculty = new ArrayList<>();
+                Faculty faculty = chooseFaculty();
+                for (Student s : university.getStudents()) {
+                    if (s.getFaculty().getCode() == faculty.getCode())
+                        studentsInFaculty.add(s);
+                }
+                //------------------ перевірку в метод пасувало би занести і інші кейси перевіряти --------------------------
+                if (!studentsInFaculty.isEmpty()) {
+                    List<Student> sortedBySurInFac = StudentService.sortByGroup(studentsInFaculty);
+                    for (Student s : sortedBySurInFac)
+                        System.out.println(s);
+                } else {
+                    System.out.println("This faculty has no students");
+                }
+                break;
+            }
+            case 3: {
+                List<Student> studentsInDepartment = new ArrayList<>();
+                Department department = chooseDepartment();
+                for (Student s : university.getStudents()) {
+                    if (s.getDepartment().getCode() == department.getCode())
+                        studentsInDepartment.add(s);
+                }
+
+                List<Student> sortedByCourseInDep = StudentService.sortByCourse(studentsInDepartment);
+                for (Student s : sortedByCourseInDep)
+                    System.out.println(s);
+                break;
+            }
+            case 4: {
+                List<Student> studentsInDepartment = new ArrayList<>();
+                Department department = chooseDepartment();
+                for (Student s : university.getStudents()) {
+                    if (s.getDepartment().getCode() == department.getCode())
+                        studentsInDepartment.add(s);
+                }
+
+                List<Student> sortedBySurInDep = StudentService.sortByGroup(studentsInDepartment);
+                for (Student s : sortedBySurInDep)
+                    System.out.println(s);
+                break;
+            }
+
+            case 5: {
+                List<Student> studentsInDepartment = new ArrayList<>();
+                Department department = chooseDepartment();
+                int course = chooseCourse();
+                for (Student s : university.getStudents()) {
+                    if (s.getDepartment().getCode() == department.getCode() && course == s.getCourse())
+                        studentsInDepartment.add(s);
+                }
+
+                List<Student> sortedBySurInDep = StudentService.sortByGroup(studentsInDepartment);
+                for (Student s : sortedBySurInDep)
+                    System.out.println(s);
+                break;
+            }
+
+
+
+
+
+        }
+    }
+
+    private int chooseCourse() {
+        int course = 0;
+        while (course < 1 || course > 4) {
+            System.out.println("Choose course (1-4): ");
+            course = readInt();
+        }
+
+        return course;
     }
 
     /**

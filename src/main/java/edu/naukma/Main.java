@@ -47,12 +47,12 @@ public class Main {
         university.getDepartment(4).setHead(university.getTeacher(7));
 
 // Students
-        university.addStudent(new Student("Oleksii", "Sydorov", "Petrovych", "10.10.2000", "+380111222333", "sydorov@gmail.com", 1, 1, university.getFaculty(1), university.getDepartment(3), 645, 2025, StudyForm.STATE_FUNDED, StudentStatus.STUDYING));
-        university.addStudent(new Student("Viktor", "Lysenko", "Ihorevych", "01.02.2001", "+380501000001", "viktor.lysenko@gmail.com", 2, 2, university.getFaculty(2), university.getDepartment(5),123, 2024, StudyForm.CONTRACT, StudentStatus.STUDYING));
+        university.addStudent(new Student("Oleksii", "Sydorov", "Petrovych", "10.10.2000", "+380111222333", "sydorov@gmail.com", 1, 1, university.getFaculty(3), university.getDepartment(3), 645, 2025, StudyForm.STATE_FUNDED, StudentStatus.STUDYING));
+        university.addStudent(new Student("Viktor", "Lysenko", "Ihorevych", "01.02.2001", "+380501000001", "viktor.lysenko@gmail.com", 2, 2, university.getFaculty(2), university.getDepartment(1),123, 2024, StudyForm.CONTRACT, StudentStatus.STUDYING));
         university.addStudent(new Student("Olena", "Shevchenko", "Oleksiivna", "14.04.1999", "+380501000002", "olena.shevchenko@gmail.com", 3, 3, university.getFaculty(2), university.getDepartment(3), 124, 2023, StudyForm.STATE_FUNDED, StudentStatus.EXPELLED));
         university.addStudent(new Student("Roman", "Tkachenko", "Volodymyrovych", "20.08.2002", "+380501000003", "roman.tkachenko@gmail.com", 4, 1, university.getFaculty(3), university.getDepartment(2), 125, 2026, StudyForm.CONTRACT, StudentStatus.STUDYING));
-        university.addStudent(new Student("Inna", "Koval", "Serhiivna", "11.11.2003", "+380501000004", "inna.koval@gmail.com", 5, 2, university.getFaculty(3), university.getDepartment(1), 126, 2025, StudyForm.STATE_FUNDED, StudentStatus.ACADEMIC_LEAVE));
-        university.addStudent(new Student("Dmytro", "Babenko", "Petrovych", "25.12.2000", "+380501000005", "dmytro.babenko@gmail.com", 6, 4, university.getFaculty(1), university.getDepartment(1),127, 2022, StudyForm.CONTRACT, StudentStatus.EXPELLED));
+        university.addStudent(new Student("Inna", "Koval", "Serhiivna", "11.11.2003", "+380501000004", "inna.koval@gmail.com", 5, 4, university.getFaculty(3), university.getDepartment(1), 126, 2025, StudyForm.STATE_FUNDED, StudentStatus.ACADEMIC_LEAVE));
+        university.addStudent(new Student("Dmytro", "Babenko", "Petrovych", "25.12.2000", "+380501000005", "dmytro.babenko@gmail.com", 6, 2, university.getFaculty(2), university.getDepartment(1),127, 2022, StudyForm.CONTRACT, StudentStatus.EXPELLED));
 
         ConsoleMenu menu = new ConsoleMenu(university);
         menu.start();
