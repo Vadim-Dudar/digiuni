@@ -604,15 +604,48 @@ public class ConsoleMenu {
     }
 
     private void sortTeachersMenu() {
+        System.out.println("---SORT TEACHERS---");
+        System.out.println("1 - sort teachers in faculty by surname");
+        System.out.println("2 - sort teachers in department by surname");
+        System.out.println("0 - Exit");
+
+        switch (readInt()) {
+            case 1: {
+                List<Teacher> teachers = new ArrayList<>();
+                Faculty faculty = chooseFaculty();
+                for (Teacher t: university.getTeachers()) {
+                    if (faculty.getCode() == t.getFaculty().getCode())
+                        teachers.add(t);
+                }
+
+                List<Teacher> sortedBySurInFac = TeacherService.sortByName(teachers);
+                for (Teacher t: sortedBySurInFac)
+                    System.out.println(t);
+                break;
+            }
+            case 2: {
+                List<Teacher> teachers = new ArrayList<>();
+                Department department = chooseDepartment();
+                for (Teacher t: university.getTeachers()) {
+                    if (department.getCode() == t.getDepartment().getCode())
+                        teachers.add(t);
+                }
+
+                List<Teacher> sortedBySurInDep = TeacherService.sortByName(teachers);
+                for (Teacher t: sortedBySurInDep)
+                    System.out.println(t);
+                break;
+            }
+        }
     }
 
     private void sortStudentMenu() {
         System.out.println("---SORT STUDENTS---");
         System.out.println("1 - sort all students by course");
-        System.out.println("2 - sort student in faculty by surname");
-        System.out.println("3 - sort student in department by course");
-        System.out.println("4 - sort student in department by surname");
-        System.out.println("5 - find student by course in department and sort by surname");
+        System.out.println("2 - sort students in faculty by surname");
+        System.out.println("3 - sort students in department by course");
+        System.out.println("4 - sort students in department by surname");
+        System.out.println("5 - find students by course in department and sort by surname");
         System.out.println("0 - Exit");
 
         switch (readInt()) {
@@ -680,10 +713,6 @@ public class ConsoleMenu {
                     System.out.println(s);
                 break;
             }
-
-
-
-
 
         }
     }
