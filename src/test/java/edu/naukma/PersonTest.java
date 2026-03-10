@@ -1,5 +1,7 @@
 package edu.naukma;
 
+import edu.naukma.exeptions.LogicalDateExeption;
+import edu.naukma.exeptions.InvalidPersonFieldException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,9 +20,18 @@ class PersonTest {
     @Test
     @DisplayName("Email validation performed")
     void emailValidation() {
-        assertThrows(IllegalArgumentException.class,
+        assertThrows(InvalidPersonFieldException.class,
                 () -> {
-                    new Person("Name", "Surname", "MidleName", "10.10.2006", "0688888888", "wrongmail");
+                    new Person("Name", "Surname", "MidleName", "2006.10.10", "0688888888", "wrongmail");
+                });
+    }
+
+    @Test
+    @DisplayName("Day of birth exeption")
+    void incorrectPattern() {
+        assertThrows(LogicalDateExeption.class,
+                () -> {
+                    new Person("Name", "Surename", "Midlename", "10.10.2006", "0688888888", "some@mail.com");
                 });
     }
 
