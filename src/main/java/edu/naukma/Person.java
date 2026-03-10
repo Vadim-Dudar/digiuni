@@ -1,5 +1,11 @@
 package edu.naukma;
 
+import edu.naukma.exeptions.LogicalDateExeption;
+import edu.naukma.exeptions.InvalidPersonFieldException;
+
+import java.time.DateTimeException;
+import java.time.LocalDate;
+
 public class Person {
     private static int lastId = 0;
 
@@ -7,7 +13,7 @@ public class Person {
     private String name;
     private String surname;
     private String middleName;
-    private final String dayOfBirth;
+    private final LocalDate dayOfBirth;
     private String phone;
     private String email;
 
@@ -16,22 +22,33 @@ public class Person {
      *
      * @param name       The first name of the person.
      * @param surname    The last name of the person.
-     * @param middleName  The middle name of the person.
-     * @param dayOfBirth The date of birth of the person in the format "dd.MM.yyyy".
+     * @param middleName The middle name of the person.
+     * @param dayOfBirth The date of birth of the person in the format "yyyy-MM-dd".
      * @param phone      The phone number of the person.
      * @param email      The email address of the person.
-     * @throws IllegalArgumentException if any of the parameters are null or empty.
+     * @throws InvalidPersonFieldException if any of the parameters incorrect.
+     * @throws LogicalDateExeption   if the date of birth is not in the correct format or logically incorrect.
      */
     public Person(String name, String surname, String middleName, String dayOfBirth, String phone, String email) {
         if (name == null || surname == null || middleName == null || dayOfBirth == null || phone == null || email == null ||
-                name.isEmpty() || surname.isEmpty() || middleName.isEmpty() || dayOfBirth.isEmpty() || phone.isEmpty() || email.isEmpty())
-            throw new IllegalArgumentException("Person field can't be null or empty!");
+                name.isEmpty() || surname.isEmpty() || middleName.isEmpty() || dayOfBirth.isEmpty() || phone.isEmpty() || !email.contains("@"))
+            throw new InvalidPersonFieldException("Person field can't be null or empty!");
+
+        LocalDate parsedDate;
+        try {
+            parsedDate = LocalDate.parse(dayOfBirth);
+        } catch (DateTimeException e) {
+            throw new LogicalDateExeption("Given birth date don't match with pattern yyyy-MM-dd");
+        }
+
+        if (parsedDate.isBefore(LocalDate.now()) && parsedDate.isAfter(LocalDate.now().minusYears(100)))
+            this.dayOfBirth = parsedDate;
+        else throw new LogicalDateExeption("Given birth date is logically incorrect: it lies to future or past");
 
         this.id = ++lastId;
         this.name = name;
         this.surname = surname;
         this.middleName = middleName;
-        this.dayOfBirth = dayOfBirth;
         this.phone = phone;
         this.email = email;
     }
@@ -131,7 +148,8 @@ public class Person {
      * @param middleName The new middle name to set.
      */
     public void setMiddleName(String middleName) {
-        if (middleName == null || middleName.isEmpty()) throw new IllegalArgumentException("Middle name cannot be null or empty");
+        if (middleName == null || middleName.isEmpty())
+            throw new IllegalArgumentException("Middle name cannot be null or empty");
 
         this.middleName = middleName;
     }
@@ -179,8 +197,17 @@ public class Person {
      *
      * @return The date of birth of the person.
      */
-    public String getDayOfBirth() {
+    public LocalDate getDayOfBirth() {
         return dayOfBirth;
+    }
+
+    /**
+     * Calculate and return the person's age based on their date of birth.
+     *
+     * @return The age of the person.
+     */
+    public int getAge() {
+        return LocalDate.now().getYear() - dayOfBirth.getYear();
     }
 
     /**
