@@ -1,11 +1,16 @@
 package edu.naukma;
 
+import edu.naukma.exeptions.LogicalDateExeption;
+
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 public class Teacher extends Person {
     private final int teacherId;
     private TeacherPosition position;
     private AcademicDegree degree;
     private AcademicStage stage;
-    private final String dateOfHiring;
+    private final LocalDate dateOfHiring;
     private int rate;
     private Faculty faculty;
     private Department department;
@@ -16,7 +21,16 @@ public class Teacher extends Person {
     public Teacher(String name, String surname, String midleName, String dayOfBirth, String phone, String email, int teacherId, TeacherPosition position, AcademicDegree degree, AcademicStage stage, String dateOfHiring, int rate, Faculty faculty, Department department) {
         super(name, surname, midleName, dayOfBirth, phone, email);
 
-        if (dateOfHiring == null || dateOfHiring.isEmpty()) throw new IllegalArgumentException("Date of hiring can't be null or empty.");
+        LocalDate parsedDate;
+        try {
+            parsedDate = LocalDate.parse(dateOfHiring);
+        } catch (Exception e) {
+            throw new LogicalDateExeption("Given hire date don't match with pattern yyyy-MM-dd");
+        }
+
+        if (parsedDate.isBefore(LocalDate.now().minusYears(60)) || parsedDate.isAfter(LocalDate.now()))
+            throw new LogicalDateExeption("Given hire date is logically incorrect: it lies to future or more than 60 years in the past");
+
         if (teacherId < 1) throw new IllegalArgumentException("Teacher ID must be positive.");
         if (rate < 0) throw new IllegalArgumentException("Rate must be non-negative.");
 
@@ -24,12 +38,15 @@ public class Teacher extends Person {
         this.position = position;
         this.degree = degree;
         this.stage = stage;
-        this.dateOfHiring = dateOfHiring;
+        this.dateOfHiring = parsedDate;
         this.rate = rate;
         this.faculty = faculty;
         this.department = department;
     }
 
+    /**
+     * Getters for Teacher ID.
+     */
     public int getTeacherId() {
         return teacherId;
     }
@@ -116,6 +133,22 @@ public class Teacher extends Person {
      */
     public void setFaculty(Faculty faculty) {
         this.faculty = faculty;
+    }
+    /**
+     * Getters for Teacher date of hiring.
+     */
+    public LocalDate getDateOfHiring() {
+        return dateOfHiring;
+    }
+
+    /**
+     * Calculates the experience of the teacher in years.
+     *
+     * @return experience in years
+     */
+    public int getExperience() {
+        int year = (int) ChronoUnit.YEARS.between(dateOfHiring, LocalDate.now());
+        return year;
     }
 
     /**
