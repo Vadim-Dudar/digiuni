@@ -9,8 +9,9 @@ public class Student extends Person {
     private final int yearOfEntry;
     private StudyForm studyForm;
     private StudentStatus status;
+    private Department department;
 
-    public Student(String name, String surname, String midleName, String dayOfBirth, String phone, String email, int studentId, int course, Faculty faculty, int group, int yearOfEntry, StudyForm studyForm, StudentStatus status) {
+    public Student(String name, String surname, String midleName, String dayOfBirth, String phone, String email, int studentId, int course, Faculty faculty, Department department, int group, int yearOfEntry, StudyForm studyForm, StudentStatus status) {
         super(name, surname, midleName, dayOfBirth, phone, email);
 
         if (studentId < 1) throw new IllegalArgumentException("Student ID must be positive.");
@@ -24,6 +25,7 @@ public class Student extends Person {
         this.yearOfEntry = yearOfEntry;
         this.course = course;
         this.faculty = faculty;
+        this.department = department;
     }
 
     /**
@@ -33,9 +35,9 @@ public class Student extends Person {
      */
     @Override
     public String toString() {
-        return "Student: " + studentId + " " + getFullName() + " " + group + " " + yearOfEntry + " " +
-                " studies at course " + course + " on a " + studyForm +
-                " at status " + status + " " + getPhone() + " " + getEmail();
+        return "Student: " + studentId + " " + getFullName() + " , faculty: " + faculty.getName() + " , department: "
+                + department.getName()  + " " + group + " " + yearOfEntry + " " + " studies at course " + course +
+                " on a " + studyForm + " at status " + status + " " + getPhone() + " " + getEmail();
     }
 
     /**
@@ -140,4 +142,21 @@ public class Student extends Person {
         return faculty;
     }
 
+    /**
+     * Get student department.
+     *
+     * @return Current department of the student.
+     */
+    public Department getDepartment() {
+        return department;
+    }
+
+    /**
+     * Set student department.
+     *
+     * @param department New department for the student.
+     */
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
 }

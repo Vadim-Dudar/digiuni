@@ -387,8 +387,10 @@ public class ConsoleMenu {
                 int studentId = readInt();
 
                 System.out.println("Enter faculty id: ");
-                int facultyId = readInt();
-                Faculty faculty = university.getFaculty(facultyId);
+                Faculty faculty = chooseFaculty();
+
+                System.out.println("Enter department id: ");
+                Department department = chooseDepartment();
 
                 System.out.println("Enter course:");
                 int course = readInt();
@@ -419,10 +421,10 @@ public class ConsoleMenu {
                 else if (c == 2) studentStatus = StudentStatus.ACADEMIC_LEAVE;
                 else studentStatus = StudentStatus.EXPELLED;
 
-                Student student = new Student(name, surname, middleName, dayOfBirth, phone, email, studentId, course, faculty, group, yearOfEntry, studyForm, studentStatus);
+                Student student = new Student(name, surname, middleName, dayOfBirth, phone, email, studentId, course, faculty, department, group, yearOfEntry, studyForm, studentStatus);
                 university.addStudent(student);
 
-                System.out.println("Student added -> " + student);
+                System.out.println("Student added -> " + student.toString());
                 break;
             }
             case 6: {
@@ -439,10 +441,12 @@ public class ConsoleMenu {
             case 1: {
                 List<Student> students = university.getStudents();
 
-                if (students.isEmpty())
+                if (students.isEmpty()) {
                     System.out.println("Student list is empty.");
-                for (Student s : students)
-                    System.out.println(s);
+                } else {
+                    for (Student s : students)
+                        System.out.println(s);
+                }
                 break;
             }
             case 7: {
@@ -587,10 +591,13 @@ public class ConsoleMenu {
                 System.out.println("Enter rate:");
                 int rate = readInt();
 
+                System.out.println("Choose faculty:");
+                Faculty faculty = chooseFaculty();
+
                 System.out.println("Choose department:");
                 Department department = chooseDepartment();
 
-                Teacher teacher = new Teacher(name, surname, middleName, dayOfBirth, phone, email, teacherId, position, degree, stage, dateOfHiring, rate, department);
+                Teacher teacher = new Teacher(name, surname, middleName, dayOfBirth, phone, email, teacherId, position, degree, stage, dateOfHiring, rate, faculty, department);
                 university.addTeacher(teacher);
 
                 System.out.println("Teacher added -> " + teacher);
@@ -670,6 +677,8 @@ public class ConsoleMenu {
     private void reportsMenu() {
         System.out.println("\n--- REPORTS ---");
         System.out.println("1 - Students in faculties");
+        System.out.println("2 - Sort student");
+        System.out.println("3 - Sort teachers");
         System.out.println("0 - Exit");
 
         switch (readInt()) {
@@ -679,7 +688,137 @@ public class ConsoleMenu {
                     System.out.println(faculty.getName() + ": " + students.size() + " students");
                 }
                 break;
+            case 2:
+                sortStudentMenu();
+                break;
+            case 3:
+                sortTeachersMenu();
+                break;
         }
+    }
+
+    private void sortTeachersMenu() {
+        System.out.println("---SORT TEACHERS---");
+        System.out.println("1 - sort teachers in faculty by surname");
+        System.out.println("2 - sort teachers in department by surname");
+        System.out.println("0 - Exit");
+
+        switch (readInt()) {
+            case 1: {
+                List<Teacher> teachers = new ArrayList<>();
+                Faculty faculty = chooseFaculty();
+                for (Teacher t: university.getTeachers()) {
+                    if (faculty.getCode() == t.getFaculty().getCode())
+                        teachers.add(t);
+                }
+
+                List<Teacher> sortedBySurInFac = TeacherService.sortByName(teachers);
+                for (Teacher t: sortedBySurInFac)
+                    System.out.println(t);
+                break;
+            }
+            case 2: {
+                List<Teacher> teachers = new ArrayList<>();
+                Department department = chooseDepartment();
+                for (Teacher t: university.getTeachers()) {
+                    if (department.getCode() == t.getDepartment().getCode())
+                        teachers.add(t);
+                }
+
+                List<Teacher> sortedBySurInDep = TeacherService.sortByName(teachers);
+                for (Teacher t: sortedBySurInDep)
+                    System.out.println(t);
+                break;
+            }
+        }
+    }
+
+    private void sortStudentMenu() {
+        System.out.println("---SORT STUDENTS---");
+        System.out.println("1 - sort all students by course");
+        System.out.println("2 - sort students in faculty by surname");
+        System.out.println("3 - sort students in department by course");
+        System.out.println("4 - sort students in department by surname");
+        System.out.println("5 - find students by course in department and sort by surname");
+        System.out.println("0 - Exit");
+
+        switch (readInt()) {
+            case 1: {
+                List<Student> sortedByCourse = StudentService.sortByCourse(university.getStudents());
+                for (Student s : sortedByCourse)
+                    System.out.println(s);
+                break;
+            }
+            case 2: {
+                List<Student> studentsInFaculty = new ArrayList<>();
+                Faculty faculty = chooseFaculty();
+                for (Student s : university.getStudents()) {
+                    if (s.getFaculty().getCode() == faculty.getCode())
+                        studentsInFaculty.add(s);
+                }
+                //------------------ перевірку в метод пасувало би занести і інші кейси перевіряти --------------------------
+                if (!studentsInFaculty.isEmpty()) {
+                    List<Student> sortedBySurInFac = StudentService.sortByGroup(studentsInFaculty);
+                    for (Student s : sortedBySurInFac)
+                        System.out.println(s);
+                } else {
+                    System.out.println("This faculty has no students");
+                }
+                break;
+            }
+            case 3: {
+                List<Student> studentsInDepartment = new ArrayList<>();
+                Department department = chooseDepartment();
+                for (Student s : university.getStudents()) {
+                    if (s.getDepartment().getCode() == department.getCode())
+                        studentsInDepartment.add(s);
+                }
+
+                List<Student> sortedByCourseInDep = StudentService.sortByCourse(studentsInDepartment);
+                for (Student s : sortedByCourseInDep)
+                    System.out.println(s);
+                break;
+            }
+            case 4: {
+                List<Student> studentsInDepartment = new ArrayList<>();
+                Department department = chooseDepartment();
+                for (Student s : university.getStudents()) {
+                    if (s.getDepartment().getCode() == department.getCode())
+                        studentsInDepartment.add(s);
+                }
+
+                List<Student> sortedBySurInDep = StudentService.sortByGroup(studentsInDepartment);
+                for (Student s : sortedBySurInDep)
+                    System.out.println(s);
+                break;
+            }
+
+            case 5: {
+                List<Student> studentsInDepartment = new ArrayList<>();
+                Department department = chooseDepartment();
+                int course = chooseCourse();
+                for (Student s : university.getStudents()) {
+                    if (s.getDepartment().getCode() == department.getCode() && course == s.getCourse())
+                        studentsInDepartment.add(s);
+                }
+
+                List<Student> sortedBySurInDep = StudentService.sortByGroup(studentsInDepartment);
+                for (Student s : sortedBySurInDep)
+                    System.out.println(s);
+                break;
+            }
+
+        }
+    }
+
+    private int chooseCourse() {
+        int course = 0;
+        while (course < 1 || course > 4) {
+            System.out.println("Choose course (1-4): ");
+            course = readInt();
+        }
+
+        return course;
     }
 
     /**
