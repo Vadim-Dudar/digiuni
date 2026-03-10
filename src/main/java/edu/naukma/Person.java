@@ -23,7 +23,7 @@ public class Person {
      * @param name       The first name of the person.
      * @param surname    The last name of the person.
      * @param middleName The middle name of the person.
-     * @param dayOfBirth The date of birth of the person in the format "yyyy-MM-dd".
+     * @param dayOfBirth The date of birth of the person in the format "yyyy-MM-dd" or "yyyy.MM.dd".
      * @param phone      The phone number of the person.
      * @param email      The email address of the person.
      * @throws InvalidPersonFieldException if any of the parameters incorrect.
@@ -35,8 +35,9 @@ public class Person {
             throw new InvalidPersonFieldException("Person field can't be null or empty!");
 
         LocalDate parsedDate;
+        String normalizedDate = dayOfBirth.trim().replace('.', '-').replace('/', '-');
         try {
-            parsedDate = LocalDate.parse(dayOfBirth);
+            parsedDate = LocalDate.parse(normalizedDate);
         } catch (DateTimeException e) {
             throw new LogicalDateExeption("Given birth date don't match with pattern yyyy-MM-dd");
         }

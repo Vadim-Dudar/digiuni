@@ -22,8 +22,9 @@ public class Teacher extends Person {
         super(name, surname, midleName, dayOfBirth, phone, email);
 
         LocalDate parsedDate;
+        String normalizedDate = dayOfBirth.trim().replace('.', '-').replace('/', '-');
         try {
-            parsedDate = LocalDate.parse(dateOfHiring);
+            parsedDate = LocalDate.parse(normalizedDate);
         } catch (Exception e) {
             throw new LogicalDateExeption("Given hire date don't match with pattern yyyy-MM-dd");
         }
