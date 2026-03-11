@@ -318,7 +318,7 @@ public class ConsoleMenu {
                 int code = readInt();
                 Department department = university.getDepartment(code);
                 Faculty faculty = university.getFaculty(department);
-                if (faculty.removeDepartmentByCode(code))
+                if (faculty.removeDepartment(code))
                     System.out.println("Deleted.");
                 else
                     System.out.println("Department not found.");
@@ -326,7 +326,7 @@ public class ConsoleMenu {
             }
             case 1: {
                 for (Department d : university.getDepartments())
-                    System.out.println(d.getCode() + " - " + d.getName());
+                    System.out.println(d.getId() + " - " + d.getName());
                 break;
             }
             case 4: {
@@ -711,7 +711,7 @@ public class ConsoleMenu {
                 List<Teacher> teachers = new ArrayList<>();
                 Faculty faculty = chooseFaculty();
                 for (Teacher t: university.getTeachers()) {
-                    if (faculty.getCode() == t.getFaculty().getCode())
+                    if (faculty.getId() == t.getFaculty().getId())
                         teachers.add(t);
                 }
 
@@ -724,7 +724,7 @@ public class ConsoleMenu {
                 List<Teacher> teachers = new ArrayList<>();
                 Department department = chooseDepartment();
                 for (Teacher t: university.getTeachers()) {
-                    if (department.getCode() == t.getDepartment().getCode())
+                    if (department.getId() == t.getDepartment().getId())
                         teachers.add(t);
                 }
 
@@ -759,7 +759,7 @@ public class ConsoleMenu {
                 List<Student> studentsInFaculty = new ArrayList<>();
                 Faculty faculty = chooseFaculty();
                 for (Student s : university.getStudents()) {
-                    if (s.getFaculty().getCode() == faculty.getCode())
+                    if (s.getFaculty().getId() == faculty.getId())
                         studentsInFaculty.add(s);
                 }
                 //------------------ перевірку в метод пасувало би занести і інші кейси перевіряти --------------------------
@@ -776,7 +776,7 @@ public class ConsoleMenu {
                 List<Student> studentsInDepartment = new ArrayList<>();
                 Department department = chooseDepartment();
                 for (Student s : university.getStudents()) {
-                    if (s.getDepartment().getCode() == department.getCode())
+                    if (s.getDepartment().getId() == department.getId())
                         studentsInDepartment.add(s);
                 }
 
@@ -789,7 +789,7 @@ public class ConsoleMenu {
                 List<Student> studentsInDepartment = new ArrayList<>();
                 Department department = chooseDepartment();
                 for (Student s : university.getStudents()) {
-                    if (s.getDepartment().getCode() == department.getCode())
+                    if (s.getDepartment().getId() == department.getId())
                         studentsInDepartment.add(s);
                 }
 
@@ -804,7 +804,7 @@ public class ConsoleMenu {
                 Department department = chooseDepartment();
                 int course = chooseCourse();
                 for (Student s : university.getStudents()) {
-                    if (s.getDepartment().getCode() == department.getCode() && course == s.getCourse())
+                    if (s.getDepartment().getId() == department.getId() && course == s.getCourse())
                         studentsInDepartment.add(s);
                 }
 
@@ -953,7 +953,7 @@ public class ConsoleMenu {
     private Department chooseDepartment() {
         while (true) {
             for (Department d : university.getDepartments())
-                System.out.println(d.getCode() + " - " + d.getName());
+                System.out.println(d.getId() + " - " + d.getName());
 
             int code = readInt();
             Department d = university.getDepartment(code);
@@ -970,12 +970,12 @@ public class ConsoleMenu {
      */
     private void showFaculties() {
         if (university.getFaculties().isEmpty()) {
-            System.out.println("Список факультетів порожній.");
+            System.out.println("Faculty list is empty!");
             return;
         }
-        System.out.println("Доступні факультети:");
+        System.out.println("Available faculties:");
         for (Faculty f : university.getFaculties()) {
-            System.out.println("[" + f.getCode() + "] " + f.getShortName() + " : " + f.getContacts());
+            System.out.println("[" + f.getId() + "] " + f.getShortName() + " : " + f.getContacts());
         }
     }
 

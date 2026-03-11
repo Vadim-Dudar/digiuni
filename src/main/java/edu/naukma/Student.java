@@ -1,6 +1,6 @@
 package edu.naukma;
 
-public class Student extends Person {
+public class Student extends Person implements Identifiable {
 
     private final int studentId;
     private Faculty faculty;
@@ -67,6 +67,7 @@ public class Student extends Person {
      *
      * @return Student ID.
      */
+    @Override
     public int getId() {
         return this.studentId;
     }

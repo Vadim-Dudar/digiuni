@@ -1,10 +1,8 @@
 package edu.naukma;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
-public class Faculty {
+public class Faculty implements Identifiable {
 
     private final int code;
     private String name;
@@ -12,7 +10,7 @@ public class Faculty {
     private Teacher dean;
     private String contacts;
 
-    private List<Department> departments;
+    private final Repository<Department> departments;
 
     /**
      * Creates a Faculty object and initializes the departments list.
@@ -29,7 +27,7 @@ public class Faculty {
         this.shortName = shortName;
         this.dean = dean;
         this.contacts = contacts;
-        this.departments = new ArrayList<>();
+        this.departments = new Repository<>();
     }
 
     /**
@@ -39,7 +37,7 @@ public class Faculty {
      */
     public void addDepartment(Department department) {
         if (department == null) throw new IllegalArgumentException("Department cannot be null.");
-        departments.add(department);
+        departments.addItem(department);
     }
 
     /**
@@ -48,28 +46,18 @@ public class Faculty {
      * @param code department code
      * @return true if removed, false otherwise
      */
-    public boolean removeDepartmentByCode(int code) {
-        for (int i = 0; i < departments.size(); i++) {
-            if (departments.get(i).getCode() == code) {
-                departments.remove(i);
-                return true;
-            }
-        }
-        return false;
+    public boolean removeDepartment(int code) {
+        return departments.remove(code);
     }
 
     /**
      * Finds a department by its code.
      *
-     * @param code department code
+     * @param id department code
      * @return department if found, otherwise null
      */
-    public Department findDepartmentByCode(int code) {
-        for (Department d : departments) {
-            if (d.getCode() == code)
-                return d;
-        }
-        return null;
+    public Department findDepartment(int id) {
+        return departments.findBy(department -> department.getId() == id).get(0);
     }
 
     /**
@@ -129,7 +117,7 @@ public class Faculty {
      *
      * @return faculty code
      */
-    public int getCode() {
+    public int getId() {
         return code;
     }
 
@@ -139,7 +127,7 @@ public class Faculty {
      * @return departments list
      */
     public List<Department> getDepartments() {
-        return List.copyOf(departments);
+        return departments.getAll();
     }
 
     /**
