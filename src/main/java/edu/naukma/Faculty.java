@@ -164,7 +164,7 @@ public class Faculty implements Identifiable {
      */
     @Override
     public String toString() {
-        return "Факультет: " + name + " [" + shortName + "], Код: " + code +
-                ", Декан: " + dean + ", Контакти: " + contacts;
+        return "Faculty: " + name + " [" + shortName + "], ID: " + code +
+                ", Dean: " + dean + ", Contacts: " + contacts;
     }
 }

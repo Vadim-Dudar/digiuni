@@ -3,6 +3,7 @@ package edu.naukma;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * A generic repository for managing items that implement the Identifiable interface.
@@ -49,6 +50,8 @@ public class Repository<T extends Identifiable> {
      * @return a list of items that match the filter
      */
     public List<T> findBy(Predicate<T> filter) {
-        return items.stream().filter(filter).toList();
+        return items.stream()
+                .filter(filter)
+                .collect(Collectors.toList());
     }
 }
