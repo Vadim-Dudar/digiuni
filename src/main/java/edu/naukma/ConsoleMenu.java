@@ -318,7 +318,7 @@ public class ConsoleMenu {
                 int code = readInt();
                 Department department = university.getDepartment(code);
                 Faculty faculty = university.getFaculty(department);
-                if (faculty.removeDepartmentByCode(code))
+                if (faculty.removeDepartment(code))
                     System.out.println("Deleted.");
                 else
                     System.out.println("Department not found.");
@@ -326,7 +326,7 @@ public class ConsoleMenu {
             }
             case 1: {
                 for (Department d : university.getDepartments())
-                    System.out.println(d.getCode() + " - " + d.getName());
+                    System.out.println(d.getId() + " - " + d.getName());
                 break;
             }
             case 4: {
@@ -577,13 +577,13 @@ public class ConsoleMenu {
                 int teacherId = readInt();
 
                 System.out.println("Choose teacher position: ");
-                TeacherPosition position = chooseTeacherPositon();
+                TeacherPosition position = chooseEnum(TeacherPosition.class);
 
                 System.out.println("Choose academic degree: ");
-                AcademicDegree degree = chooseAcademicDegree();
+                AcademicDegree degree = chooseEnum(AcademicDegree.class);
 
                 System.out.println("Choose academic stage: ");
-                AcademicStage stage = chooseAcademicStage();
+                AcademicStage stage = chooseEnum(AcademicStage.class);
 
                 System.out.println("Enter date of hiring:");
                 String dateOfHiring = readString();
@@ -643,13 +643,13 @@ public class ConsoleMenu {
                 teacher.setEmail(readString());
 
                 System.out.println("Choose teacher position: ");
-                teacher.setPosition(chooseTeacherPositon());
+                teacher.setPosition(chooseEnum(TeacherPosition.class));
 
                 System.out.println("Choose academic degree: ");
-                teacher.setDegree(chooseAcademicDegree());
+                teacher.setDegree(chooseEnum(AcademicDegree.class));
 
                 System.out.println("Choose academic stage: ");
-                teacher.setStage(chooseAcademicStage());
+                teacher.setStage(chooseEnum(AcademicStage.class));
 
                 System.out.println("Enter rate:");
                 teacher.setRate(readInt());
@@ -697,6 +697,9 @@ public class ConsoleMenu {
         }
     }
 
+    /**
+     * Displays and handles the teacher sorting menu, allowing users to sort teachers by surname within faculties or departments.
+     */
     private void sortTeachersMenu() {
         System.out.println("---SORT TEACHERS---");
         System.out.println("1 - sort teachers in faculty by surname");
@@ -708,7 +711,7 @@ public class ConsoleMenu {
                 List<Teacher> teachers = new ArrayList<>();
                 Faculty faculty = chooseFaculty();
                 for (Teacher t: university.getTeachers()) {
-                    if (faculty.getCode() == t.getFaculty().getCode())
+                    if (faculty.getId() == t.getFaculty().getId())
                         teachers.add(t);
                 }
 
@@ -721,7 +724,7 @@ public class ConsoleMenu {
                 List<Teacher> teachers = new ArrayList<>();
                 Department department = chooseDepartment();
                 for (Teacher t: university.getTeachers()) {
-                    if (department.getCode() == t.getDepartment().getCode())
+                    if (department.getId() == t.getDepartment().getId())
                         teachers.add(t);
                 }
 
@@ -733,6 +736,9 @@ public class ConsoleMenu {
         }
     }
 
+    /**
+     * Displays and handles the student sorting menu, allowing users to sort students by various criteria.
+     */
     private void sortStudentMenu() {
         System.out.println("---SORT STUDENTS---");
         System.out.println("1 - sort all students by course");
@@ -753,7 +759,7 @@ public class ConsoleMenu {
                 List<Student> studentsInFaculty = new ArrayList<>();
                 Faculty faculty = chooseFaculty();
                 for (Student s : university.getStudents()) {
-                    if (s.getFaculty().getCode() == faculty.getCode())
+                    if (s.getFaculty().getId() == faculty.getId())
                         studentsInFaculty.add(s);
                 }
                 //------------------ перевірку в метод пасувало би занести і інші кейси перевіряти --------------------------
@@ -770,7 +776,7 @@ public class ConsoleMenu {
                 List<Student> studentsInDepartment = new ArrayList<>();
                 Department department = chooseDepartment();
                 for (Student s : university.getStudents()) {
-                    if (s.getDepartment().getCode() == department.getCode())
+                    if (s.getDepartment().getId() == department.getId())
                         studentsInDepartment.add(s);
                 }
 
@@ -783,7 +789,7 @@ public class ConsoleMenu {
                 List<Student> studentsInDepartment = new ArrayList<>();
                 Department department = chooseDepartment();
                 for (Student s : university.getStudents()) {
-                    if (s.getDepartment().getCode() == department.getCode())
+                    if (s.getDepartment().getId() == department.getId())
                         studentsInDepartment.add(s);
                 }
 
@@ -798,7 +804,7 @@ public class ConsoleMenu {
                 Department department = chooseDepartment();
                 int course = chooseCourse();
                 for (Student s : university.getStudents()) {
-                    if (s.getDepartment().getCode() == department.getCode() && course == s.getCourse())
+                    if (s.getDepartment().getId() == department.getId() && course == s.getCourse())
                         studentsInDepartment.add(s);
                 }
 
@@ -811,6 +817,11 @@ public class ConsoleMenu {
         }
     }
 
+    /**
+     * Prompts the user to choose a course number between 1 and 4.
+     *
+     * @return the chosen course number
+     */
     private int chooseCourse() {
         int course = 0;
         while (course < 1 || course > 4) {
@@ -842,7 +853,7 @@ public class ConsoleMenu {
             case 2: {
                 String login = readString("Enter user login: ");
                 String password = readString("Enter user password: ");
-                UserRole userRole = chooseUserRole();
+                UserRole userRole = chooseEnum(UserRole.class);
 
                 User user = new User(login, password, userRole);
                 users.add(user);
@@ -874,6 +885,11 @@ public class ConsoleMenu {
         }
     }
 
+    /**
+     * Prompts the user to enter a login and returns the corresponding User object if found.
+     *
+     * @return the User object corresponding to the entered login
+     */
     private User askUser() {
         String login;
         while (true) {
@@ -888,67 +904,23 @@ public class ConsoleMenu {
     }
 
     /**
-     * Allows the user to select an academic degree from the available options.
+     * Generic method to allow the user to select an enum value from a list of options.
      *
-     * @return selected AcademicDegree
+     * @param enumClass the class of the enum to choose from
+     * @param <T>       the type of the enum
+     * @return the selected enum value
      */
-    private AcademicDegree chooseAcademicDegree() {
-        AcademicDegree[] degrees = AcademicDegree.values();
+    private <T extends Enum<T>> T chooseEnum(Class<T> enumClass) {
+        T[] elements = enumClass.getEnumConstants();
 
         while (true) {
-            for (int i = 0; i < degrees.length; i++) {
-                System.out.println((i + 1) + " - " + degrees[i]);
+            for (int i = 0; i < elements.length; i++) {
+                System.out.println((i+1) + " - " + elements[i]);
             }
 
-            System.out.println("Enter number: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // to clear enter without this next call of scanner will end
+            int choice = readInt("Enter number: ");
 
-            if (choice > 0 && choice <= degrees.length) return degrees[choice - 1];
-            else System.out.println("[Enter proper variant!]");
-        }
-    }
-
-    /**
-     * Allows the user to select an academic stage from the available options.
-     *
-     * @return selected AcademicStage
-     */
-    private AcademicStage chooseAcademicStage() {
-        AcademicStage[] academicStages = AcademicStage.values();
-
-        while (true) {
-            for (int i = 0; i < academicStages.length; i++) {
-                System.out.println((i + 1) + " - " + academicStages[i]);
-            }
-
-            System.out.println("Enter number: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // to clear enter without this next call of scanner will end
-
-            if (choice > 0 && choice <= academicStages.length) return academicStages[choice - 1];
-            else System.out.println("[Enter proper variant!]");
-        }
-    }
-
-    /**
-     * Allows the user to select a teacher position from the available options.
-     *
-     * @return selected TeacherPosition
-     */
-    private TeacherPosition chooseTeacherPositon() {
-        TeacherPosition[] positions = TeacherPosition.values();
-
-        while (true) {
-            for (int i = 0; i < positions.length; i++) {
-                System.out.println((i + 1) + " - " + positions[i]);
-            }
-
-            System.out.println("Enter number: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // to clear enter without this next call of scanner will end
-
-            if (choice > 0 && choice <= positions.length) return positions[choice - 1];
+            if (choice > 0 && choice <= elements.length) return elements[choice-1];
             else System.out.println("[Enter proper variant!]");
         }
     }
@@ -966,7 +938,7 @@ public class ConsoleMenu {
             int code = readInt();
             Faculty f = university.getFaculty(code);
             if (f == null) {
-                System.out.println("Помилка: факультет не знайдено.");
+                System.out.println("Error: faculty not found.");
                 continue;
             }
             return f;
@@ -981,37 +953,15 @@ public class ConsoleMenu {
     private Department chooseDepartment() {
         while (true) {
             for (Department d : university.getDepartments())
-                System.out.println(d.getCode() + " - " + d.getName());
+                System.out.println(d.getId() + " - " + d.getName());
 
             int code = readInt();
             Department d = university.getDepartment(code);
             if (d == null) {
-                System.out.println("Помилка: кафедру не знайдено.");
+                System.out.println("Error: department not found.");
                 continue;
             }
             return d;
-        }
-    }
-
-    /**
-     * Allows the user to select a user role from the available options.
-     *
-     * @return selected UserRole
-     */
-    private UserRole chooseUserRole() {
-        UserRole[] roles = UserRole.values();
-
-        while (true) {
-            for (int i = 0; i < roles.length; i++) {
-                System.out.println((i + 1) + " - " + roles[i]);
-            }
-
-            System.out.println("Enter number: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // to clear enter without this next call of scanner will end
-
-            if (choice > 0 && choice <= roles.length) return roles[choice - 1];
-            else System.out.println("[Enter proper variant!]");
         }
     }
 
@@ -1020,12 +970,12 @@ public class ConsoleMenu {
      */
     private void showFaculties() {
         if (university.getFaculties().isEmpty()) {
-            System.out.println("Список факультетів порожній.");
+            System.out.println("Faculty list is empty!");
             return;
         }
-        System.out.println("Доступні факультети:");
+        System.out.println("Available faculties:");
         for (Faculty f : university.getFaculties()) {
-            System.out.println("[" + f.getCode() + "] " + f.getShortName() + " : " + f.getContacts());
+            System.out.println("[" + f.getId() + "] " + f.getShortName() + " : " + f.getContacts());
         }
     }
 

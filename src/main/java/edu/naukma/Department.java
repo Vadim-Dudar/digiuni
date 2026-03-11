@@ -1,7 +1,7 @@
 package edu.naukma;
 
 
-public class Department {
+public class Department implements Identifiable {
 
     private final int code;
     private String name;
@@ -61,7 +61,7 @@ public class Department {
     /**
      * @return department code
      */
-    public int getCode() {
+    public int getId() {
         return code;
     }
 

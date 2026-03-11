@@ -6,7 +6,7 @@ import edu.naukma.exeptions.InvalidPersonFieldException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 
-public class Person {
+public class Person implements Identifiable {
     private static int lastId = 0;
 
     private final int id;

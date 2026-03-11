@@ -5,7 +5,7 @@ import edu.naukma.exeptions.LogicalDateExeption;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class Teacher extends Person {
+public class Teacher extends Person implements Identifiable {
     private final int teacherId;
     private TeacherPosition position;
     private AcademicDegree degree;
@@ -48,7 +48,8 @@ public class Teacher extends Person {
     /**
      * Getters for Teacher ID.
      */
-    public int getTeacherId() {
+    @Override
+    public int getId() {
         return teacherId;
     }
 
@@ -159,7 +160,7 @@ public class Teacher extends Person {
      */
     @Override
     public String toString() {
-        return getTeacherId() + " Teacher -> " + getFullName() + " | Faculty: " + faculty.getName() +
+        return getId() + " Teacher -> " + getFullName() + " | Faculty: " + faculty.getName() +
                 " | Department: " + department.getName() + " | Hiring Date: " + dateOfHiring +
                 " | Position: " + position + " | Degree: " + degree + " | Stage: " + stage +
                 " | Email: " + getEmail() + " | Phone: " + getPhone();

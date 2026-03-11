@@ -1,7 +1,6 @@
 package edu.naukma;
 
 import java.util.ArrayList;
-import java.util.Formattable;
 import java.util.List;
 
 public class University {
@@ -10,9 +9,9 @@ public class University {
     private String shortName;
     private String city;
     private String address;
-    private List<Faculty> faculties;
-    private List<Student> students;
-    private List<Teacher> teachers;
+    private final Repository<Faculty> faculties;
+    private final Repository<Student> students;
+    private final Repository<Teacher> teachers;
 
     /**
      * Creates a University object and initializes the faculties list.
@@ -33,9 +32,9 @@ public class University {
         this.shortName = shortName;
         this.city = city;
         this.address = address;
-        this.faculties = new ArrayList<>();
-        this.students = new ArrayList<>();
-        this.teachers = new ArrayList<>();
+        this.faculties = new Repository<>();
+        this.students = new Repository<>();
+        this.teachers = new Repository<>();
     }
 
     /**
@@ -45,7 +44,7 @@ public class University {
      */
     public void addFaculty(Faculty faculty) {
         if (faculty == null) throw new IllegalArgumentException("Faculty cannot be null.");
-        faculties.add(faculty);
+        faculties.addItem(faculty);
     }
 
     /**
@@ -55,13 +54,7 @@ public class University {
      * @return true if the faculty was removed, false otherwise
      */
     public boolean removeFacultyByCode(int code) {
-        for (int i = 0; i < faculties.size(); i++) {
-            if (faculties.get(i).getCode() == code) {
-                faculties.remove(i);
-                return true;
-            }
-        }
-        return false;
+        return faculties.remove(code);
     }
 
     /**
@@ -71,11 +64,7 @@ public class University {
      * @return faculty if found, otherwise null
      */
     public Faculty getFaculty(int code) {
-        for (Faculty f : faculties) {
-            if (f.getCode() == code)
-                return f;
-        }
-        return null;
+        return faculties.findBy(faculty -> faculty.getId() == code).get(0);
     }
 
     /**
@@ -84,7 +73,7 @@ public class University {
      * @return list of faculties
      */
     public List<Faculty> getFaculties() {
-        return List.copyOf(faculties);
+        return faculties.getAll();
     }
 
     /**
@@ -94,11 +83,7 @@ public class University {
      * @return faculty if found, otherwise null
      */
     public Faculty getFaculty(Department department) {
-        for (Faculty faculty : faculties) {
-            for (Department d : faculty.getDepartments()) if (d.getCode() == department.getCode()) return faculty;
-        }
-
-        return null;
+        return faculties.findBy(faculty -> faculty.getDepartments().contains(department)).get(0);
     }
 
     /**
@@ -109,7 +94,7 @@ public class University {
     public List<Department> getDepartments() {
         List<Department> departments = new ArrayList<>();
 
-        for (Faculty faculty : faculties) {
+        for (Faculty faculty : faculties.getAll()) {
             departments.addAll(faculty.getDepartments());
         }
 
@@ -125,7 +110,7 @@ public class University {
     public Department getDepartment(int code) {
         List<Department> departments = getDepartments();
 
-        for (Department department : departments) if (department.getCode() == code) return department;
+        for (Department department : departments) if (department.getId() == code) return department;
 
         return null;
     }
@@ -136,38 +121,27 @@ public class University {
      * @param student student object to add
      */
     public void addStudent(Student student) {
-        if (student == null) throw new IllegalArgumentException("Student cannot be null.");
-        students.add(student);
+        students.addItem(student);
     }
 
     /**
      * Removes a student by their ID.
      *
-     * @param code student ID
+     * @param id student ID
      * @return true if the student was removed, false otherwise
      */
-    public boolean removeStudent(int code) {
-        for (Student student : students) {
-            if (student.getId() == code) {
-                students.remove(student);
-                return true;
-            }
-        }
-        return false;
+    public boolean removeStudent(int id) {
+        return students.remove(id);
     }
 
     /**
      * Finds a student by their ID.
      *
-     * @param code student ID
+     * @param id student ID
      * @return student if found, otherwise null
      */
-    public Student getStudent(int code) {
-        for (Student student : students) {
-            if (student.getId() == code) return student;
-        }
-
-        return null;
+    public Student getStudent(int id) {
+        return students.findBy(student -> student.getId() == id).get(0);
     }
 
     /**
@@ -177,9 +151,7 @@ public class University {
      * @return student if found, otherwise null
      */
     public Student getStudent(String fullName) {
-        for (Student student : students) if (student.getFullName().equals(fullName)) return student;
-
-        return null;
+        return students.findBy(student -> student.getFullName().equals(fullName)).get(0);
     }
 
     /**
@@ -188,7 +160,7 @@ public class University {
      * @return list of students
      */
     public List<Student> getStudents() {
-        return List.copyOf(students);
+        return students.getAll();
     }
 
     /**
@@ -198,11 +170,7 @@ public class University {
      * @return list of students in the faculty
      */
     public List<Student> getStudents(Faculty faculty) {
-        List<Student> result = new ArrayList<>();
-
-        for (Student student : students) if (student.getFaculty() == faculty) result.add(student);
-
-        return result;
+        return students.findBy(student -> student.getFaculty() == faculty);
     }
 
     /**
@@ -212,13 +180,7 @@ public class University {
      * @return list of students in the course
      */
     public List<Student> getStudentsByCourse(int course) {
-        List<Student> result = new ArrayList<>();
-
-        for (Student student : students) {
-            if (student.getCourse() == course) result.add(student);
-        }
-
-        return result;
+        return students.findBy(student -> student.getCourse() == course);
     }
 
     /**
@@ -228,13 +190,7 @@ public class University {
      * @return list of students in the group
      */
     public List<Student> getStudentsByGroup(int group) {
-        List<Student> result = new ArrayList<>();
-
-        for (Student student : students) {
-            if (student.getGroup() == group) result.add(student);
-        }
-
-        return result;
+        return students.findBy(student -> student.getGroup() == group);
     }
 
     /**
@@ -243,24 +199,17 @@ public class University {
      * @param teacher teacher object to add
      */
     public void addTeacher(Teacher teacher) {
-        if (teacher == null) throw new IllegalArgumentException("Teacher cannot be null.");
-        teachers.add(teacher);
+        teachers.addItem(teacher);
     }
 
     /**
      * Removes a teacher by their ID.
      *
-     * @param code teacher ID
+     * @param id teacher ID
      * @return true if the teacher was removed, false otherwise
      */
-    public boolean removeTeacher(int code) {
-        for (Teacher teacher : teachers) {
-            if (teacher.getId() == code) {
-                teachers.remove(teacher);
-                return true;
-            }
-        }
-        return false;
+    public boolean removeTeacher(int id) {
+        return teachers.remove(id);
     }
 
     /**
@@ -270,11 +219,7 @@ public class University {
      * @return teacher if found, otherwise null
      */
     public Teacher getTeacher(int id) {
-        for (Teacher teacher : teachers) {
-            if (teacher.getTeacherId() == id) return teacher;
-        }
-
-        return null;
+        return teachers.findBy(teacher -> teacher.getId() == id).get(0);
     }
 
     /**
@@ -283,7 +228,7 @@ public class University {
      * @return list of teachers
      */
     public List<Teacher> getTeachers() {
-        return List.copyOf(teachers);
+        return teachers.getAll();
     }
 
     /**
@@ -293,13 +238,7 @@ public class University {
      * @return list of teachers in the department
      */
     public List<Teacher> getTeachers(Department department) {
-        List<Teacher> result = new ArrayList<Teacher>();
-
-        for (Teacher teacher : teachers) {
-            if (teacher.getDepartment() == department)
-                result.add(teacher);
-        }
-        return result;
+        return teachers.findBy(teacher -> teacher.getDepartment() == department);
     }
     /**
      * Sets the full name of the university.
