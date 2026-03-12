@@ -93,7 +93,7 @@ public class Main {
         universityBranch.addMenuItem(editUniversity);
 
         // Add menu items to Faculties branch
-        MenuItem listFaculties = new MenuItem(1, "List Faculties", () -> System.out.println("Not realized yet!"), UserRole.EXPLORER);
+        MenuItem listFaculties = new MenuItem(1, "List Faculties", () -> FacultyService.listFaculties(university.getFaculties()), UserRole.EXPLORER);
         MenuItem addFaculty = new MenuItem(2, "Add Faculty", () -> System.out.println("Not realized yet!"), UserRole.ADMIN);
         MenuItem deleteFaculty = new MenuItem(3, "Delete Faculty", () -> System.out.println("Not realized yet!"), UserRole.ADMIN);
         MenuItem editFaculty = new MenuItem(4, "Edit Faculty", new EditFacultyAction(university.getFaculties(), university.getTeachers()), UserRole.ADMIN);
