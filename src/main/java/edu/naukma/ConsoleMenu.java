@@ -1,5 +1,8 @@
 package edu.naukma;
 
+import edu.naukma.services.StudentService;
+import edu.naukma.services.TeacherService;
+
 import java.util.*;
 
 public class ConsoleMenu {

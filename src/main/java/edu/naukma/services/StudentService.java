@@ -1,4 +1,7 @@
-package edu.naukma;
+package edu.naukma.services;
+
+import edu.naukma.Student;
+import edu.naukma.StudentComparators;
 
 import java.util.ArrayList;
 import java.util.List;

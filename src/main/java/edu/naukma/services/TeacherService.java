@@ -1,4 +1,7 @@
-package edu.naukma;
+package edu.naukma.services;
+
+import edu.naukma.Teacher;
+import edu.naukma.TeacherComparators;
 
 import java.util.ArrayList;
 import java.util.List;
