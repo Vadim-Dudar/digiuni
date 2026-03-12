@@ -143,4 +143,27 @@ public class InputUtils {
             }
         }
     }
+
+    /**
+     * Reads an email address from the console input, ensuring it contains an "@" symbol.
+     *
+     * @param prompt the message to display to the user before input
+     * @return the entered email address as a string
+     */
+    public static String readEmail(String prompt) {
+        while (true) {
+            String email = readString(prompt);
+            if (email.contains("@")) return email;
+            System.out.println("Enter valid email!");
+        }
+    }
+
+    /**
+     * Reads an email address from the console input with a default prompt.
+     *
+     * @return the entered email address as a string
+     */
+    public static String readEmail() {
+        return readEmail("Enter email: ");
+    }
 }
