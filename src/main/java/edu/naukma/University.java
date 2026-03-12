@@ -2,6 +2,7 @@ package edu.naukma;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class University {
 
@@ -63,8 +64,12 @@ public class University {
      * @param code faculty code
      * @return faculty if found, otherwise null
      */
-    public Faculty getFaculty(int code) {
-        return faculties.findBy(faculty -> faculty.getId() == code).get(0);
+    public Optional<Faculty> getFaculty(int code) {
+        List<Faculty> facultyList = faculties.findBy(faculty -> faculty.getId() == code);
+
+        if (facultyList.isEmpty())
+            return Optional.empty();
+        return Optional.of(facultyList.get(0));
     }
 
     /**
@@ -82,8 +87,12 @@ public class University {
      * @param department department to find the faculty for
      * @return faculty if found, otherwise null
      */
-    public Faculty getFaculty(Department department) {
-        return faculties.findBy(faculty -> faculty.getDepartments().contains(department)).get(0);
+    public Optional<Faculty> getFaculty(Department department) {
+        List<Faculty> facultyList =  faculties.findBy(faculty -> faculty.getDepartments().contains(department));
+
+        if (facultyList.isEmpty())
+            return Optional.empty();
+        return Optional.of(facultyList.get(0));
     }
 
     /**
@@ -107,12 +116,15 @@ public class University {
      * @param code department code
      * @return department if found, otherwise null
      */
-    public Department getDepartment(int code) {
+    public Optional<Department> getDepartment(int code) {
         List<Department> departments = getDepartments();
 
-        for (Department department : departments) if (department.getId() == code) return department;
+        for (Department department : departments) {
+            if (department.getId() == code)
+                return Optional.of(department);
+        }
 
-        return null;
+        return Optional.empty();
     }
 
     /**
@@ -140,8 +152,12 @@ public class University {
      * @param id student ID
      * @return student if found, otherwise null
      */
-    public Student getStudent(int id) {
-        return students.findBy(student -> student.getId() == id).get(0);
+    public Optional<Student> getStudent(int id) {
+        List<Student> studentList = students.findBy(student -> student.getId() == id);
+
+        if (studentList.isEmpty())
+            return Optional.empty();
+        return Optional.of(studentList.get(0));
     }
 
     /**
@@ -150,8 +166,12 @@ public class University {
      * @param fullName student full name
      * @return student if found, otherwise null
      */
-    public Student getStudent(String fullName) {
-        return students.findBy(student -> student.getFullName().equals(fullName)).get(0);
+    public Optional<Student> getStudent(String fullName) {
+        List<Student> studentList = students.findBy(student -> student.getFullName().equals(fullName));
+
+        if (studentList.isEmpty())
+            return Optional.empty();
+        return Optional.of(studentList.get(0));
     }
 
     /**
@@ -218,8 +238,12 @@ public class University {
      * @param id teacher ID
      * @return teacher if found, otherwise null
      */
-    public Teacher getTeacher(int id) {
-        return teachers.findBy(teacher -> teacher.getId() == id).get(0);
+    public Optional<Teacher> getTeacher(int id) {
+        List<Teacher> teacherList = teachers.findBy(teacher -> teacher.getId() == id);
+
+        if (teacherList.isEmpty())
+            return Optional.empty();
+        return Optional.of(teacherList.get(0));
     }
 
     /**
