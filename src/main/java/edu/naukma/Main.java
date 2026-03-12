@@ -6,6 +6,7 @@ import edu.naukma.actions.EditUniversityAction;
 import edu.naukma.actions.ShowUniversityAction;
 import edu.naukma.console.*;
 import edu.naukma.console.MenuItem;
+import edu.naukma.services.DepartmentService;
 import edu.naukma.services.FacultyService;
 import edu.naukma.services.UserService;
 
@@ -105,10 +106,10 @@ public class Main {
         faculties.addMenuItem(editFaculty);
 
         // Add menu items to Departments branch
-        MenuItem listDepartments = new MenuItem(1, "List Departments", () -> System.out.println("Not realized yet!"), UserRole.EXPLORER);
+        MenuItem listDepartments = new MenuItem(1, "List Departments", () -> DepartmentService.listDepartments(university.getDepartments()), UserRole.EXPLORER);
         MenuItem addDepartment = new MenuItem(2, "Add Department", () -> System.out.println("Not realized yet!"), UserRole.ADMIN);
         MenuItem deleteDepartment = new MenuItem(3, "Delete Department", () -> System.out.println("Not realized yet!"), UserRole.ADMIN);
-        MenuItem editDepartment = new MenuItem(4, "Edit Department", () -> System.out.println("Not realized yet!"), UserRole.ADMIN);
+        MenuItem editDepartment = new MenuItem(4, "Edit Department", () -> DepartmentService.editDepartment(university.getDepartments(), university.getFaculties(), university.getTeachers()), UserRole.ADMIN);
         departments.addMenuItem(listDepartments);
         departments.addMenuItem(addDepartment);
         departments.addMenuItem(deleteDepartment);
