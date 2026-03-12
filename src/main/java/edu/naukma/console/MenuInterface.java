@@ -147,4 +147,13 @@ public class MenuInterface {
     public void setUniversity(University university) {
         this.university = university;
     }
+
+    /**
+     * Get the university associated with the menu interface.
+     *
+     * @return The university associated with the menu interface.
+     */
+    public Set<User> getUsers() {
+        return users;
+    }
 }

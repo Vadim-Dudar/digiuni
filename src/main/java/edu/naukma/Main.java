@@ -7,6 +7,7 @@ import edu.naukma.actions.ShowUniversityAction;
 import edu.naukma.console.*;
 import edu.naukma.console.MenuItem;
 import edu.naukma.services.FacultyService;
+import edu.naukma.services.UserService;
 
 import java.awt.*;
 
@@ -150,8 +151,8 @@ public class Main {
         reports.addMenuItem(sortTeachers);
 
         // Add menu items to Users branch
-        MenuItem listUsers = new MenuItem(1, "List Users", () -> System.out.println("Not realized yet!"), UserRole.TECH_ADMIN);
-        MenuItem createUser = new MenuItem(2, "Create User", () -> System.out.println("Not realized yet!"), UserRole.TECH_ADMIN);
+        MenuItem listUsers = new MenuItem(1, "List Users", () -> UserService.listUsers(menuInterface.getUsers()), UserRole.TECH_ADMIN);
+        MenuItem createUser = new MenuItem(2, "Create User", () -> UserService.createUser(menuInterface.getUsers()), UserRole.TECH_ADMIN);
         MenuItem changePassword = new MenuItem(3, "Change Password", () -> System.out.println("Not realized yet!"), UserRole.TECH_ADMIN);
         MenuItem deleteUser = new MenuItem(5, "Delete User", () -> System.out.println("Not realized yet!"), UserRole.TECH_ADMIN);
         users.addMenuItem(listUsers);
