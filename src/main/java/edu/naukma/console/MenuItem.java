@@ -2,6 +2,7 @@ package edu.naukma.console;
 
 import edu.naukma.User;
 import edu.naukma.UserRole;
+import edu.naukma.actions.Action;
 import edu.naukma.exeptions.InvalidMenuItemFieldException;
 
 /**
@@ -11,10 +12,10 @@ import edu.naukma.exeptions.InvalidMenuItemFieldException;
 public class MenuItem implements Described {
     private final int id;
     private final String description;
-    private final MenuAction action;
+    private final Action action;
     private final UserRole requiredRole;
 
-    public MenuItem(int id, String description, MenuAction action, UserRole requiredRole) {
+    public MenuItem(int id, String description, Action action, UserRole requiredRole) {
         if (id < 0)
             throw new InvalidMenuItemFieldException("Menu item ID must be non-negative!");
         if (description == null || description.trim().isEmpty())
@@ -48,7 +49,7 @@ public class MenuItem implements Described {
      *
      * @return The action associated with the menu item.
      */
-    public MenuAction getAction() {
+    public Action getAction() {
         return action;
     }
 
