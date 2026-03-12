@@ -1,5 +1,6 @@
 package edu.naukma.console;
 
+import edu.naukma.University;
 import edu.naukma.User;
 
 import java.util.*;
@@ -9,6 +10,7 @@ public class MenuInterface {
     private final List<MenuBranch> branches = new ArrayList<>();
     private final Set<User> users = new HashSet<>();
     private User currentUser;
+    private University university;
 
     /**
      * Get the list of menu branches in the interface.
@@ -136,5 +138,14 @@ public class MenuInterface {
             System.out.println((i + 1) + " - " + branches.get(i).getDescription());
         }
         System.out.println("0 - Exit");
+    }
+
+    /**
+     * Get the university associated with the menu interface.
+     *
+     * @return The university associated with the menu interface.
+     */
+    public void setUniversity(University university) {
+        this.university = university;
     }
 }
