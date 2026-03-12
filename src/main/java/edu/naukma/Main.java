@@ -141,7 +141,10 @@ public class Main {
         students.addMenuItem(editStudent);
 
         // Add menu items to Reports branch
-        MenuItem studentsInFacultyReport = new MenuItem(1, "Students in Faculty Report", () -> System.out.println("Not realized yet!"), UserRole.EXPLORER);
+        MenuItem studentsInFacultyReport = new MenuItem(1, "Students in Faculty Report", () -> {
+            for (Faculty faculty: university.getFaculties())
+                System.out.println("Faculty: " + faculty.getName() + " has " + university.getStudents(faculty).size() + " students.");
+        }, UserRole.EXPLORER);
         reports.addMenuItem(studentsInFacultyReport);
 
         // Add menu items to Sorting branch
