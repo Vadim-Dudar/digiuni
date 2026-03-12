@@ -31,8 +31,11 @@ public class Person implements Identifiable {
      */
     public Person(String name, String surname, String middleName, String dayOfBirth, String phone, String email) {
         if (name == null || surname == null || middleName == null || dayOfBirth == null || phone == null || email == null ||
-                name.isEmpty() || surname.isEmpty() || middleName.isEmpty() || dayOfBirth.isEmpty() || phone.isEmpty() || !email.contains("@"))
+                name.isEmpty() || surname.isEmpty() || middleName.isEmpty() || dayOfBirth.isEmpty() || phone.isEmpty() || email.isEmpty())
             throw new InvalidPersonFieldException("Person field can't be null or empty!");
+
+        if (phone.length() < 5) throw new InvalidPersonFieldException("Phone number is too short!");
+        if (!email.contains("@")) throw new IllegalArgumentException("Email must contain '@' symbol!");
 
         LocalDate parsedDate;
         String normalizedDate = dayOfBirth.trim().replace('.', '-').replace('/', '-');
