@@ -1,13 +1,9 @@
 package edu.naukma;
 
-import edu.naukma.actions.AddFacultyAction;
-import edu.naukma.actions.EditFacultyAction;
-import edu.naukma.actions.EditUniversityAction;
-import edu.naukma.actions.ShowUniversityAction;
+import edu.naukma.actions.*;
 import edu.naukma.console.*;
 import edu.naukma.console.MenuItem;
-import edu.naukma.services.FacultyService;
-import edu.naukma.services.UserService;
+import edu.naukma.services.*;
 
 import java.awt.*;
 
@@ -79,6 +75,7 @@ public class Main {
         MenuBranch teachers = new MenuBranch("Manage Teachers");
         MenuBranch students = new MenuBranch("Manage Students");
         MenuBranch reports = new MenuBranch("Reports");
+        MenuBranch sorting = new MenuBranch("Sorting");
         MenuBranch users = new MenuBranch("Manage Users");
         menuInterface.addMenuBranch(universityBranch);
         menuInterface.addMenuBranch(faculties);
@@ -86,6 +83,7 @@ public class Main {
         menuInterface.addMenuBranch(teachers);
         menuInterface.addMenuBranch(students);
         menuInterface.addMenuBranch(reports);
+        menuInterface.addMenuBranch(sorting);
         menuInterface.addMenuBranch(users);
 
         // Add menu items to University branch
@@ -105,21 +103,21 @@ public class Main {
         faculties.addMenuItem(editFaculty);
 
         // Add menu items to Departments branch
-        MenuItem listDepartments = new MenuItem(1, "List Departments", () -> System.out.println("Not realized yet!"), UserRole.EXPLORER);
-        MenuItem addDepartment = new MenuItem(2, "Add Department", () -> System.out.println("Not realized yet!"), UserRole.ADMIN);
-        MenuItem deleteDepartment = new MenuItem(3, "Delete Department", () -> System.out.println("Not realized yet!"), UserRole.ADMIN);
-        MenuItem editDepartment = new MenuItem(4, "Edit Department", () -> System.out.println("Not realized yet!"), UserRole.ADMIN);
+        MenuItem listDepartments = new MenuItem(1, "List Departments", () -> DepartmentService.listDepartments(university.getDepartments()), UserRole.EXPLORER);
+        MenuItem addDepartment = new MenuItem(2, "Add Department", () -> DepartmentService.addDepartment(university.getDepartments(), university.getFaculties(), university.getTeachers()), UserRole.ADMIN);
+        MenuItem deleteDepartment = new MenuItem(3, "Delete Department", () -> DepartmentService.deleteDepartment(university.getDepartments()), UserRole.ADMIN);
+        MenuItem editDepartment = new MenuItem(4, "Edit Department", () -> DepartmentService.editDepartment(university.getDepartments(), university.getFaculties(), university.getTeachers()), UserRole.ADMIN);
         departments.addMenuItem(listDepartments);
         departments.addMenuItem(addDepartment);
         departments.addMenuItem(deleteDepartment);
         departments.addMenuItem(editDepartment);
 
         // Add menu items to Teachers branch
-        MenuItem listTeachers = new MenuItem(1, "List Teachers", () -> System.out.println("Not realized yet!"), UserRole.EXPLORER);
-        MenuItem findTeacherByDepartment = new MenuItem(2, "Find Teacher by Department", () -> System.out.println("Not realized yet!"), UserRole.EXPLORER);
-        MenuItem addTeacher = new MenuItem(3, "Add Teacher", () -> System.out.println("Not realized yet!"), UserRole.ADMIN);
-        MenuItem deleteTeacher = new MenuItem(4, "Delete Teacher", () -> System.out.println("Not realized yet!"), UserRole.ADMIN);
-        MenuItem editTeacher = new MenuItem(5, "Edit Teacher", () -> System.out.println("Not realized yet!"), UserRole.ADMIN);
+        MenuItem listTeachers = new MenuItem(1, "List Teachers", () -> TeacherService.listTeachers(university.getTeachers()), UserRole.EXPLORER);
+        MenuItem findTeacherByDepartment = new MenuItem(2, "Find Teacher by Department", () -> TeacherService.listTeachers(university.getTeachers(DepartmentService.chooseDepartment(university.getDepartments()))), UserRole.EXPLORER);
+        MenuItem addTeacher = new MenuItem(3, "Add Teacher", () -> TeacherService.addTeacher(university.getTeachers(), university.getFaculties(), university.getDepartments()), UserRole.ADMIN);
+        MenuItem deleteTeacher = new MenuItem(4, "Delete Teacher", () -> TeacherService.deleteTeacher(university.getTeachers()), UserRole.ADMIN);
+        MenuItem editTeacher = new MenuItem(5, "Edit Teacher", () -> TeacherService.editTeacher(university.getTeachers(), university.getFaculties(), university.getDepartments()), UserRole.ADMIN);
         teachers.addMenuItem(listTeachers);
         teachers.addMenuItem(findTeacherByDepartment);
         teachers.addMenuItem(addTeacher);
@@ -127,13 +125,13 @@ public class Main {
         teachers.addMenuItem(editTeacher);
 
         // Add menu items to Students branch
-        MenuItem listStudents = new MenuItem(1, "List Students", () -> System.out.println("Not realized yet!"), UserRole.EXPLORER);
-        MenuItem findStudentByFullName = new MenuItem(2, "Find Student by Full Name", () -> System.out.println("Not realized yet!"), UserRole.EXPLORER);
-        MenuItem findStudentByCourse = new MenuItem(3, "Find Student by Course", () -> System.out.println("Not realized yet!"), UserRole.EXPLORER);
-        MenuItem findStudentByGroup = new MenuItem(4, "Find Student by Group", () -> System.out.println("Not realized yet!"), UserRole.EXPLORER);
-        MenuItem addStudent = new MenuItem(5, "Add Student", () -> System.out.println("Not realized yet!"), UserRole.ADMIN);
-        MenuItem deleteStudent = new MenuItem(6, "Delete Student", () -> System.out.println("Not realized yet!"), UserRole.ADMIN);
-        MenuItem editStudent = new MenuItem(7, "Edit Student", () -> System.out.println("Not realized yet!"), UserRole.ADMIN);
+        MenuItem listStudents = new MenuItem(1, "List Students", () -> StudentService.listStudents(university.getStudents()), UserRole.EXPLORER);
+        MenuItem findStudentByFullName = new MenuItem(2, "Find Student by Full Name", () -> new FindStudentByFullNameAction(university.getStudentRepository()), UserRole.EXPLORER);
+        MenuItem findStudentByCourse = new MenuItem(3, "Find Student by Course", () -> new FindStudentByCourseAction(university.getStudentRepository()), UserRole.EXPLORER);
+        MenuItem findStudentByGroup = new MenuItem(4, "Find Student by Group", () -> new FindStudentByCourseAction(university.getStudentRepository()), UserRole.EXPLORER);
+        MenuItem addStudent = new MenuItem(5, "Add Student", () -> StudentService.addStudent(university.getStudents(), university.getFaculties(), university.getDepartments()), UserRole.ADMIN);
+        MenuItem deleteStudent = new MenuItem(6, "Delete Student", () -> StudentService.deleteStudent(university.getStudents()), UserRole.ADMIN);
+        MenuItem editStudent = new MenuItem(7, "Edit Student", () -> StudentService.editStudent(university.getStudents(), university.getFaculties(), university.getDepartments()), UserRole.ADMIN);
         students.addMenuItem(listStudents);
         students.addMenuItem(findStudentByFullName);
         students.addMenuItem(findStudentByCourse);
@@ -143,12 +141,21 @@ public class Main {
         students.addMenuItem(editStudent);
 
         // Add menu items to Reports branch
-        MenuItem studentsInFacultyReport = new MenuItem(1, "Students in Faculty Report", () -> System.out.println("Not realized yet!"), UserRole.EXPLORER);
-        MenuItem sortStudent = new MenuItem(2, "Sort Students", () -> System.out.println("Not realized yet!"), UserRole.EXPLORER);
-        MenuItem sortTeachers = new MenuItem(3, "Sort Teachers", () -> System.out.println("Not realized yet!"), UserRole.EXPLORER);
+        MenuItem studentsInFacultyReport = new MenuItem(1, "Students in Faculty Report", () -> {
+            for (Faculty faculty: university.getFaculties())
+                System.out.println("Faculty: " + faculty.getName() + " has " + university.getStudents(faculty).size() + " students.");
+        }, UserRole.EXPLORER);
         reports.addMenuItem(studentsInFacultyReport);
-        reports.addMenuItem(sortStudent);
-        reports.addMenuItem(sortTeachers);
+
+        // Add menu items to Sorting branch
+        MenuItem sortStudentsByCourse = new MenuItem(1, "Sort Students by Course", () -> StudentService.listStudents(StudentService.sortByCourse(university.getStudents())), UserRole.EXPLORER);
+        MenuItem sortStudentsByGroup = new MenuItem(2, "Sort Students by Group", () -> StudentService.listStudents(StudentService.sortByGroup(university.getStudents())), UserRole.EXPLORER);
+        MenuItem sortTeachersBySurname = new MenuItem(3, "Sort Teachers by Surname", () -> TeacherService.listTeachers(TeacherService.sortByName(university.getTeachers())), UserRole.EXPLORER);
+        MenuItem sortTeacherBySurnameInDepartment = new MenuItem(4, "Sort Teachers by Surname in Department", () -> TeacherService.listTeachers(TeacherService.sortByName(university.getTeachers(DepartmentService.chooseDepartment(university.getDepartments())))), UserRole.EXPLORER);
+        sorting.addMenuItem(sortStudentsByCourse);
+        sorting.addMenuItem(sortStudentsByGroup);
+        sorting.addMenuItem(sortTeachersBySurname);
+        sorting.addMenuItem(sortTeacherBySurnameInDepartment);
 
         // Add menu items to Users branch
         MenuItem listUsers = new MenuItem(1, "List Users", () -> UserService.listUsers(menuInterface.getUsers()), UserRole.TECH_ADMIN);
