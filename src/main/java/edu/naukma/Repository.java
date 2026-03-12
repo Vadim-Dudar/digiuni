@@ -1,7 +1,6 @@
 package edu.naukma;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -11,7 +10,7 @@ import java.util.stream.Collectors;
  * @param <T> the type of items in the repository
  */
 public class Repository<T extends Identifiable> {
-    private final List<T> items = new ArrayList<>();
+    private final Map<Integer, T> items = new HashMap<>();
 
     /**
      * Adds an item to the repository.
@@ -21,7 +20,7 @@ public class Repository<T extends Identifiable> {
      */
     public void addItem(T item) {
         if (item == null) throw new IllegalArgumentException("Item can't be null!");
-        items.add(item);
+        items.put(item.getId(), item);
     }
 
     /**
@@ -31,7 +30,7 @@ public class Repository<T extends Identifiable> {
      * @return true if the item was removed, false otherwise
      */
     public boolean remove(int id) {
-        return items.removeIf(item -> item.getId() == id);
+        return items.remove(id) != null;
     }
 
     /**
@@ -40,7 +39,7 @@ public class Repository<T extends Identifiable> {
      * @return a list of all items
      */
     public List<T> getAll() {
-        return items;
+        return new ArrayList<>(items.values());
     }
 
     /**
@@ -50,8 +49,12 @@ public class Repository<T extends Identifiable> {
      * @return a list of items that match the filter
      */
     public List<T> findBy(Predicate<T> filter) {
-        return items.stream()
+        return items.values().stream()
                 .filter(filter)
                 .collect(Collectors.toList());
+    }
+
+    public Optional<T> getById(int id) {
+        return Optional.ofNullable(items.get(id));
     }
 }

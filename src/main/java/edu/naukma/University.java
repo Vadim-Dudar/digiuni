@@ -65,11 +65,7 @@ public class University {
      * @return faculty if found, otherwise null
      */
     public Optional<Faculty> getFaculty(int code) {
-        List<Faculty> facultyList = faculties.findBy(faculty -> faculty.getId() == code);
-
-        if (facultyList.isEmpty())
-            return Optional.empty();
-        return Optional.of(facultyList.get(0));
+        return faculties.getById(code);
     }
 
     /**
@@ -88,7 +84,7 @@ public class University {
      * @return faculty if found, otherwise null
      */
     public Optional<Faculty> getFaculty(Department department) {
-        List<Faculty> facultyList =  faculties.findBy(faculty -> faculty.getDepartments().contains(department));
+        List<Faculty> facultyList = faculties.findBy(faculty -> faculty.getDepartments().contains(department));
 
         if (facultyList.isEmpty())
             return Optional.empty();
@@ -117,9 +113,7 @@ public class University {
      * @return department if found, otherwise null
      */
     public Optional<Department> getDepartment(int code) {
-        List<Department> departments = getDepartments();
-
-        for (Department department : departments) {
+        for (Department department : getDepartments()) {
             if (department.getId() == code)
                 return Optional.of(department);
         }
@@ -153,11 +147,7 @@ public class University {
      * @return student if found, otherwise null
      */
     public Optional<Student> getStudent(int id) {
-        List<Student> studentList = students.findBy(student -> student.getId() == id);
-
-        if (studentList.isEmpty())
-            return Optional.empty();
-        return Optional.of(studentList.get(0));
+        return students.getById(id);
     }
 
     /**
@@ -239,11 +229,7 @@ public class University {
      * @return teacher if found, otherwise null
      */
     public Optional<Teacher> getTeacher(int id) {
-        List<Teacher> teacherList = teachers.findBy(teacher -> teacher.getId() == id);
-
-        if (teacherList.isEmpty())
-            return Optional.empty();
-        return Optional.of(teacherList.get(0));
+        return teachers.getById(id);
     }
 
     /**
@@ -276,7 +262,7 @@ public class University {
     /**
      * Sets the short name of the university.
      *
-     * @param shortName new short name of the university
+     * @param shortName new short name
      */
     public void setShortName(String shortName) {
         this.shortName = shortName;
