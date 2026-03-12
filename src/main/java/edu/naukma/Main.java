@@ -153,8 +153,8 @@ public class Main {
         // Add menu items to Users branch
         MenuItem listUsers = new MenuItem(1, "List Users", () -> UserService.listUsers(menuInterface.getUsers()), UserRole.TECH_ADMIN);
         MenuItem createUser = new MenuItem(2, "Create User", () -> UserService.createUser(menuInterface.getUsers()), UserRole.TECH_ADMIN);
-        MenuItem changePassword = new MenuItem(3, "Change Password", () -> System.out.println("Not realized yet!"), UserRole.TECH_ADMIN);
-        MenuItem deleteUser = new MenuItem(5, "Delete User", () -> System.out.println("Not realized yet!"), UserRole.TECH_ADMIN);
+        MenuItem changePassword = new MenuItem(3, "Change Password", () -> UserService.changePassword(menuInterface.getUsers()), UserRole.TECH_ADMIN);
+        MenuItem deleteUser = new MenuItem(5, "Delete User", () -> UserService.deleteUser(menuInterface.getUsers()), UserRole.TECH_ADMIN);
         users.addMenuItem(listUsers);
         users.addMenuItem(createUser);
         users.addMenuItem(deleteUser);
