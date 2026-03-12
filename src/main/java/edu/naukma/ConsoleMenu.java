@@ -214,7 +214,11 @@ public class ConsoleMenu {
                 System.out.println("Enter dean ID:");
                 String teacherIdStr = readString();
                 int teacherId = Integer.parseInt(teacherIdStr);
-                Teacher teacher = university.getTeacher(teacherId);
+                Teacher teacher = university.getTeacher(teacherId).orElse(null);
+                if (teacher == null) {
+                    System.out.println("teacher not found");
+                    return;
+                }
 
                 System.out.println("Enter contacts:");
                 String contacts = readString();
@@ -243,7 +247,7 @@ public class ConsoleMenu {
 
                 System.out.println("Enter faculty code to edit: ");
                 int code = readInt();
-                Faculty faculty = university.getFaculty(code);
+                Faculty faculty = university.getFaculty(code).orElse(null);
 
                 if (faculty == null) {
                     System.out.println("Faculty not found.");
@@ -258,7 +262,12 @@ public class ConsoleMenu {
 
                 System.out.println("Enter teacher code of new dean");
                 int teacherId = readInt();
-                faculty.setDean(university.getTeacher(teacherId));
+                Teacher teacher = university.getTeacher(teacherId).orElse(null);
+                if (teacher == null) {
+                    System.out.println("teacher not found");
+                    return;
+                }
+                faculty.setDean(teacher);
 
                 System.out.println("Enter new contacts: ");
                 faculty.setContacts(readString());
@@ -300,7 +309,11 @@ public class ConsoleMenu {
 
                 System.out.println("Enter head teacher id:");
                 int teacherId = readInt();
-                Teacher head = university.getTeacher(teacherId);
+                Teacher head = university.getTeacher(teacherId).orElse(null);
+                if (head == null) {
+                    System.out.println("teacher not found");
+                    return;
+                }
 
                 System.out.println("Enter location:");
                 String location = readString();
@@ -316,8 +329,16 @@ public class ConsoleMenu {
 
                 System.out.print("Enter department code to delete: ");
                 int code = readInt();
-                Department department = university.getDepartment(code);
-                Faculty faculty = university.getFaculty(department);
+                Department department = university.getDepartment(code).orElse(null);
+                if (department == null) {
+                    System.out.println("department not found");
+                    return;
+                }
+                Faculty faculty = university.getFaculty(department).orElse(null);
+                if (faculty == null) {
+                    System.out.println("faculty not found");
+                    return;
+                }
                 if (faculty.removeDepartment(code))
                     System.out.println("Deleted.");
                 else
@@ -454,7 +475,11 @@ public class ConsoleMenu {
 
                 System.out.print("Enter student ID to edit: ");
                 int idEdit = readInt();
-                Student student = university.getStudent(idEdit);
+                Student student = university.getStudent(idEdit).orElse(null);
+                if (student == null) {
+                    System.out.println("student not found");
+                    return;
+                }
 
                 System.out.println("Enter name:");
                 student.setName(readString());
@@ -473,7 +498,12 @@ public class ConsoleMenu {
 
                 System.out.println("Enter faculty id: ");
                 int facultyId = readInt();
-                student.setFaculty(university.getFaculty(facultyId));
+                Faculty faculty = university.getFaculty(facultyId).orElse(null);
+                if (faculty == null) {
+                    System.out.println("Faculty not found");
+                    return;
+                }
+                student.setFaculty(faculty);
 
                 System.out.println("Enter course:");
                 int course = readInt();
@@ -513,7 +543,12 @@ public class ConsoleMenu {
                 System.out.println("Enter full name: ");
                 String fullName = readString();
 
-                System.out.println(university.getStudent(fullName));
+                Student student = university.getStudent(fullName).orElse(null);
+                if (student == null) {
+                    System.out.println("Student not found");
+                    return;
+                }
+                System.out.println(student);
                 break;
             }
             case 3: {
@@ -625,7 +660,11 @@ public class ConsoleMenu {
                 System.out.print("Enter teacher ID to edit: ");
                 int idEdit = readInt();
 
-                Teacher teacher = university.getTeacher(idEdit);
+                Teacher teacher = university.getTeacher(idEdit).orElse(null);
+                if (teacher == null) {
+                    System.out.println("teacher not found");
+                    return;
+                }
 
                 System.out.println("Enter name:");
                 teacher.setName(readString());
@@ -936,7 +975,7 @@ public class ConsoleMenu {
             if (university.getFaculties().isEmpty()) return null;
 
             int code = readInt();
-            Faculty f = university.getFaculty(code);
+            Faculty f = university.getFaculty(code).orElse(null);
             if (f == null) {
                 System.out.println("Error: faculty not found.");
                 continue;
@@ -956,7 +995,7 @@ public class ConsoleMenu {
                 System.out.println(d.getId() + " - " + d.getName());
 
             int code = readInt();
-            Department d = university.getDepartment(code);
+            Department d = university.getDepartment(code).orElse(null);
             if (d == null) {
                 System.out.println("Error: department not found.");
                 continue;
