@@ -12,8 +12,9 @@ public class FacultyService {
             return;
         }
         System.out.println("Available faculties:");
+        int i = 1;
         for (Faculty f : faculties) {
-            System.out.println("[" + f.getId() + "] " + f.getShortName() + " : " + f.getContacts());
+            System.out.println(i++ +"Faculty id:  [" + f.getId() + "] name: " + f.getShortName() + " : " + f.getContacts());
         }
     }
 
@@ -24,5 +25,11 @@ public class FacultyService {
             if (choise > 0 && choise <= faculties.size()) return faculties.get(choise-1);
             else System.out.println("Choose correct faculty! ");
         }
+    }
+
+    public static void deleteFaculty(List<Faculty> faculties) {
+        Faculty faculty = chooseFaculty(faculties);
+        faculties.remove(faculty);
+        System.out.println("Faculty successfully deleted: " + faculty);
     }
 }
