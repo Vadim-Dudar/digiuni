@@ -6,7 +6,6 @@ import edu.naukma.User;
 import java.util.*;
 
 public class MenuInterface {
-    private static final InputUtils inputUtils = new InputUtils();
     private final List<MenuBranch> branches = new ArrayList<>();
     private final Set<User> users = new HashSet<>();
     private User currentUser;
@@ -48,7 +47,7 @@ public class MenuInterface {
             login();
             while (currentUser != null) {
                 printMenu(branches);
-                int choice = inputUtils.readInt("Select option: ");
+                int choice = InputUtils.readInt("Select option: ");
                 if (choice == 0) {
                     currentUser = null;
                     System.out.println("Logged out.");
@@ -80,7 +79,7 @@ public class MenuInterface {
                 }
                 System.out.println("0 - Back");
 
-                int itemChoice = inputUtils.readInt("Select option: ");
+                int itemChoice = InputUtils.readInt("Select option: ");
                 if (itemChoice == 0) continue;
                 if (itemChoice < 1 || itemChoice > allowed.size()) {
                     System.out.println("[Invalid selection.]");
@@ -106,11 +105,11 @@ public class MenuInterface {
             System.out.println("\n--- Enter to system ---");
 
 
-            String login = inputUtils.readString("Login: ");
+            String login = InputUtils.readString("Login: ");
 
             for (User user : users) {
                 if (user.login.equals(login.trim())) {
-                    String password = inputUtils.readString("Password: ");
+                    String password = InputUtils.readString("Password: ");
 
                     if (user.checkPassword(password.trim())) {
                         currentUser = user;

@@ -1,5 +1,7 @@
 package edu.naukma;
 
+import edu.naukma.actions.EditUniversityAction;
+import edu.naukma.actions.ShowUniversityAction;
 import edu.naukma.console.*;
 import edu.naukma.console.MenuItem;
 
@@ -83,8 +85,10 @@ public class Main {
         menuInterface.addMenuBranch(users);
 
         // Add menu items to University branch
-        MenuItem showUniversity = new MenuItem(1, "Show University", () -> System.out.println("Not realized yet!"), UserRole.EXPLORER);
+        MenuItem showUniversity = new MenuItem(1, "Show University", new ShowUniversityAction(university), UserRole.EXPLORER);
+        MenuItem editUniversity = new MenuItem(2, "Edit University", new EditUniversityAction(university), UserRole.ADMIN);
         universityBranch.addMenuItem(showUniversity);
+        universityBranch.addMenuItem(editUniversity);
 
         // Add menu items to Faculties branch
         MenuItem listFaculties = new MenuItem(1, "List Faculties", () -> System.out.println("Not realized yet!"), UserRole.EXPLORER);

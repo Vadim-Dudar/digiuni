@@ -5,14 +5,14 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 public class InputUtils {
-    private final Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
     /**
      * Safely reads an integer from console input.
      *
      * @return integer value entered by the user
      */
-    public int readInt() {
+    public static int readInt() {
         while (true) {
             try {
                 int result = Integer.parseInt(scanner.nextLine());
@@ -33,7 +33,7 @@ public class InputUtils {
      * @param prompt the message to display to the user before input
      * @return integer value entered by the user
      */
-    public int readInt(String prompt) {
+    public static int readInt(String prompt) {
         while (true) {
             try {
                 System.out.print(prompt);
@@ -55,7 +55,7 @@ public class InputUtils {
      *
      * @return non-empty string entered by the user
      */
-    public String readString() {
+    public static String readString() {
         while (true) {
             String result = scanner.nextLine();
             if (result.trim().isEmpty()) {
@@ -72,7 +72,7 @@ public class InputUtils {
      * @param prompt the message to display to the user before input
      * @return non-empty string entered by the user
      */
-    public String readString(String prompt) {
+    public static String readString(String prompt) {
         while (true) {
             System.out.print(prompt);
             String result = scanner.nextLine();
@@ -91,7 +91,7 @@ public class InputUtils {
      * @param <T>       the type of the enum
      * @return the selected enum value
      */
-    public  <T extends Enum<T>> T chooseEnum(Class<T> enumClass) {
+    public static  <T extends Enum<T>> T chooseEnum(Class<T> enumClass) {
         T[] elements = enumClass.getEnumConstants();
 
         while (true) {
@@ -112,7 +112,7 @@ public class InputUtils {
      * @param prompt the message to display to the user before input
      * @return the entered phone number as a string
      */
-    public String readPhone(String prompt) {
+    public static String readPhone(String prompt) {
         while (true) {
             String result = readString(prompt);
             if (result.length() > 5) {
@@ -130,7 +130,7 @@ public class InputUtils {
      * @param prompt the message to display to the user before input
      * @return the parsed date as a string in ISO format (YYYY-MM-DD)
      */
-    public String readDate(String prompt) {
+    public static String readDate(String prompt) {
         while (true) {
             String result = readString(prompt);
             LocalDate parsedDate;
