@@ -75,6 +75,7 @@ public class Main {
         MenuBranch teachers = new MenuBranch("Manage Teachers");
         MenuBranch students = new MenuBranch("Manage Students");
         MenuBranch reports = new MenuBranch("Reports");
+        MenuBranch sorting = new MenuBranch("Sorting");
         MenuBranch users = new MenuBranch("Manage Users");
         menuInterface.addMenuBranch(universityBranch);
         menuInterface.addMenuBranch(faculties);
@@ -82,6 +83,7 @@ public class Main {
         menuInterface.addMenuBranch(teachers);
         menuInterface.addMenuBranch(students);
         menuInterface.addMenuBranch(reports);
+        menuInterface.addMenuBranch(sorting);
         menuInterface.addMenuBranch(users);
 
         // Add menu items to University branch
@@ -140,11 +142,17 @@ public class Main {
 
         // Add menu items to Reports branch
         MenuItem studentsInFacultyReport = new MenuItem(1, "Students in Faculty Report", () -> System.out.println("Not realized yet!"), UserRole.EXPLORER);
-        MenuItem sortStudent = new MenuItem(2, "Sort Students", () -> System.out.println("Not realized yet!"), UserRole.EXPLORER);
-        MenuItem sortTeachers = new MenuItem(3, "Sort Teachers", () -> System.out.println("Not realized yet!"), UserRole.EXPLORER);
         reports.addMenuItem(studentsInFacultyReport);
-        reports.addMenuItem(sortStudent);
-        reports.addMenuItem(sortTeachers);
+
+        // Add menu items to Sorting branch
+        MenuItem sortStudentsByCourse = new MenuItem(1, "Sort Students by Course", () -> StudentService.listStudents(StudentService.sortByCourse(university.getStudents())), UserRole.EXPLORER);
+        MenuItem sortStudentsByGroup = new MenuItem(2, "Sort Students by Group", () -> StudentService.listStudents(StudentService.sortByGroup(university.getStudents())), UserRole.EXPLORER);
+        MenuItem sortTeachersBySurname = new MenuItem(3, "Sort Teachers by Surname", () -> TeacherService.listTeachers(TeacherService.sortByName(university.getTeachers())), UserRole.EXPLORER);
+        MenuItem sortTeacherBySurnameInDepartment = new MenuItem(4, "Sort Teachers by Surname in Department", () -> TeacherService.listTeachers(TeacherService.sortByName(university.getTeachers(DepartmentService.chooseDepartment(university.getDepartments())))), UserRole.EXPLORER);
+        sorting.addMenuItem(sortStudentsByCourse);
+        sorting.addMenuItem(sortStudentsByGroup);
+        sorting.addMenuItem(sortTeachersBySurname);
+        sorting.addMenuItem(sortTeacherBySurnameInDepartment);
 
         // Add menu items to Users branch
         MenuItem listUsers = new MenuItem(1, "List Users", () -> UserService.listUsers(menuInterface.getUsers()), UserRole.TECH_ADMIN);
