@@ -183,6 +183,10 @@ public class University {
         return students.getAll();
     }
 
+    public Repository<Student> getStudentRepository() {
+        return students;
+    }
+
     /**
      * Finds the students of a given faculty.
      *

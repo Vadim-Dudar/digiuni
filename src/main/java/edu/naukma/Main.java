@@ -1,15 +1,9 @@
 package edu.naukma;
 
-import edu.naukma.actions.AddFacultyAction;
-import edu.naukma.actions.EditFacultyAction;
-import edu.naukma.actions.EditUniversityAction;
-import edu.naukma.actions.ShowUniversityAction;
+import edu.naukma.actions.*;
 import edu.naukma.console.*;
 import edu.naukma.console.MenuItem;
-import edu.naukma.services.DepartmentService;
-import edu.naukma.services.FacultyService;
-import edu.naukma.services.TeacherService;
-import edu.naukma.services.UserService;
+import edu.naukma.services.*;
 
 import java.awt.*;
 
@@ -129,13 +123,13 @@ public class Main {
         teachers.addMenuItem(editTeacher);
 
         // Add menu items to Students branch
-        MenuItem listStudents = new MenuItem(1, "List Students", () -> System.out.println("Not realized yet!"), UserRole.EXPLORER);
-        MenuItem findStudentByFullName = new MenuItem(2, "Find Student by Full Name", () -> System.out.println("Not realized yet!"), UserRole.EXPLORER);
-        MenuItem findStudentByCourse = new MenuItem(3, "Find Student by Course", () -> System.out.println("Not realized yet!"), UserRole.EXPLORER);
-        MenuItem findStudentByGroup = new MenuItem(4, "Find Student by Group", () -> System.out.println("Not realized yet!"), UserRole.EXPLORER);
-        MenuItem addStudent = new MenuItem(5, "Add Student", () -> System.out.println("Not realized yet!"), UserRole.ADMIN);
-        MenuItem deleteStudent = new MenuItem(6, "Delete Student", () -> System.out.println("Not realized yet!"), UserRole.ADMIN);
-        MenuItem editStudent = new MenuItem(7, "Edit Student", () -> System.out.println("Not realized yet!"), UserRole.ADMIN);
+        MenuItem listStudents = new MenuItem(1, "List Students", () -> StudentService.listStudents(university.getStudents()), UserRole.EXPLORER);
+        MenuItem findStudentByFullName = new MenuItem(2, "Find Student by Full Name", () -> new FindStudentByFullNameAction(university.getStudentRepository()), UserRole.EXPLORER);
+        MenuItem findStudentByCourse = new MenuItem(3, "Find Student by Course", () -> new FindStudentByCourseAction(university.getStudentRepository()), UserRole.EXPLORER);
+        MenuItem findStudentByGroup = new MenuItem(4, "Find Student by Group", () -> new FindStudentByCourseAction(university.getStudentRepository()), UserRole.EXPLORER);
+        MenuItem addStudent = new MenuItem(5, "Add Student", () -> StudentService.addStudent(university.getStudents(), university.getFaculties(), university.getDepartments()), UserRole.ADMIN);
+        MenuItem deleteStudent = new MenuItem(6, "Delete Student", () -> StudentService.deleteStudent(university.getStudents()), UserRole.ADMIN);
+        MenuItem editStudent = new MenuItem(7, "Edit Student", () -> StudentService.editStudent(university.getStudents(), university.getFaculties(), university.getDepartments()), UserRole.ADMIN);
         students.addMenuItem(listStudents);
         students.addMenuItem(findStudentByFullName);
         students.addMenuItem(findStudentByCourse);
