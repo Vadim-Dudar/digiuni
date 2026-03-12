@@ -43,4 +43,30 @@ public class DepartmentService {
 
         System.out.println("Department successfully changed: " + department);
     }
+
+    public static void addDepartment(List<Department> departments, List<Faculty> faculties, List<Teacher> teachers) {
+        if (departments == null) throw new IllegalArgumentException("Departments list can not be null!");
+        else if (faculties == null) throw new IllegalArgumentException("Faculties list can not be null!");
+        else if (teachers == null) throw new IllegalArgumentException("Teachers list can not be null!");
+
+        int code = InputUtils.readInt("Enter department code: ");
+        String name = InputUtils.readString("Enter department name: ");
+        Faculty faculty = FacultyService.chooseFaculty(faculties);
+        Teacher head = TeacherService.chooseTeacher(teachers);
+        String location = InputUtils.readString("Enter department location: ");
+
+        Department department = new Department(code, name, faculty, head, location);
+        departments.add(department);
+
+        System.out.println("Department successfully added: " + department);
+    }
+
+    public static void deleteDepartment(List<Department> departments) {
+        if (departments == null) throw new IllegalArgumentException("Departments list can not be null!");
+
+        Department department = chooseDepartment(departments);
+        departments.remove(department);
+
+        System.out.println("Department successfully deleted: " + department);
+    }
 }

@@ -107,8 +107,8 @@ public class Main {
 
         // Add menu items to Departments branch
         MenuItem listDepartments = new MenuItem(1, "List Departments", () -> DepartmentService.listDepartments(university.getDepartments()), UserRole.EXPLORER);
-        MenuItem addDepartment = new MenuItem(2, "Add Department", () -> System.out.println("Not realized yet!"), UserRole.ADMIN);
-        MenuItem deleteDepartment = new MenuItem(3, "Delete Department", () -> System.out.println("Not realized yet!"), UserRole.ADMIN);
+        MenuItem addDepartment = new MenuItem(2, "Add Department", () -> DepartmentService.addDepartment(university.getDepartments(), university.getFaculties(), university.getTeachers()), UserRole.ADMIN);
+        MenuItem deleteDepartment = new MenuItem(3, "Delete Department", () -> DepartmentService.deleteDepartment(university.getDepartments()), UserRole.ADMIN);
         MenuItem editDepartment = new MenuItem(4, "Edit Department", () -> DepartmentService.editDepartment(university.getDepartments(), university.getFaculties(), university.getTeachers()), UserRole.ADMIN);
         departments.addMenuItem(listDepartments);
         departments.addMenuItem(addDepartment);

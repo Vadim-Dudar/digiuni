@@ -14,7 +14,7 @@ public class FacultyService {
         System.out.println("Available faculties:");
         int i = 1;
         for (Faculty f : faculties) {
-            System.out.println(i++ +"Faculty id:  [" + f.getId() + "] name: " + f.getShortName() + " : " + f.getContacts());
+            System.out.println(i++ +" - Faculty id:  [" + f.getId() + "] name: " + f.getShortName() + " : " + f.getContacts());
         }
     }
 
