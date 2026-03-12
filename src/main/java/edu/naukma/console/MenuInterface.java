@@ -87,11 +87,11 @@ public class MenuInterface {
                 }
 
                 MenuItem selected = allowed.get(itemChoice - 1);
-                try {
+                //try {
                     selected.getAction().execute();
-                } catch (Exception e) {
-                    System.out.println("[Action failed: " + e.getMessage() + "]");
-                }
+                //} catch (Exception e) {
+                  //  System.out.println("[Action failed: " + e.getMessage() + "]");
+                //}
             }
         }
     }

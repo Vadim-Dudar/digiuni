@@ -24,7 +24,7 @@ public class UserService {
         String login;
         while (true) {
             login = InputUtils.readString("Enter username: ");
-            if (users.contains(new User(login, "", null))) {
+            if (users.contains(new User(login, "anyPassword", null))) {
                 System.out.println("User with this username already exists.");
                 continue;
             }
