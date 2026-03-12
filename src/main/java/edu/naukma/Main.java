@@ -8,6 +8,7 @@ import edu.naukma.console.*;
 import edu.naukma.console.MenuItem;
 import edu.naukma.services.DepartmentService;
 import edu.naukma.services.FacultyService;
+import edu.naukma.services.TeacherService;
 import edu.naukma.services.UserService;
 
 import java.awt.*;
@@ -116,11 +117,11 @@ public class Main {
         departments.addMenuItem(editDepartment);
 
         // Add menu items to Teachers branch
-        MenuItem listTeachers = new MenuItem(1, "List Teachers", () -> System.out.println("Not realized yet!"), UserRole.EXPLORER);
-        MenuItem findTeacherByDepartment = new MenuItem(2, "Find Teacher by Department", () -> System.out.println("Not realized yet!"), UserRole.EXPLORER);
-        MenuItem addTeacher = new MenuItem(3, "Add Teacher", () -> System.out.println("Not realized yet!"), UserRole.ADMIN);
-        MenuItem deleteTeacher = new MenuItem(4, "Delete Teacher", () -> System.out.println("Not realized yet!"), UserRole.ADMIN);
-        MenuItem editTeacher = new MenuItem(5, "Edit Teacher", () -> System.out.println("Not realized yet!"), UserRole.ADMIN);
+        MenuItem listTeachers = new MenuItem(1, "List Teachers", () -> TeacherService.listTeachers(university.getTeachers()), UserRole.EXPLORER);
+        MenuItem findTeacherByDepartment = new MenuItem(2, "Find Teacher by Department", () -> TeacherService.listTeachers(university.getTeachers(DepartmentService.chooseDepartment(university.getDepartments()))), UserRole.EXPLORER);
+        MenuItem addTeacher = new MenuItem(3, "Add Teacher", () -> TeacherService.addTeacher(university.getTeachers(), university.getFaculties(), university.getDepartments()), UserRole.ADMIN);
+        MenuItem deleteTeacher = new MenuItem(4, "Delete Teacher", () -> TeacherService.deleteTeacher(university.getTeachers()), UserRole.ADMIN);
+        MenuItem editTeacher = new MenuItem(5, "Edit Teacher", () -> TeacherService.editTeacher(university.getTeachers(), university.getFaculties(), university.getDepartments()), UserRole.ADMIN);
         teachers.addMenuItem(listTeachers);
         teachers.addMenuItem(findTeacherByDepartment);
         teachers.addMenuItem(addTeacher);
