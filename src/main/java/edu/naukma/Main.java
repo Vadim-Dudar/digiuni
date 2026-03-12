@@ -1,9 +1,11 @@
 package edu.naukma;
 
+import edu.naukma.actions.EditFacultyAction;
 import edu.naukma.actions.EditUniversityAction;
 import edu.naukma.actions.ShowUniversityAction;
 import edu.naukma.console.*;
 import edu.naukma.console.MenuItem;
+import edu.naukma.services.FacultyService;
 
 import java.awt.*;
 
@@ -94,7 +96,7 @@ public class Main {
         MenuItem listFaculties = new MenuItem(1, "List Faculties", () -> System.out.println("Not realized yet!"), UserRole.EXPLORER);
         MenuItem addFaculty = new MenuItem(2, "Add Faculty", () -> System.out.println("Not realized yet!"), UserRole.ADMIN);
         MenuItem deleteFaculty = new MenuItem(3, "Delete Faculty", () -> System.out.println("Not realized yet!"), UserRole.ADMIN);
-        MenuItem editFaculty = new MenuItem(4, "Edit Faculty", () -> System.out.println("Not realized yet!"), UserRole.ADMIN);
+        MenuItem editFaculty = new MenuItem(4, "Edit Faculty", new EditFacultyAction(university.getFaculties(), university.getTeachers()), UserRole.ADMIN);
         faculties.addMenuItem(listFaculties);
         faculties.addMenuItem(addFaculty);
         faculties.addMenuItem(deleteFaculty);
