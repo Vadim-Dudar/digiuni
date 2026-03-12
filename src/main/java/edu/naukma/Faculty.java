@@ -1,6 +1,7 @@
 package edu.naukma;
 
 import java.util.List;
+import java.util.Optional;
 
 public class Faculty implements Identifiable {
 
@@ -56,8 +57,14 @@ public class Faculty implements Identifiable {
      * @param id department code
      * @return department if found, otherwise null
      */
-    public Department findDepartment(int id) {
-        return departments.findBy(department -> department.getId() == id).get(0);
+    public Optional<Department> findDepartment(int id) {
+        List<Department> foundDepartments = departments.findBy(department -> department.getId() == id);
+
+        if (foundDepartments.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(foundDepartments.get(0));
     }
 
     /**
