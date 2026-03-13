@@ -22,7 +22,7 @@ public class Teacher extends Person implements Identifiable {
         super(name, surname, midleName, dayOfBirth, phone, email);
 
         LocalDate parsedDate;
-        String normalizedDate = dayOfBirth.trim().replace('.', '-').replace('/', '-');
+        String normalizedDate = dateOfHiring.trim().replace('.', '-').replace('/', '-');
         try {
             parsedDate = LocalDate.parse(normalizedDate);
         } catch (Exception e) {

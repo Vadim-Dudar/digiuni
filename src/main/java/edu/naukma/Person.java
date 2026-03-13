@@ -35,7 +35,7 @@ public class Person implements Identifiable {
             throw new InvalidPersonFieldException("Person field can't be null or empty!");
 
         if (phone.length() < 5) throw new InvalidPersonFieldException("Phone number is too short!");
-        if (!email.contains("@")) throw new IllegalArgumentException("Email must contain '@' symbol!");
+        if (!email.contains("@")) throw new InvalidPersonFieldException("Email must contain '@' symbol!");
 
         LocalDate parsedDate;
         String normalizedDate = dayOfBirth.trim().replace('.', '-').replace('/', '-');
