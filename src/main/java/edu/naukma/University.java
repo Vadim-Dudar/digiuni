@@ -65,7 +65,7 @@ public class University {
      * @return faculty if found, otherwise null
      */
     public Optional<Faculty> getFaculty(int code) {
-        return faculties.getById(code);
+        return Optional.of(faculties.findBy(faculty -> faculty.getId() == code).get(0));
     }
 
     /**
@@ -147,7 +147,7 @@ public class University {
      * @return student if found, otherwise null
      */
     public Optional<Student> getStudent(int id) {
-        return students.getById(id);
+        return Optional.of(students.findBy(student -> student.getId() == id).get(0));
     }
 
     /**
@@ -233,7 +233,7 @@ public class University {
      * @return teacher if found, otherwise null
      */
     public Optional<Teacher> getTeacher(int id) {
-        return teachers.getById(id);
+        return Optional.of(teachers.findBy(teacher -> teacher.getId() == id).get(0));
     }
 
     /**

@@ -58,7 +58,7 @@ public class Faculty implements Identifiable {
      * @return department if found, otherwise null
      */
     public Optional<Department> findDepartment(int id) {
-        return departments.getById(id);
+        return Optional.of(departments.findBy(department -> department.getId() == id).get(0));
     }
 
     /**
