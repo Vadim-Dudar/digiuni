@@ -34,6 +34,10 @@ public class User {
         password = newPassword;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
     }
