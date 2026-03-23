@@ -2,9 +2,11 @@ package edu.naukma.services;
 
 import edu.naukma.Faculty;
 import edu.naukma.console.InputUtils;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
+@Slf4j
 public class FacultyService {
     public static void listFaculties(List<Faculty> faculties) {
         if (faculties.isEmpty()) {
@@ -31,5 +33,7 @@ public class FacultyService {
         Faculty faculty = chooseFaculty(faculties);
         faculties.remove(faculty);
         System.out.println("Faculty successfully deleted: " + faculty);
+
+        log.info("Faculty deleted: {}", faculty);
     }
 }

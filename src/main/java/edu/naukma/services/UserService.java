@@ -3,11 +3,13 @@ package edu.naukma.services;
 import edu.naukma.User;
 import edu.naukma.UserRole;
 import edu.naukma.console.InputUtils;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+@Slf4j
 public class UserService {
     public static void listUsers(Set<User> users) {
         if (users.isEmpty()) throw new IllegalArgumentException("User list can not be empty or null!");
@@ -36,6 +38,7 @@ public class UserService {
         User user = new User(login, password, role);
         users.add(user);
         System.out.println("User successfully added: " + user);
+        log.info("User created: {}", user);
     }
 
     public static User chooseUser(Set<User> users) {
@@ -63,6 +66,7 @@ public class UserService {
         User user = chooseUser(users);
         users.remove(user);
         System.out.println("User successfully deleted: " + user);
+        log.info("User deleted: {}", user);
     }
 
     public static void changePassword(Set<User> users) {
@@ -88,5 +92,6 @@ public class UserService {
         }
         user.changePassword(oldPassword, newPassword);
         System.out.println("Password successfully changed for user: " + user);
+        log.info("Password changed for user: {}", user);
     }
 }

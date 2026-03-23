@@ -2,10 +2,12 @@ package edu.naukma.services;
 
 import edu.naukma.*;
 import edu.naukma.console.InputUtils;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class TeacherService {
 
     public static List<Teacher> sortByName(List<Teacher> teachers) {
@@ -41,6 +43,8 @@ public class TeacherService {
         Teacher teacher = chooseTeacher(teachers);
         teachers.remove(teacher);
         System.out.println("Teacher successfully deleted: " + teacher);
+
+        log.info("Teacher deleted: {}", teacher);
     }
 
     public static void editTeacher(List<Teacher> teachers, List<Faculty> faculties, List<Department> departments) {
@@ -55,6 +59,7 @@ public class TeacherService {
         teacher.setDepartment(DepartmentService.chooseDepartment(departments));
 
         System.out.println("Teacher successfully changed: " + teacher);
+        log.info("Teacher edited: {}", teacher);
     }
 
     public static void addTeacher(List<Teacher> teachers, List<Faculty> faculties, List<Department> departments) {
@@ -72,9 +77,10 @@ public class TeacherService {
 
         Teacher teacher = new Teacher(person.getName(), person.getSurname(), person.getMiddleName(),
                 person.getDayOfBirth().toString(), person.getPhone(), person.getEmail(),
-                teacherId ,position, degree, stage, dayOfHire, rate, faculty, department);
+                teacherId, position, degree, stage, dayOfHire, rate, faculty, department);
 
         teachers.add(teacher);
         System.out.println("Teacher successfully added: " + teacher);
+        log.info("Teacher created: {}", teacher);
     }
 }

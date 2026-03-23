@@ -4,9 +4,11 @@ import edu.naukma.Department;
 import edu.naukma.Faculty;
 import edu.naukma.Teacher;
 import edu.naukma.console.InputUtils;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
+@Slf4j
 public class DepartmentService {
     public static void listDepartments(List<Department> departments) {
         if (departments.isEmpty()) throw new IllegalArgumentException("Department list can not be empty or null!");
@@ -68,5 +70,7 @@ public class DepartmentService {
         departments.remove(department);
 
         System.out.println("Department successfully deleted: " + department);
+
+        log.info("Department deleted: {}", department);
     }
 }
