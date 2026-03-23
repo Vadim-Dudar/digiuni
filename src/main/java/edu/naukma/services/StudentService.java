@@ -2,10 +2,12 @@ package edu.naukma.services;
 
 import edu.naukma.*;
 import edu.naukma.console.InputUtils;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class StudentService {
     public static List<Student> sortByCourse(List<Student> students) {
         List<Student> result = new ArrayList<>(students);
@@ -58,12 +60,16 @@ public class StudentService {
 
         System.out.println("Student successfully added: " + student);
         students.add(student);
+
+        log.info("Student created: {}", student);
     }
 
     public static void deleteStudent(List<Student> students) {
         Student student = chooseStudent(students);
         students.remove(student);
         System.out.println("Student successfully deleted: " + student);
+
+        log.info("Student deleted: {}", student);
     }
 
     public static void editStudent(List<Student> students, List<Faculty> faculties, List<Department> departments) {
@@ -78,5 +84,7 @@ public class StudentService {
         student.setStatus(InputUtils.chooseEnum(StudentStatus.class));
 
         System.out.println("Student successfully changed: " + student);
+
+        log.info("Student edited: {}", student);
     }
 }

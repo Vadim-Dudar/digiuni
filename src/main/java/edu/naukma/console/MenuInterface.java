@@ -2,23 +2,17 @@ package edu.naukma.console;
 
 import edu.naukma.University;
 import edu.naukma.User;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 
+@Slf4j
 public class MenuInterface {
     private final List<MenuBranch> branches = new ArrayList<>();
+    @Getter
     private final Set<User> users = new HashSet<>();
     private User currentUser;
-    private University university;
-
-    /**
-     * Get the list of menu branches in the interface.
-     *
-     * @return List of menu branches in the interface.
-     */
-    public List<MenuBranch> getBranches() {
-        return branches;
-    }
 
     /**
      * Add a menu branch to the interface.
@@ -87,11 +81,12 @@ public class MenuInterface {
                 }
 
                 MenuItem selected = allowed.get(itemChoice - 1);
-                //try {
+                try {
                     selected.getAction().execute();
-                //} catch (Exception e) {
-                  //  System.out.println("[Action failed: " + e.getMessage() + "]");
-                //}
+                    log.info("Executed action: " + selected.getDescription() + " by user: " + currentUser.login);
+                } catch (Exception e) {
+                    log.error("Error executing action: ", e);
+                }
             }
         }
     }
@@ -114,9 +109,11 @@ public class MenuInterface {
                     if (user.checkPassword(password.trim())) {
                         currentUser = user;
                         System.out.println("Welcome!");
+                        log.info("User logged in: " + user.login);
                         return;
                     }
                     System.out.println("[Password incorrect.]");
+                    log.warn("Failed login attempt for user: " + user.login);
                 }
             }
 
@@ -137,23 +134,5 @@ public class MenuInterface {
             System.out.println((i + 1) + " - " + branches.get(i).getDescription());
         }
         System.out.println("0 - Exit");
-    }
-
-    /**
-     * Get the university associated with the menu interface.
-     *
-     * @return The university associated with the menu interface.
-     */
-    public void setUniversity(University university) {
-        this.university = university;
-    }
-
-    /**
-     * Get the university associated with the menu interface.
-     *
-     * @return The university associated with the menu interface.
-     */
-    public Set<User> getUsers() {
-        return users;
     }
 }
