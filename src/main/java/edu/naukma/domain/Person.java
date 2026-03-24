@@ -1,6 +1,5 @@
 package edu.naukma.domain;
 
-import edu.naukma.Identifiable;
 import edu.naukma.exсeptions.LogicalDateExeption;
 import edu.naukma.exсeptions.InvalidPersonFieldException;
 

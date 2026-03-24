@@ -1,5 +1,7 @@
 package edu.naukma;
 
+import edu.naukma.domain.Identifiable;
+
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;

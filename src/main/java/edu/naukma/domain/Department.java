@@ -1,8 +1,6 @@
 package edu.naukma.domain;
 
 
-import edu.naukma.Identifiable;
-
 public class Department implements Identifiable {
 
     private final int code;

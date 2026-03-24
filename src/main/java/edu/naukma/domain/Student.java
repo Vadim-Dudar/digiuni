@@ -1,7 +1,5 @@
 package edu.naukma.domain;
 
-import edu.naukma.Identifiable;
-
 public class Student extends Person implements Identifiable {
 
     private final int studentId;

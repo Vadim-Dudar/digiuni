@@ -1,4 +1,4 @@
-package edu.naukma;
+package edu.naukma.domain;
 
 /**
  * An interface that represents an identifiable entity with a unique ID.
