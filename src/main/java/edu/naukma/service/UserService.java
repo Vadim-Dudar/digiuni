@@ -1,7 +1,7 @@
 package edu.naukma.service;
 
-import edu.naukma.User;
-import edu.naukma.UserRole;
+import edu.naukma.domain.User;
+import edu.naukma.domain.UserRole;
 import edu.naukma.console.InputUtils;
 import lombok.extern.slf4j.Slf4j;
 

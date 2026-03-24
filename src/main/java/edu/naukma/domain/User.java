@@ -1,4 +1,5 @@
-package edu.naukma;
+package edu.naukma.domain;
+
 /**
  * The User class represents a user in the system with a login, password, and user role.
  * It provides methods for checking the password, changing the password, and managing the user role.

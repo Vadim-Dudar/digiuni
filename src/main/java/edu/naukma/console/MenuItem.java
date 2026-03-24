@@ -1,7 +1,7 @@
 package edu.naukma.console;
 
-import edu.naukma.User;
-import edu.naukma.UserRole;
+import edu.naukma.domain.User;
+import edu.naukma.domain.UserRole;
 import edu.naukma.actions.Action;
 import edu.naukma.exсeptions.InvalidMenuItemFieldException;
 

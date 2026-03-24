@@ -1,6 +1,6 @@
 package edu.naukma.console;
 
-import edu.naukma.UserRole;
+import edu.naukma.domain.UserRole;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 

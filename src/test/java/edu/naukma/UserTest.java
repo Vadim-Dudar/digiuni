@@ -1,6 +1,7 @@
 package edu.naukma;
 
-import org.junit.jupiter.api.BeforeAll;
+import edu.naukma.domain.User;
+import edu.naukma.domain.UserRole;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
