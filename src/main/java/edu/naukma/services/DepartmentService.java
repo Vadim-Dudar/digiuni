@@ -1,8 +1,8 @@
 package edu.naukma.services;
 
-import edu.naukma.Department;
-import edu.naukma.Faculty;
-import edu.naukma.Teacher;
+import edu.naukma.domain.Department;
+import edu.naukma.domain.Faculty;
+import edu.naukma.domain.Teacher;
 import edu.naukma.console.InputUtils;
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,4 +1,6 @@
-package edu.naukma;
+package edu.naukma.domain;
+
+import edu.naukma.Repository;
 
 import java.util.ArrayList;
 import java.util.List;

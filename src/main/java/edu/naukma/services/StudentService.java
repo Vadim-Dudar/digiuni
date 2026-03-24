@@ -1,7 +1,7 @@
 package edu.naukma.services;
 
-import edu.naukma.*;
 import edu.naukma.console.InputUtils;
+import edu.naukma.domain.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;

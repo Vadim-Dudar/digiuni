@@ -1,6 +1,6 @@
 package edu.naukma.actions;
 
-import edu.naukma.Faculty;
+import edu.naukma.domain.Faculty;
 import edu.naukma.console.InputUtils;
 
 import java.util.List;

@@ -1,7 +1,8 @@
-package edu.naukma;
+package edu.naukma.domain;
 
-import edu.naukma.exeptions.LogicalDateExeption;
-import edu.naukma.exeptions.InvalidPersonFieldException;
+import edu.naukma.Identifiable;
+import edu.naukma.exсeptions.LogicalDateExeption;
+import edu.naukma.exсeptions.InvalidPersonFieldException;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;

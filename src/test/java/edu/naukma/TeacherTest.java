@@ -1,7 +1,10 @@
 package edu.naukma;
 
+import edu.naukma.domain.AcademicDegree;
+import edu.naukma.domain.AcademicStage;
+import edu.naukma.domain.Teacher;
+import edu.naukma.domain.TeacherPosition;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 

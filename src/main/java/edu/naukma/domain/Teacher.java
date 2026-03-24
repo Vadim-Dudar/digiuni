@@ -1,6 +1,7 @@
-package edu.naukma;
+package edu.naukma.domain;
 
-import edu.naukma.exeptions.LogicalDateExeption;
+import edu.naukma.Identifiable;
+import edu.naukma.exсeptions.LogicalDateExeption;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;

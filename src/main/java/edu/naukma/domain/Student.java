@@ -1,4 +1,6 @@
-package edu.naukma;
+package edu.naukma.domain;
+
+import edu.naukma.Identifiable;
 
 public class Student extends Person implements Identifiable {
 

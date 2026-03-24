@@ -1,6 +1,6 @@
 package edu.naukma.actions;
 
-import edu.naukma.University;
+import edu.naukma.domain.University;
 
 public class ShowUniversityAction implements Action {
     private University university;

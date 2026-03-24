@@ -1,4 +1,4 @@
-package edu.naukma.exeptions;
+package edu.naukma.exсeptions;
 
 public class InvalidPersonFieldException extends IllegalArgumentException {
     public InvalidPersonFieldException(String message) {

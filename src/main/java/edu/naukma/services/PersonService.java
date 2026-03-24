@@ -1,6 +1,6 @@
 package edu.naukma.services;
 
-import edu.naukma.Person;
+import edu.naukma.domain.Person;
 import edu.naukma.console.InputUtils;
 
 public class PersonService {

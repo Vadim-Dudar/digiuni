@@ -1,4 +1,4 @@
-package edu.naukma;
+package edu.naukma.domain;
 
 import java.util.Comparator;
 

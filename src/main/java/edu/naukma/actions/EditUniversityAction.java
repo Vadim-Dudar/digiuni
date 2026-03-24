@@ -1,6 +1,6 @@
 package edu.naukma.actions;
 
-import edu.naukma.University;
+import edu.naukma.domain.University;
 import edu.naukma.console.InputUtils;
 
 public class EditUniversityAction implements Action {

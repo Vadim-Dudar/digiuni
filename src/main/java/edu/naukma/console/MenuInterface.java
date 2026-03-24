@@ -1,6 +1,5 @@
 package edu.naukma.console;
 
-import edu.naukma.University;
 import edu.naukma.User;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;

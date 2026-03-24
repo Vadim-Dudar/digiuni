@@ -1,7 +1,7 @@
 package edu.naukma.actions;
 
 import edu.naukma.Repository;
-import edu.naukma.Student;
+import edu.naukma.domain.Student;
 import edu.naukma.console.InputUtils;
 import edu.naukma.services.StudentService;
 

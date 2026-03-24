@@ -3,10 +3,9 @@ package edu.naukma;
 import edu.naukma.actions.*;
 import edu.naukma.console.*;
 import edu.naukma.console.MenuItem;
+import edu.naukma.domain.*;
 import edu.naukma.services.*;
 import lombok.extern.slf4j.Slf4j;
-
-import java.awt.*;
 
 @Slf4j
 public class Main {

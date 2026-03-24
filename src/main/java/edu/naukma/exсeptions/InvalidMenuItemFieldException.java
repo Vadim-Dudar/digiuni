@@ -1,4 +1,4 @@
-package edu.naukma.exeptions;
+package edu.naukma.exсeptions;
 
 public class InvalidMenuItemFieldException extends RuntimeException {
     public InvalidMenuItemFieldException(String message) {

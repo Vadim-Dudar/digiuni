@@ -3,7 +3,7 @@ package edu.naukma.console;
 import edu.naukma.User;
 import edu.naukma.UserRole;
 import edu.naukma.actions.Action;
-import edu.naukma.exeptions.InvalidMenuItemFieldException;
+import edu.naukma.exсeptions.InvalidMenuItemFieldException;
 
 /**
  * The MenuItem class represents an item in the console menu. It contains an ID, description, action to execute, and the required user role for access.
