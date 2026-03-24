@@ -1,0 +1,232 @@
+package edu.naukma.domain;
+
+import edu.naukma.exсeptions.LogicalDateExeption;
+import edu.naukma.exсeptions.InvalidPersonFieldException;
+
+import java.time.DateTimeException;
+import java.time.LocalDate;
+
+public class Person implements Identifiable {
+    private static int lastId = 0;
+
+    private final int id;
+    private String name;
+    private String surname;
+    private String middleName;
+    private final LocalDate dayOfBirth;
+    private String phone;
+    private String email;
+
+    /**
+     * Constructor for Person class. It initializes all fields and assigns a unique ID to each person.
+     *
+     * @param name       The first name of the person.
+     * @param surname    The last name of the person.
+     * @param middleName The middle name of the person.
+     * @param dayOfBirth The date of birth of the person in the format "yyyy-MM-dd" or "yyyy.MM.dd".
+     * @param phone      The phone number of the person.
+     * @param email      The email address of the person.
+     * @throws InvalidPersonFieldException if any of the parameters incorrect.
+     * @throws LogicalDateExeption   if the date of birth is not in the correct format or logically incorrect.
+     */
+    public Person(String name, String surname, String middleName, String dayOfBirth, String phone, String email) {
+        if (name == null || surname == null || middleName == null || dayOfBirth == null || phone == null || email == null ||
+                name.isEmpty() || surname.isEmpty() || middleName.isEmpty() || dayOfBirth.isEmpty() || phone.isEmpty() || email.isEmpty())
+            throw new InvalidPersonFieldException("Person field can't be null or empty!");
+
+        if (phone.length() < 5) throw new InvalidPersonFieldException("Phone number is too short!");
+        if (!email.contains("@")) throw new InvalidPersonFieldException("Email must contain '@' symbol!");
+
+        LocalDate parsedDate;
+        String normalizedDate = dayOfBirth.trim().replace('.', '-').replace('/', '-');
+        try {
+            parsedDate = LocalDate.parse(normalizedDate);
+        } catch (DateTimeException e) {
+            throw new LogicalDateExeption("Given birth date don't match with pattern yyyy-MM-dd");
+        }
+
+        if (parsedDate.isBefore(LocalDate.now()) && parsedDate.isAfter(LocalDate.now().minusYears(100)))
+            this.dayOfBirth = parsedDate;
+        else throw new LogicalDateExeption("Given birth date is logically incorrect: it lies to future or past");
+
+        this.id = ++lastId;
+        this.name = name;
+        this.surname = surname;
+        this.middleName = middleName;
+        this.phone = phone;
+        this.email = email;
+    }
+
+    /**
+     * Get the last assigned ID for any person.
+     *
+     * @return The last assigned ID.
+     */
+    private static int getLastId() {
+        return lastId;
+    }
+
+    /**
+     * Get the full name of the person in the format "Name Surname MiddleName".
+     *
+     * @return The full name of the person.
+     */
+    public String getFullName() {
+        return surname + " " + name + " " + middleName;
+    }
+
+    /**
+     * Get the person's phone number.
+     *
+     * @return The phone number of the person.
+     */
+    public String getPhone() {
+        return phone;
+    }
+
+    /**
+     * Set the person's phone number with basic validation.
+     *
+     * @param phone The new phone number to set.
+     * @throws IllegalArgumentException if the phone number is null or too short.
+     */
+    public void setPhone(String phone) {
+        if (phone == null || phone.length() < 5) throw new IllegalArgumentException("Invalid phone number");
+
+        this.phone = phone;
+    }
+
+    /**
+     * Get the person's email address.
+     *
+     * @return The email address of the person.
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * Set the person's email address with basic validation.
+     *
+     * @param email The new email address to set.
+     * @throws IllegalArgumentException if the email is null or does not contain an "@" symbol.
+     */
+    public void setEmail(String email) {
+        if (email == null || !email.contains("@")) throw new IllegalArgumentException("Invalid email address");
+
+        this.email = email;
+    }
+
+    /**
+     * Get the unique ID of the person.
+     *
+     * @return The unique ID of the person.
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Set the last assigned ID for any person. This method can be used to reset the ID counter if needed.
+     *
+     * @param lastId The new last assigned ID to set.
+     */
+    private static void setLastId(int lastId) {
+        Person.lastId = lastId;
+    }
+
+    /**
+     * Set the person's name.
+     *
+     * @param name The new name to set.
+     */
+    public void setName(String name) {
+        if (name == null || name.isEmpty()) throw new IllegalArgumentException("Name cannot be null or empty");
+
+        this.name = name;
+    }
+
+    /**
+     * Set the person's middle name.
+     *
+     * @param middleName The new middle name to set.
+     */
+    public void setMiddleName(String middleName) {
+        if (middleName == null || middleName.isEmpty())
+            throw new IllegalArgumentException("Middle name cannot be null or empty");
+
+        this.middleName = middleName;
+    }
+
+    /**
+     * Set the person's surname.
+     *
+     * @param surname The new surname to set.
+     */
+    public void setSurname(String surname) {
+        if (surname == null || surname.isEmpty()) throw new IllegalArgumentException("Surname cannot be null or empty");
+
+        this.surname = surname;
+    }
+
+    /**
+     * Get the person's name.
+     *
+     * @return The name of the person.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Get the person's surname.
+     *
+     * @return The surname of the person.
+     */
+    public String getSurname() {
+        return surname;
+    }
+
+    /**
+     * Get the person's middle name.
+     *
+     * @return The middle name of the person.
+     */
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    /**
+     * Get the person's date of birth.
+     *
+     * @return The date of birth of the person.
+     */
+    public LocalDate getDayOfBirth() {
+        return dayOfBirth;
+    }
+
+    /**
+     * Calculate and return the person's age based on their date of birth.
+     *
+     * @return The age of the person.
+     */
+    public int getAge() {
+        return LocalDate.now().getYear() - dayOfBirth.getYear();
+    }
+
+    /**
+     * Returns a string representation of the person, including their ID, name, surname, middle name, date of birth, phone number, and email.
+     *
+     * @return A string representation of the person.
+     */
+    @Override
+    public String toString() {
+        return "Person #" + id + ". " +
+                name + ". " +
+                surname + ". " +
+                middleName + ". " +
+                dayOfBirth + ". " +
+                phone + ". " +
+                email;
+    }
+}

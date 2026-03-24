@@ -1,7 +1,8 @@
 package edu.naukma;
 
-import edu.naukma.exeptions.LogicalDateExeption;
-import edu.naukma.exeptions.InvalidPersonFieldException;
+import edu.naukma.domain.Person;
+import edu.naukma.exсeptions.LogicalDateExeption;
+import edu.naukma.exсeptions.InvalidPersonFieldException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
