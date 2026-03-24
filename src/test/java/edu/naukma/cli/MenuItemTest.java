@@ -1,6 +1,7 @@
-package edu.naukma.console;
+package edu.naukma.cli;
 
 import edu.naukma.domain.UserRole;
+import edu.naukma.ui.cli.MenuItem;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 

@@ -1,8 +1,10 @@
 package edu.naukma;
 
-import edu.naukma.actions.*;
-import edu.naukma.console.*;
-import edu.naukma.console.MenuItem;
+import edu.naukma.ui.cli.*;
+import edu.naukma.ui.actions.*;
+import edu.naukma.ui.cli.MenuBranch;
+import edu.naukma.ui.cli.MenuInterface;
+import edu.naukma.ui.cli.MenuItem;
 import edu.naukma.domain.*;
 import edu.naukma.service.*;
 import lombok.extern.slf4j.Slf4j;

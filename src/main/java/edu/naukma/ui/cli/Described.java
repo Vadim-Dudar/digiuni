@@ -1,4 +1,4 @@
-package edu.naukma.console;
+package edu.naukma.ui.cli;
 
 public interface Described {
     String getDescription();

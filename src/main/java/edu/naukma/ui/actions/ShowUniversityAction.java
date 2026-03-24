@@ -1,4 +1,4 @@
-package edu.naukma.actions;
+package edu.naukma.ui.actions;
 
 import edu.naukma.domain.University;
 

@@ -1,8 +1,8 @@
-package edu.naukma.actions;
+package edu.naukma.ui.actions;
 
 import edu.naukma.repository.Repository;
 import edu.naukma.domain.Student;
-import edu.naukma.console.InputUtils;
+import edu.naukma.ui.cli.InputUtils;
 import edu.naukma.service.StudentService;
 
 public class FindStudentByFullNameAction implements Action {

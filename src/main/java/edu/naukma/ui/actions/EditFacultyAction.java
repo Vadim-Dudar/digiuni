@@ -1,8 +1,8 @@
-package edu.naukma.actions;
+package edu.naukma.ui.actions;
 
 import edu.naukma.domain.Faculty;
 import edu.naukma.domain.Teacher;
-import edu.naukma.console.InputUtils;
+import edu.naukma.ui.cli.InputUtils;
 import edu.naukma.service.FacultyService;
 import edu.naukma.service.TeacherService;
 

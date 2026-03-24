@@ -1,4 +1,4 @@
-package edu.naukma.console;
+package edu.naukma.ui.cli;
 
 import edu.naukma.domain.User;
 import lombok.Getter;

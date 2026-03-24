@@ -1,6 +1,6 @@
 package edu.naukma.service;
 
-import edu.naukma.console.InputUtils;
+import edu.naukma.ui.cli.InputUtils;
 import edu.naukma.domain.*;
 import lombok.extern.slf4j.Slf4j;
 

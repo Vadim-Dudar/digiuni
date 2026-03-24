@@ -1,7 +1,7 @@
-package edu.naukma.actions;
+package edu.naukma.ui.actions;
 
 import edu.naukma.domain.University;
-import edu.naukma.console.InputUtils;
+import edu.naukma.ui.cli.InputUtils;
 
 public class EditUniversityAction implements Action {
     private University university;

@@ -2,7 +2,7 @@ package edu.naukma.service;
 
 import edu.naukma.domain.User;
 import edu.naukma.domain.UserRole;
-import edu.naukma.console.InputUtils;
+import edu.naukma.ui.cli.InputUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;

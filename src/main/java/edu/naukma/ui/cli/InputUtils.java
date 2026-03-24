@@ -1,4 +1,4 @@
-package edu.naukma.console;
+package edu.naukma.ui.cli;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
