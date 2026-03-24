@@ -1,6 +1,7 @@
 package edu.naukma;
 
 import edu.naukma.domain.Identifiable;
+import edu.naukma.repository.Repository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

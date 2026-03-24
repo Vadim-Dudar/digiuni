@@ -1,4 +1,4 @@
-package edu.naukma.services;
+package edu.naukma.service;
 
 import edu.naukma.console.InputUtils;
 import edu.naukma.domain.*;

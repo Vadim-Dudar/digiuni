@@ -1,4 +1,4 @@
-package edu.naukma;
+package edu.naukma.repository;
 
 import edu.naukma.domain.Identifiable;
 

@@ -3,8 +3,8 @@ package edu.naukma.actions;
 import edu.naukma.domain.Faculty;
 import edu.naukma.domain.Teacher;
 import edu.naukma.console.InputUtils;
-import edu.naukma.services.FacultyService;
-import edu.naukma.services.TeacherService;
+import edu.naukma.service.FacultyService;
+import edu.naukma.service.TeacherService;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package edu.naukma.services;
+package edu.naukma.service;
 
 import edu.naukma.User;
 import edu.naukma.UserRole;
