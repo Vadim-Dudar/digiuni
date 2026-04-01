@@ -5,6 +5,7 @@ import edu.naukma.repository.Repository;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class University implements Serializable {
@@ -329,4 +330,25 @@ public class University implements Serializable {
         return address;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        University that = (University) o;
+        return Objects.equals(fullName, that.fullName) && Objects.equals(shortName, that.shortName) && Objects.equals(city, that.city) && Objects.equals(address, that.address);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(fullName, shortName, city, address);
+    }
+
+    @Override
+    public String toString() {
+        return "University{" +
+                "fullName='" + fullName + '\'' +
+                ", shortName='" + shortName + '\'' +
+                ", city='" + city + '\'' +
+                ", address='" + address + '\'' +
+                '}';
+    }
 }
