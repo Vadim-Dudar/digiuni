@@ -2,11 +2,12 @@ package edu.naukma.domain;
 
 import edu.naukma.repository.Repository;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class University {
+public class University implements Serializable {
 
     private String fullName;
     private String shortName;

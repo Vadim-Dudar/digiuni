@@ -3,10 +3,11 @@ package edu.naukma.domain;
 import edu.naukma.exсeptions.LogicalDateExeption;
 import edu.naukma.exсeptions.InvalidPersonFieldException;
 
+import java.io.Serializable;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 
-public class Person implements Identifiable {
+public class Person implements Identifiable, Serializable {
     private static int lastId = 0;
 
     private final int id;

@@ -1,6 +1,8 @@
 package edu.naukma.domain;
 
-public class Student extends Person implements Identifiable {
+import java.io.Serializable;
+
+public class Student extends Person implements Identifiable, Serializable {
 
     private final int studentId;
     private Faculty faculty;

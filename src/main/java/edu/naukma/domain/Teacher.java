@@ -2,10 +2,11 @@ package edu.naukma.domain;
 
 import edu.naukma.exсeptions.LogicalDateExeption;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class Teacher extends Person implements Identifiable {
+public class Teacher extends Person implements Identifiable, Serializable {
     private final int teacherId;
     private TeacherPosition position;
     private AcademicDegree degree;

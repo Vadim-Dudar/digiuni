@@ -1,7 +1,9 @@
 package edu.naukma.domain;
 
 
-public class Department implements Identifiable {
+import java.io.Serializable;
+
+public class Department implements Identifiable, Serializable {
 
     private final int code;
     private String name;
