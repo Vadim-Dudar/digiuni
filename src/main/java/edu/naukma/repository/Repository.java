@@ -2,6 +2,7 @@ package edu.naukma.repository;
 
 import edu.naukma.domain.Identifiable;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -11,7 +12,7 @@ import java.util.stream.Collectors;
  *
  * @param <T> the type of items in the repository
  */
-public class Repository<T extends Identifiable> {
+public class Repository<T extends Identifiable> implements Serializable {
     private final Map<Integer, T> items = new HashMap<>();
 
     /**
