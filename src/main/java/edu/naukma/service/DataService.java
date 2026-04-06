@@ -11,10 +11,10 @@ public class DataService {
 
     private static final Path DATA_FILE = Path.of("university_data.ser");
 
-    public static void saveUniversity(University university) {
+    public static void saveUniversity(University university, Path path) {
         if (university == null) throw new IllegalArgumentException("University can't be null!");
 
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DATA_FILE.toString()))) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path.toString()))) {
             oos.writeObject(university);
             log.info("University serialized successfully!");
         } catch (IOException e) {
@@ -23,8 +23,24 @@ public class DataService {
         }
     }
 
+    public static void saveUniversity(University university) {
+        saveUniversity(university, DATA_FILE);
+    }
+
+    public static University loadUniversity(Path path) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path.toString()))) {
+            return (University) ois.readObject();
+        } catch (IOException e) {
+            log.error("Error {} \n to find university by Path {}", e, DATA_FILE);
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            log.error("Error {} of casting", e);
+            throw new RuntimeException(e);
+        }
+    }
+
     public static University loadUniversity() {
-        return null;
+        return loadUniversity(DATA_FILE);
     }
 
 }
