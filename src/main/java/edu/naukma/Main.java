@@ -9,6 +9,8 @@ import edu.naukma.domain.*;
 import edu.naukma.service.*;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.stream.Collectors;
+
 @Slf4j
 public class Main {
     public static void main(String[] args) {
@@ -142,12 +144,27 @@ public class Main {
         students.addMenuItem(deleteStudent);
         students.addMenuItem(editStudent);
 
-        // Add menu items to Reports branch
+        /// Звіт 1: Кількість студентів по факультетах (через stream.count)
         MenuItem studentsInFacultyReport = new MenuItem(1, "Students in Faculty Report", () -> {
-            for (Faculty faculty: university.getFaculties())
-                System.out.println("Faculty: " + faculty.getName() + " has " + university.getStudents(faculty).size() + " students.");
+            university.getFaculties().stream()
+                    .forEach(f -> {
+                        long count = university.getStudents().stream()
+                                .filter(s -> s.getFaculty().getId() == f.getId())
+                                .count();
+                        System.out.println("Faculty: " + f.getName() + " | Students: " + count);
+                    });
         }, UserRole.EXPLORER);
+
+// Звіт 2: Статистика статусів студентів (через groupingBy)
+        MenuItem studentStatusReport = new MenuItem(2, "Student Status Report", () -> {
+            System.out.println("--- Summary by Status ---");
+            university.getStudents().stream()
+                    .collect(Collectors.groupingBy(Student::getStatus, Collectors.counting()))
+                    .forEach((status, count) -> System.out.println(status + ": " + count));
+        }, UserRole.EXPLORER);
+
         reports.addMenuItem(studentsInFacultyReport);
+        reports.addMenuItem(studentStatusReport);
 
         // Add menu items to Sorting branch
         MenuItem sortStudentsByCourse = new MenuItem(1, "Sort Students by Course", () -> StudentService.listStudents(StudentService.sortByCourse(university.getStudents())), UserRole.EXPLORER);
