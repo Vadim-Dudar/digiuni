@@ -9,7 +9,7 @@ import java.nio.file.*;
 @Slf4j
 public class DataService {
 
-    private static final Path DATA_FILE = Path.of("university_data.ser");
+    private static final Path DATA_FILE = Path.of("src/main/java/edu/naukma/university_data.ser");
 
     public static void saveUniversity(University university, Path path) {
         if (university == null) throw new IllegalArgumentException("University can't be null!");
@@ -41,6 +41,10 @@ public class DataService {
 
     public static University loadUniversity() {
         return loadUniversity(DATA_FILE);
+    }
+
+    public static void loadUniversity(University university) {
+        university = loadUniversity(DATA_FILE);
     }
 
 }
