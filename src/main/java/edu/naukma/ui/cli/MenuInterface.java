@@ -1,6 +1,7 @@
 package edu.naukma.ui.cli;
 
 import edu.naukma.domain.User;
+import edu.naukma.util.InputUtil;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,7 +41,7 @@ public class MenuInterface {
             login();
             while (currentUser != null) {
                 printMenu(branches);
-                int choice = InputUtils.readInt("Select option: ");
+                int choice = InputUtil.readInt("Select option: ");
                 if (choice == 0) {
                     currentUser = null;
                     System.out.println("Logged out.");
@@ -72,7 +73,7 @@ public class MenuInterface {
                 }
                 System.out.println("0 - Back");
 
-                int itemChoice = InputUtils.readInt("Select option: ");
+                int itemChoice = InputUtil.readInt("Select option: ");
                 if (itemChoice == 0) continue;
                 if (itemChoice < 1 || itemChoice > allowed.size()) {
                     System.out.println("[Invalid selection.]");
@@ -99,11 +100,11 @@ public class MenuInterface {
             System.out.println("\n--- Enter to system ---");
 
 
-            String login = InputUtils.readString("Login: ");
+            String login = InputUtil.readString("Login: ");
 
             for (User user : users) {
                 if (user.login.equals(login.trim())) {
-                    String password = InputUtils.readString("Password: ");
+                    String password = InputUtil.readString("Password: ");
 
                     if (user.checkPassword(password.trim())) {
                         currentUser = user;

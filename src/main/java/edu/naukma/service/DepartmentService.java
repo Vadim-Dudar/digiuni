@@ -3,7 +3,7 @@ package edu.naukma.service;
 import edu.naukma.domain.Department;
 import edu.naukma.domain.Faculty;
 import edu.naukma.domain.Teacher;
-import edu.naukma.ui.cli.InputUtils;
+import edu.naukma.util.InputUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public class DepartmentService {
         listDepartments(departments);
 
         while (true) {
-            int choice = InputUtils.readInt("Choose: ");
+            int choice = InputUtil.readInt("Choose: ");
             if (choice > 0 && choice <= departments.size()) return departments.get(choice - 1);
             System.out.println("Enter proper number from list");
         }
@@ -38,10 +38,10 @@ public class DepartmentService {
 
         Department department = chooseDepartment(departments);
 
-        department.setName(InputUtils.readString("Enter new name: "));
+        department.setName(InputUtil.readString("Enter new name: "));
         department.setFaculty(FacultyService.chooseFaculty(faculties));
         department.setHead(TeacherService.chooseTeacher(teachers));
-        department.setLocation(InputUtils.readString("Enter new location: "));
+        department.setLocation(InputUtil.readString("Enter new location: "));
 
         System.out.println("Department successfully changed: " + department);
     }
@@ -51,11 +51,11 @@ public class DepartmentService {
         else if (faculties == null) throw new IllegalArgumentException("Faculties list can not be null!");
         else if (teachers == null) throw new IllegalArgumentException("Teachers list can not be null!");
 
-        int code = InputUtils.readInt("Enter department code: ");
-        String name = InputUtils.readString("Enter department name: ");
+        int code = InputUtil.readInt("Enter department code: ");
+        String name = InputUtil.readString("Enter department name: ");
         Faculty faculty = FacultyService.chooseFaculty(faculties);
         Teacher head = TeacherService.chooseTeacher(teachers);
-        String location = InputUtils.readString("Enter department location: ");
+        String location = InputUtil.readString("Enter department location: ");
 
         Department department = new Department(code, name, faculty, head, location);
         departments.add(department);

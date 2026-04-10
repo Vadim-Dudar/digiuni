@@ -1,7 +1,7 @@
 package edu.naukma.ui.actions;
 
 import edu.naukma.domain.University;
-import edu.naukma.ui.cli.InputUtils;
+import edu.naukma.util.InputUtil;
 
 public class EditUniversityAction implements Action {
     private University university;
@@ -13,9 +13,9 @@ public class EditUniversityAction implements Action {
 
     @Override
     public void execute() {
-        university.setFullName(InputUtils.readString("Enter new full name: "));
-        university.setShortName(InputUtils.readString("Enter new short name: "));
-        university.setCity(InputUtils.readString("Enter new city: "));
-        university.setAddress(InputUtils.readString("Enter new address: "));
+        university.setFullName(InputUtil.readString("Enter new full name: "));
+        university.setShortName(InputUtil.readString("Enter new short name: "));
+        university.setCity(InputUtil.readString("Enter new city: "));
+        university.setAddress(InputUtil.readString("Enter new address: "));
     }
 }

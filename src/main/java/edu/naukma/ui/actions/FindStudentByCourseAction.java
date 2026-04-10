@@ -2,7 +2,7 @@ package edu.naukma.ui.actions;
 
 import edu.naukma.repository.Repository;
 import edu.naukma.domain.Student;
-import edu.naukma.ui.cli.InputUtils;
+import edu.naukma.util.InputUtil;
 import edu.naukma.service.StudentService;
 
 public class FindStudentByCourseAction implements Action {
@@ -18,7 +18,7 @@ public class FindStudentByCourseAction implements Action {
     public void execute() {
         int course;
         while (true) {
-            course = InputUtils.readInt("Enter student's group: ");
+            course = InputUtil.readInt("Enter student's group: ");
             if (course > 0 && course <= 6) break;
             System.out.println("Course must be between 1 and 6. Please try again.");
         }

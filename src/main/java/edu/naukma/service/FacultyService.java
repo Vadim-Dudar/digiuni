@@ -1,7 +1,7 @@
 package edu.naukma.service;
 
 import edu.naukma.domain.Faculty;
-import edu.naukma.ui.cli.InputUtils;
+import edu.naukma.util.InputUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class FacultyService {
     public static Faculty chooseFaculty(List<Faculty> faculties) {
         listFaculties(faculties);
         while (true) {
-            int choise = InputUtils.readInt("Choose: ");
+            int choise = InputUtil.readInt("Choose: ");
             if (choise > 0 && choise <= faculties.size()) return faculties.get(choise-1);
             else System.out.println("Choose correct faculty! ");
         }

@@ -25,7 +25,7 @@ public class ValidationUtil {
                     if (field.isAnnotationPresent(ValidPhone.class)) {
                         if (value != null) {
                             String phone = value.toString();
-                            if (!phone.matches("\\+?\\d{10,13}")) {
+                            if (!phone.matches("\\+?\\d{10,15}")) {
                                 throw new IllegalArgumentException(field.getAnnotation(ValidPhone.class).message() + ": " + phone);
                             }
                         }

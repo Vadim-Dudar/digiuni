@@ -2,7 +2,7 @@ package edu.naukma.ui.actions;
 
 import edu.naukma.repository.Repository;
 import edu.naukma.domain.Student;
-import edu.naukma.ui.cli.InputUtils;
+import edu.naukma.util.InputUtil;
 import edu.naukma.service.StudentService;
 
 public class FindStudentByFullNameAction implements Action {
@@ -16,7 +16,7 @@ public class FindStudentByFullNameAction implements Action {
 
     @Override
     public void execute() {
-        String name = InputUtils.readString("Enter student's full name: ");
+        String name = InputUtil.readString("Enter student's full name: ");
         StudentService.listStudents(studentRepository.findBy(s -> s.getFullName().equalsIgnoreCase(name)));
     }
 }
