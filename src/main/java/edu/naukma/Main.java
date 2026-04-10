@@ -141,15 +141,15 @@ public class Main {
         }, UserRole.EXPLORER);
 
         MenuItem facultyReport = new MenuItem(3, "Faculty Quick Info (Record)", () -> {
-            System.out.println("--- Експрес-довідка по факультетах ---");
+            System.out.println("--- Express help by faculties ---");
             university.getFaculties().stream()
                     .map(f -> new FacultyInfo(
                             f.getId(),
                             f.getName(),
-                            f.getDean() != null ? f.getDean().getFullName() : "Не призначено"
+                            f.getDean() != null ? f.getDean().getFullName() : "Not assigned"
                     ))
                     .forEach(info -> System.out.println(
-                            "ID: " + info.id() + " | Назва: " + info.name() + " | Декан: " + info.deanName()
+                            "ID: " + info.id() + " | Name: " + info.name() + " | Dean: " + info.deanName()
                     ));
         }, UserRole.EXPLORER);
 
