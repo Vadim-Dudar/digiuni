@@ -1,11 +1,13 @@
 package edu.naukma.domain;
 
+import java.io.Serializable;
+
 /**
  * The User class represents a user in the system with a login, password, and user role.
  * It provides methods for checking the password, changing the password, and managing the user role.
  */
 
-public class User {
+public class User implements Serializable {
 
     public final String login;
     private String password;

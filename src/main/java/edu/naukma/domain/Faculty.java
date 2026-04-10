@@ -2,10 +2,11 @@ package edu.naukma.domain;
 
 import edu.naukma.repository.Repository;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-public class Faculty implements Identifiable {
+public class Faculty implements Identifiable, Serializable {
 
     private final int code;
     private String name;
