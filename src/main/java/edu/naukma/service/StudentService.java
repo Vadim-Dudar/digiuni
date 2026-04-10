@@ -1,6 +1,6 @@
 package edu.naukma.service;
 
-import edu.naukma.ui.cli.InputUtils;
+import edu.naukma.util.InputUtil;
 import edu.naukma.domain.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,7 +38,7 @@ public class StudentService {
         listStudents(students);
 
         while (true) {
-            int choice = InputUtils.readInt("Choose: ");
+            int choice = InputUtil.readInt("Choose: ");
             if (choice > 0 && choice <= students.size()) return students.get(choice - 1);
             System.out.println("Enter proper number from list");
         }
@@ -46,14 +46,14 @@ public class StudentService {
 
     public static void addStudent(List<Student> students, List<Faculty> faculties, List<Department> departments) {
         Person person = PersonService.createPerson();
-        int studentId = InputUtils.readInt("Enter student ID: ");
-        int course = InputUtils.readInt("Enter course: ");
+        int studentId = InputUtil.readInt("Enter student ID: ");
+        int course = InputUtil.readInt("Enter course: ");
         Faculty faculty = FacultyService.chooseFaculty(faculties);
         Department department = DepartmentService.chooseDepartment(departments);
-        int group = InputUtils.readInt("Enter group: ");
-        int yearOfEntry = InputUtils.readInt("Enter year of entry: ");
-        StudyForm studyForm = InputUtils.chooseEnum(StudyForm.class);
-        StudentStatus status = InputUtils.chooseEnum(StudentStatus.class);
+        int group = InputUtil.readInt("Enter group: ");
+        int yearOfEntry = InputUtil.readInt("Enter year of entry: ");
+        StudyForm studyForm = InputUtil.chooseEnum(StudyForm.class);
+        StudentStatus status = InputUtil.chooseEnum(StudentStatus.class);
 
         Student student = new Student(person.getName(), person.getSurname(), person.getMiddleName(), person.getDayOfBirth().toString(),
                 person.getPhone(), person.getEmail(), studentId, course, faculty, department, group, yearOfEntry, studyForm, status);
@@ -76,12 +76,12 @@ public class StudentService {
         Student student = chooseStudent(students);
 
         PersonService.editPerson(student);
-        student.setCourse(InputUtils.readInt("Enter new course: "));
+        student.setCourse(InputUtil.readInt("Enter new course: "));
         student.setFaculty(FacultyService.chooseFaculty(faculties));
         student.setDepartment(DepartmentService.chooseDepartment(departments));
-        student.setGroup(InputUtils.readInt("Enter new group: "));
-        student.setStudyForm(InputUtils.chooseEnum(StudyForm.class));
-        student.setStatus(InputUtils.chooseEnum(StudentStatus.class));
+        student.setGroup(InputUtil.readInt("Enter new group: "));
+        student.setStudyForm(InputUtil.chooseEnum(StudyForm.class));
+        student.setStatus(InputUtil.chooseEnum(StudentStatus.class));
 
         System.out.println("Student successfully changed: " + student);
 

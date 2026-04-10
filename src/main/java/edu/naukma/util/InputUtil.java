@@ -1,10 +1,10 @@
-package edu.naukma.ui.cli;
+package edu.naukma.util;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-public class InputUtils {
+public class InputUtil {
     private static final Scanner scanner = new Scanner(System.in);
 
     /**

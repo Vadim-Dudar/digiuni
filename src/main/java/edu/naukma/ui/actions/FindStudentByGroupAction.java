@@ -2,7 +2,7 @@ package edu.naukma.ui.actions;
 
 import edu.naukma.repository.Repository;
 import edu.naukma.domain.Student;
-import edu.naukma.ui.cli.InputUtils;
+import edu.naukma.util.InputUtil;
 import edu.naukma.service.StudentService;
 
 public class FindStudentByGroupAction implements Action {
@@ -16,7 +16,7 @@ public class FindStudentByGroupAction implements Action {
 
     @Override
     public void execute() {
-        int group = InputUtils.readInt("Enter student's group: ");
+        int group = InputUtil.readInt("Enter student's group: ");
         StudentService.listStudents(studentRepository.findBy(s -> s.getGroup() == group));
     }
 }

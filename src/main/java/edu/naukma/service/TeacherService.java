@@ -1,6 +1,6 @@
 package edu.naukma.service;
 
-import edu.naukma.ui.cli.InputUtils;
+import edu.naukma.util.InputUtil;
 import edu.naukma.domain.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,7 +24,7 @@ public class TeacherService {
         listTeachers(teachers);
 
         while (true) {
-            int choice = InputUtils.readInt("Choose: ");
+            int choice = InputUtil.readInt("Choose: ");
             if (choice > 0 && choice <= teachers.size()) return teachers.get(choice - 1);
             System.out.println("Enter proper number from list");
         }
@@ -51,10 +51,10 @@ public class TeacherService {
         Teacher teacher = chooseTeacher(teachers);
 
         PersonService.editPerson(teacher);
-        teacher.setPosition(InputUtils.chooseEnum(TeacherPosition.class));
-        teacher.setDegree(InputUtils.chooseEnum(AcademicDegree.class));
-        teacher.setStage(InputUtils.chooseEnum(AcademicStage.class));
-        teacher.setRate(InputUtils.readInt("Enter new rate: "));
+        teacher.setPosition(InputUtil.chooseEnum(TeacherPosition.class));
+        teacher.setDegree(InputUtil.chooseEnum(AcademicDegree.class));
+        teacher.setStage(InputUtil.chooseEnum(AcademicStage.class));
+        teacher.setRate(InputUtil.readInt("Enter new rate: "));
         teacher.setFaculty(FacultyService.chooseFaculty(faculties));
         teacher.setDepartment(DepartmentService.chooseDepartment(departments));
 
@@ -66,12 +66,12 @@ public class TeacherService {
         System.out.println("Enter teacher's personal information:");
         Person person = PersonService.createPerson();
 
-        int teacherId = InputUtils.readInt("Enter teacher ID: ");
-        TeacherPosition position = InputUtils.chooseEnum(TeacherPosition.class);
-        AcademicDegree degree = InputUtils.chooseEnum(AcademicDegree.class);
-        AcademicStage stage = InputUtils.chooseEnum(AcademicStage.class);
-        String dayOfHire = InputUtils.readDate("Enter date of hire (yyyy-MM-dd): ");
-        int rate = InputUtils.readInt("Enter rate: ");
+        int teacherId = InputUtil.readInt("Enter teacher ID: ");
+        TeacherPosition position = InputUtil.chooseEnum(TeacherPosition.class);
+        AcademicDegree degree = InputUtil.chooseEnum(AcademicDegree.class);
+        AcademicStage stage = InputUtil.chooseEnum(AcademicStage.class);
+        String dayOfHire = InputUtil.readDate("Enter date of hire (yyyy-MM-dd): ");
+        int rate = InputUtil.readInt("Enter rate: ");
         Faculty faculty = FacultyService.chooseFaculty(faculties);
         Department department = DepartmentService.chooseDepartment(departments);
 

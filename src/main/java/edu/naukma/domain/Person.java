@@ -3,6 +3,10 @@ package edu.naukma.domain;
 import edu.naukma.exсeptions.LogicalDateExeption;
 import edu.naukma.exсeptions.InvalidPersonFieldException;
 
+import edu.naukma.annotations.NotNullOrEmpty;
+import edu.naukma.annotations.ValidPhone;
+import edu.naukma.util.ValidationUtil;
+
 import java.io.Serializable;
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -11,11 +15,21 @@ public class Person implements Identifiable, Serializable {
     private static int lastId = 0;
 
     private final int id;
+
+    @NotNullOrEmpty(message = "Ім'я не може бути порожнім")
     private String name;
+
+    @NotNullOrEmpty(message = "Прізвище не може бути порожнім")
     private String surname;
+
+    @NotNullOrEmpty(message = "По батькові не може бути порожнім")
     private String middleName;
+
     private final LocalDate dayOfBirth;
+
+    @ValidPhone(message = "Неправильний формат телефону")
     private String phone;
+
     private String email;
 
     /**
@@ -35,7 +49,6 @@ public class Person implements Identifiable, Serializable {
                 name.isEmpty() || surname.isEmpty() || middleName.isEmpty() || dayOfBirth.isEmpty() || phone.isEmpty() || email.isEmpty())
             throw new InvalidPersonFieldException("Person field can't be null or empty!");
 
-        if (phone.length() < 5) throw new InvalidPersonFieldException("Phone number is too short!");
         if (!email.contains("@")) throw new InvalidPersonFieldException("Email must contain '@' symbol!");
 
         LocalDate parsedDate;
@@ -56,6 +69,8 @@ public class Person implements Identifiable, Serializable {
         this.middleName = middleName;
         this.phone = phone;
         this.email = email;
+
+        ValidationUtil.validate(this);
     }
 
     /**

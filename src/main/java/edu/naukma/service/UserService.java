@@ -2,7 +2,7 @@ package edu.naukma.service;
 
 import edu.naukma.domain.User;
 import edu.naukma.domain.UserRole;
-import edu.naukma.ui.cli.InputUtils;
+import edu.naukma.util.InputUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -25,15 +25,15 @@ public class UserService {
 
         String login;
         while (true) {
-            login = InputUtils.readString("Enter username: ");
+            login = InputUtil.readString("Enter username: ");
             if (users.contains(new User(login, "anyPassword", null))) {
                 System.out.println("User with this username already exists.");
                 continue;
             }
             break;
         }
-        String password = InputUtils.readString("Enter password: ");
-        UserRole role = InputUtils.chooseEnum(UserRole.class);
+        String password = InputUtil.readString("Enter password: ");
+        UserRole role = InputUtil.chooseEnum(UserRole.class);
 
         User user = new User(login, password, role);
         users.add(user);
@@ -52,7 +52,7 @@ public class UserService {
         }
 
         while (true) {
-            int choice = InputUtils.readInt("Choose user: ");
+            int choice = InputUtil.readInt("Choose user: ");
             if (choice < 1 || choice > userList.size()) {
                 System.out.println("Invalid choice. Please try again.");
                 continue;
@@ -75,8 +75,8 @@ public class UserService {
         User user = chooseUser(users);
         String oldPassword, newPassword;
         while (true) {
-            oldPassword = InputUtils.readString("Enter old password: ");
-            newPassword = InputUtils.readString("Enter new password: ");
+            oldPassword = InputUtil.readString("Enter old password: ");
+            newPassword = InputUtil.readString("Enter new password: ");
 
             if (!user.checkPassword(oldPassword)) {
                 System.out.println("Incorrect old password. Please try again.");
