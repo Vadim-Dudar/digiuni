@@ -1,6 +1,5 @@
 package edu.naukma;
 
-import edu.naukma.ui.cli.*;
 import edu.naukma.ui.actions.*;
 import edu.naukma.ui.cli.MenuBranch;
 import edu.naukma.ui.cli.MenuInterface;
@@ -10,11 +9,9 @@ import edu.naukma.service.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.stream.Collectors;
-import java.io.FileNotFoundException;
 
 @Slf4j
 public class Main {
-
 
     public static void main(String[] args) {
 
@@ -23,8 +20,11 @@ public class Main {
         University tempUniversity;
         try {
             tempUniversity = DataService.loadUniversity();
+            log.debug("Loaded from file");
         } catch (RuntimeException e) {
+            log.error(String.valueOf(e));
             tempUniversity = createUniversity();
+            log.debug("Created from hardcode method");
         }
         university = tempUniversity;
 
@@ -66,30 +66,30 @@ public class Main {
 
         // Add menu items to Faculties branch
         faculties.addMenuItem(new MenuItem(1, "List Faculties", () -> FacultyService.listFaculties(university.getFaculties()), UserRole.EXPLORER));
-        faculties.addMenuItem(new MenuItem(2, "Add Faculty", new AddFacultyAction(university.getFaculties()), UserRole.ADMIN));
-        faculties.addMenuItem(new MenuItem(3, "Delete Faculty", () -> FacultyService.deleteFaculty(university.getFaculties()), UserRole.ADMIN));
+        faculties.addMenuItem(new MenuItem(2, "Add Faculty", new AddFacultyAction(university.getFacultiesRepository()), UserRole.ADMIN));
+        faculties.addMenuItem(new MenuItem(3, "Delete Faculty", () -> FacultyService.deleteFaculty(university.getFacultiesRepository()), UserRole.ADMIN));
         faculties.addMenuItem(new MenuItem(4, "Edit Faculty", new EditFacultyAction(university.getFaculties(), university.getTeachers()), UserRole.ADMIN));
 
         // Add menu items to Departments branch
         departments.addMenuItem(new MenuItem(1, "List Departments", () -> DepartmentService.listDepartments(university.getDepartments()), UserRole.EXPLORER));
-        departments.addMenuItem(new MenuItem(2, "Add Department", () -> DepartmentService.addDepartment(university.getDepartments(), university.getFaculties(), university.getTeachers()), UserRole.ADMIN));
-        departments.addMenuItem(new MenuItem(3, "Delete Department", () -> DepartmentService.deleteDepartment(university.getDepartments()), UserRole.ADMIN));
+        departments.addMenuItem(new MenuItem(2, "Add Department", () -> DepartmentService.addDepartment(university.getFacultiesRepository(), university.getTeachers()), UserRole.ADMIN));
+        departments.addMenuItem(new MenuItem(3, "Delete Department", () -> DepartmentService.deleteDepartment(university.getDepartments(), university.getFacultiesRepository()), UserRole.ADMIN));
         departments.addMenuItem(new MenuItem(4, "Edit Department", () -> DepartmentService.editDepartment(university.getDepartments(), university.getFaculties(), university.getTeachers()), UserRole.ADMIN));
 
         // Add menu items to Teachers branch
         teachers.addMenuItem(new MenuItem(1, "List Teachers", () -> TeacherService.listTeachers(university.getTeachers()), UserRole.EXPLORER));
         teachers.addMenuItem(new MenuItem(2, "Find Teacher by Department", () -> TeacherService.listTeachers(university.getTeachers(DepartmentService.chooseDepartment(university.getDepartments()))), UserRole.EXPLORER));
-        teachers.addMenuItem(new MenuItem(3, "Add Teacher", () -> TeacherService.addTeacher(university.getTeachers(), university.getFaculties(), university.getDepartments()), UserRole.ADMIN));
-        teachers.addMenuItem(new MenuItem(4, "Delete Teacher", () -> TeacherService.deleteTeacher(university.getTeachers()), UserRole.ADMIN));
+        teachers.addMenuItem(new MenuItem(3, "Add Teacher", () -> TeacherService.addTeacher(university.getTeachersRepository(), university.getFaculties(), university.getDepartments()), UserRole.ADMIN));
+        teachers.addMenuItem(new MenuItem(4, "Delete Teacher", () -> TeacherService.deleteTeacher(university.getTeachersRepository()), UserRole.ADMIN));
         teachers.addMenuItem(new MenuItem(5, "Edit Teacher", () -> TeacherService.editTeacher(university.getTeachers(), university.getFaculties(), university.getDepartments()), UserRole.ADMIN));
 
         // Add menu items to Students branch
         students.addMenuItem(new MenuItem(1, "List Students", () -> StudentService.listStudents(university.getStudents()), UserRole.EXPLORER));
-        students.addMenuItem(new MenuItem(2, "Find Student by Full Name", () -> new FindStudentByFullNameAction(university.getStudentRepository()), UserRole.EXPLORER));
-        students.addMenuItem(new MenuItem(3, "Find Student by Course", () -> new FindStudentByCourseAction(university.getStudentRepository()), UserRole.EXPLORER));
-        students.addMenuItem(new MenuItem(4, "Find Student by Group", () -> new FindStudentByCourseAction(university.getStudentRepository()), UserRole.EXPLORER));
-        students.addMenuItem(new MenuItem(5, "Add Student", () -> StudentService.addStudent(university.getStudents(), university.getFaculties(), university.getDepartments()), UserRole.ADMIN));
-        students.addMenuItem(new MenuItem(6, "Delete Student", () -> StudentService.deleteStudent(university.getStudents()), UserRole.ADMIN));
+        students.addMenuItem(new MenuItem(2, "Find Student by Full Name", () -> new FindStudentByFullNameAction(university.getStudentsRepository()), UserRole.EXPLORER));
+        students.addMenuItem(new MenuItem(3, "Find Student by Course", () -> new FindStudentByCourseAction(university.getStudentsRepository()), UserRole.EXPLORER));
+        students.addMenuItem(new MenuItem(4, "Find Student by Group", () -> new FindStudentByCourseAction(university.getStudentsRepository()), UserRole.EXPLORER));
+        students.addMenuItem(new MenuItem(5, "Add Student", () -> StudentService.addStudent(university.getStudentsRepository(), university.getFaculties(), university.getDepartments()), UserRole.ADMIN));
+        students.addMenuItem(new MenuItem(6, "Delete Student", () -> StudentService.deleteStudent(university.getStudentsRepository()), UserRole.ADMIN));
         students.addMenuItem(new MenuItem(7, "Edit Student", () -> StudentService.editStudent(university.getStudents(), university.getFaculties(), university.getDepartments()), UserRole.ADMIN));
 
         // --- REPORTS BRANCH ---
@@ -127,7 +127,7 @@ public class Main {
         reports.addMenuItem(studentStatusReport);
         reports.addMenuItem(facultyReport);
 
-        // --- SORTING BRANCH (Повернув усі твої пункти) ---
+        // --- SORTING BRANCH ---
         sorting.addMenuItem(new MenuItem(1, "Sort Students by Course", () -> StudentService.listStudents(StudentService.sortByCourse(university.getStudents())), UserRole.EXPLORER));
         sorting.addMenuItem(new MenuItem(2, "Sort Students by Group", () -> StudentService.listStudents(StudentService.sortByGroup(university.getStudents())), UserRole.EXPLORER));
         sorting.addMenuItem(new MenuItem(3, "Sort Teachers by Surname", () -> TeacherService.listTeachers(TeacherService.sortByName(university.getTeachers())), UserRole.EXPLORER));
@@ -147,17 +147,17 @@ public class Main {
 
     private static void mainBanner() {
         System.out.println("*****************************************************");
-        System.out.println("* *");
-        System.out.println("* ██████╗ ██╗ ██████╗ ██╗██╗   ██╗███╗   ██╗██╗   *");
-        System.out.println("* ██╔══██╗██║██╔════╝ ██║██║   ██║████╗  ██║██║   *");
-        System.out.println("* ██║  ██║██║██║  ███╗██║██║   ██║██╔██╗ ██║██║   *");
-        System.out.println("* ██║  ██║██║██║   ██║██║██║   ██║██║╚██╗██║██║   *");
-        System.out.println("* ██████╔╝██║╚██████╔╝██║╚██████╔╝██║ ╚████║██║   *");
-        System.out.println("* ╚═════╝ ╚═╝ ╚═════╝ ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝   *");
-        System.out.println("* *");
-        System.out.println("* Welcome to the University Manager         *");
-        System.out.println("* Created by: Dudar Vadim & Demkiv Max       *");
-        System.out.println("* *");
+        System.out.println("*                                                   *");
+        System.out.println("*   ██████╗ ██╗ ██████╗ ██╗██╗   ██╗███╗   ██╗██╗   *");
+        System.out.println("*   ██╔══██╗██║██╔════╝ ██║██║   ██║████╗  ██║██║   *");
+        System.out.println("*   ██║  ██║██║██║  ███╗██║██║   ██║██╔██╗ ██║██║   *");
+        System.out.println("*   ██║  ██║██║██║   ██║██║██║   ██║██║╚██╗██║██║   *");
+        System.out.println("*   ██████╔╝██║╚██████╔╝██║╚██████╔╝██║ ╚████║██║   *");
+        System.out.println("*   ╚═════╝ ╚═╝ ╚═════╝ ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝   *");
+        System.out.println("*                                                   *");
+        System.out.println("*         Welcome to the University Manager         *");
+        System.out.println("*       Created by: Dudar Vadim & Demkiv Max        *");
+        System.out.println("*                                                   *");
         System.out.println("*****************************************************");
     }
 

@@ -1,15 +1,16 @@
 package edu.naukma.ui.actions;
 
 import edu.naukma.domain.Faculty;
+import edu.naukma.repository.Repository;
 import edu.naukma.util.InputUtil;
 
 import java.util.List;
 
 public class AddFacultyAction implements Action {
-    private List<Faculty> faculties;
+    private Repository<Faculty> faculties;
 
-    public AddFacultyAction(List<Faculty> faculties) {
-        if (faculties.isEmpty()) throw new IllegalArgumentException("Faculties can not be empty or null!");
+    public AddFacultyAction(Repository<Faculty> faculties) {
+        if (faculties.getAll() == null || faculties.getAll().isEmpty()) throw new IllegalArgumentException("Faculties can not be empty or null!");
 
         this.faculties = faculties;
     }
@@ -22,7 +23,7 @@ public class AddFacultyAction implements Action {
         String contacts = InputUtil.readString("Enter faculty contacts: ");
 
         Faculty newFaculty = new Faculty(code, name, shortName, null, contacts);
-        faculties.add(newFaculty);
+        faculties.addItem(newFaculty);
         System.out.println("Faculty successfully added: " + newFaculty);
     }
 }

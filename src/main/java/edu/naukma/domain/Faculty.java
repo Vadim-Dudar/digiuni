@@ -134,6 +134,10 @@ public class Faculty implements Identifiable, Serializable {
         return departments.getAll();
     }
 
+    public Repository<Department> getDepartmentsRepository() {
+        return departments;
+    }
+
     /**
      * Returns the faculty dean.
      *
