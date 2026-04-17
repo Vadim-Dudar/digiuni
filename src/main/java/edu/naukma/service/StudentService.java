@@ -1,5 +1,6 @@
 package edu.naukma.service;
 
+import edu.naukma.repository.Repository;
 import edu.naukma.util.InputUtil;
 import edu.naukma.domain.*;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +45,7 @@ public class StudentService {
         }
     }
 
-    public static void addStudent(List<Student> students, List<Faculty> faculties, List<Department> departments) {
+    public static void addStudent(Repository<Student> studentRepository, List<Faculty> faculties, List<Department> departments) {
         Person person = PersonService.createPerson();
         int studentId = InputUtil.readInt("Enter student ID: ");
         int course = InputUtil.readInt("Enter course: ");
@@ -58,15 +59,15 @@ public class StudentService {
         Student student = new Student(person.getName(), person.getSurname(), person.getMiddleName(), person.getDayOfBirth().toString(),
                 person.getPhone(), person.getEmail(), studentId, course, faculty, department, group, yearOfEntry, studyForm, status);
 
+        studentRepository.addItem(student);
         System.out.println("Student successfully added: " + student);
-        students.add(student);
 
         log.info("Student created: {}", student);
     }
 
-    public static void deleteStudent(List<Student> students) {
-        Student student = chooseStudent(students);
-        students.remove(student);
+    public static void deleteStudent(Repository<Student> students) {
+        Student student = chooseStudent(students.getAll());
+        students.remove(student.getId());
         System.out.println("Student successfully deleted: " + student);
 
         log.info("Student deleted: {}", student);

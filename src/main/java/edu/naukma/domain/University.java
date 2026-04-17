@@ -135,16 +135,6 @@ public class University implements Serializable {
     }
 
     /**
-     * Removes a student by their ID.
-     *
-     * @param id student ID
-     * @return true if the student was removed, false otherwise
-     */
-    public boolean removeStudent(int id) {
-        return students.remove(id);
-    }
-
-    /**
      * Finds a student by their ID.
      *
      * @param id student ID
@@ -177,7 +167,8 @@ public class University implements Serializable {
         return students.getAll();
     }
 
-    public Repository<Student> getStudentRepository() {
+
+    public Repository<Student> getStudentsRepository() {
         return students;
     }
 
