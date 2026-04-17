@@ -3,6 +3,7 @@ package edu.naukma.service;
 import edu.naukma.domain.Department;
 import edu.naukma.domain.Faculty;
 import edu.naukma.domain.Teacher;
+import edu.naukma.repository.Repository;
 import edu.naukma.util.InputUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,28 +47,29 @@ public class DepartmentService {
         System.out.println("Department successfully changed: " + department);
     }
 
-    public static void addDepartment(List<Department> departments, List<Faculty> faculties, List<Teacher> teachers) {
-        if (departments == null) throw new IllegalArgumentException("Departments list can not be null!");
-        else if (faculties == null) throw new IllegalArgumentException("Faculties list can not be null!");
+    public static void addDepartment(Repository<Faculty> faculties, List<Teacher> teachers) {
+        if (faculties == null) throw new IllegalArgumentException("Faculties list can not be null!");
         else if (teachers == null) throw new IllegalArgumentException("Teachers list can not be null!");
 
         int code = InputUtil.readInt("Enter department code: ");
         String name = InputUtil.readString("Enter department name: ");
-        Faculty faculty = FacultyService.chooseFaculty(faculties);
+        Faculty faculty = FacultyService.chooseFaculty(faculties.getAll());
         Teacher head = TeacherService.chooseTeacher(teachers);
         String location = InputUtil.readString("Enter department location: ");
 
         Department department = new Department(code, name, faculty, head, location);
-        departments.add(department);
+        faculty.getDepartmentsRepository().addItem(department);
 
         System.out.println("Department successfully added: " + department);
     }
 
-    public static void deleteDepartment(List<Department> departments) {
+    public static void deleteDepartment(List<Department> departments, Repository<Faculty> faculties) {
         if (departments == null) throw new IllegalArgumentException("Departments list can not be null!");
 
         Department department = chooseDepartment(departments);
-        departments.remove(department);
+
+        Faculty target = faculties.getAll().stream().filter(f -> f.getDepartments().contains(department)).findFirst().orElseThrow();
+        target.getDepartmentsRepository().remove(department.getId());
 
         System.out.println("Department successfully deleted: " + department);
 

@@ -22,6 +22,7 @@ public class Main {
             tempUniversity = DataService.loadUniversity();
             log.debug("Loaded from file");
         } catch (RuntimeException e) {
+            log.error(String.valueOf(e));
             tempUniversity = createUniversity();
             log.debug("Created from hardcode method");
         }
@@ -71,8 +72,8 @@ public class Main {
 
         // Add menu items to Departments branch
         departments.addMenuItem(new MenuItem(1, "List Departments", () -> DepartmentService.listDepartments(university.getDepartments()), UserRole.EXPLORER));
-        departments.addMenuItem(new MenuItem(2, "Add Department", () -> DepartmentService.addDepartment(university.getDepartments(), university.getFaculties(), university.getTeachers()), UserRole.ADMIN));
-        departments.addMenuItem(new MenuItem(3, "Delete Department", () -> DepartmentService.deleteDepartment(university.getDepartments()), UserRole.ADMIN));
+        departments.addMenuItem(new MenuItem(2, "Add Department", () -> DepartmentService.addDepartment(university.getFacultiesRepository(), university.getTeachers()), UserRole.ADMIN));
+        departments.addMenuItem(new MenuItem(3, "Delete Department", () -> DepartmentService.deleteDepartment(university.getDepartments(), university.getFacultiesRepository()), UserRole.ADMIN));
         departments.addMenuItem(new MenuItem(4, "Edit Department", () -> DepartmentService.editDepartment(university.getDepartments(), university.getFaculties(), university.getTeachers()), UserRole.ADMIN));
 
         // Add menu items to Teachers branch
