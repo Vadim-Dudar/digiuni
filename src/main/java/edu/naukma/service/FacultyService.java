@@ -1,6 +1,7 @@
 package edu.naukma.service;
 
 import edu.naukma.domain.Faculty;
+import edu.naukma.repository.Repository;
 import edu.naukma.util.InputUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,9 +30,9 @@ public class FacultyService {
         }
     }
 
-    public static void deleteFaculty(List<Faculty> faculties) {
-        Faculty faculty = chooseFaculty(faculties);
-        faculties.remove(faculty);
+    public static void deleteFaculty(Repository<Faculty> faculties) {
+        Faculty faculty = chooseFaculty(faculties.getAll());
+        faculties.remove(faculty.getId());
         System.out.println("Faculty successfully deleted: " + faculty);
 
         log.info("Faculty deleted: {}", faculty);

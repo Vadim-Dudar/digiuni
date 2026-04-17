@@ -81,6 +81,10 @@ public class University implements Serializable {
         return faculties.getAll();
     }
 
+    public Repository<Faculty> getFacultiesRepository() {
+        return faculties;
+    }
+
     /**
      * Finds the faculty of a given department.
      *
@@ -238,6 +242,10 @@ public class University implements Serializable {
      */
     public List<Teacher> getTeachers() {
         return teachers.getAll();
+    }
+
+    public Repository<Teacher> getTeachersRepository() {
+        return teachers;
     }
 
     /**

@@ -65,8 +65,8 @@ public class Main {
 
         // Add menu items to Faculties branch
         faculties.addMenuItem(new MenuItem(1, "List Faculties", () -> FacultyService.listFaculties(university.getFaculties()), UserRole.EXPLORER));
-        faculties.addMenuItem(new MenuItem(2, "Add Faculty", new AddFacultyAction(university.getFaculties()), UserRole.ADMIN));
-        faculties.addMenuItem(new MenuItem(3, "Delete Faculty", () -> FacultyService.deleteFaculty(university.getFaculties()), UserRole.ADMIN));
+        faculties.addMenuItem(new MenuItem(2, "Add Faculty", new AddFacultyAction(university.getFacultiesRepository()), UserRole.ADMIN));
+        faculties.addMenuItem(new MenuItem(3, "Delete Faculty", () -> FacultyService.deleteFaculty(university.getFacultiesRepository()), UserRole.ADMIN));
         faculties.addMenuItem(new MenuItem(4, "Edit Faculty", new EditFacultyAction(university.getFaculties(), university.getTeachers()), UserRole.ADMIN));
 
         // Add menu items to Departments branch
@@ -78,8 +78,8 @@ public class Main {
         // Add menu items to Teachers branch
         teachers.addMenuItem(new MenuItem(1, "List Teachers", () -> TeacherService.listTeachers(university.getTeachers()), UserRole.EXPLORER));
         teachers.addMenuItem(new MenuItem(2, "Find Teacher by Department", () -> TeacherService.listTeachers(university.getTeachers(DepartmentService.chooseDepartment(university.getDepartments()))), UserRole.EXPLORER));
-        teachers.addMenuItem(new MenuItem(3, "Add Teacher", () -> TeacherService.addTeacher(university.getTeachers(), university.getFaculties(), university.getDepartments()), UserRole.ADMIN));
-        teachers.addMenuItem(new MenuItem(4, "Delete Teacher", () -> TeacherService.deleteTeacher(university.getTeachers()), UserRole.ADMIN));
+        teachers.addMenuItem(new MenuItem(3, "Add Teacher", () -> TeacherService.addTeacher(university.getTeachersRepository(), university.getFaculties(), university.getDepartments()), UserRole.ADMIN));
+        teachers.addMenuItem(new MenuItem(4, "Delete Teacher", () -> TeacherService.deleteTeacher(university.getTeachersRepository()), UserRole.ADMIN));
         teachers.addMenuItem(new MenuItem(5, "Edit Teacher", () -> TeacherService.editTeacher(university.getTeachers(), university.getFaculties(), university.getDepartments()), UserRole.ADMIN));
 
         // Add menu items to Students branch
