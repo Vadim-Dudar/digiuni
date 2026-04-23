@@ -10,6 +10,14 @@ import java.util.List;
 
 @Slf4j
 public class StudentService {
+
+    public static List<Student> sortByName(List<Student> students) {
+        List<Student> result = new ArrayList<>(students);
+        result.sort(StudentComparators.bySurname);
+
+        return result;
+    }
+
     public static List<Student> sortByCourse(List<Student> students) {
         List<Student> result = new ArrayList<>(students);
         result.sort(StudentComparators.byCourse);
@@ -48,7 +56,7 @@ public class StudentService {
     public static void addStudent(Repository<Student> studentRepository, List<Faculty> faculties, List<Department> departments) {
         Person person = PersonService.createPerson();
         int studentId = InputUtil.readInt("Enter student ID: ");
-        int course = InputUtil.readInt("Enter course: ");
+        int course = InputUtil.readCourse("Enter course: ");
         Faculty faculty = FacultyService.chooseFaculty(faculties);
         Department department = DepartmentService.chooseDepartment(departments);
         int group = InputUtil.readInt("Enter group: ");

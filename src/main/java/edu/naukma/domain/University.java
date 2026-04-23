@@ -187,6 +187,16 @@ public class University implements Serializable {
     }
 
     /**
+     * Finds the students of a given faculty.
+     *
+     * @param department faculty to find the students for
+     * @return list of students in the faculty
+     */
+    public List<Student> getStudents(Department department) {
+        return students.findBy(student -> student.getDepartment() == department);
+    }
+
+    /**
      * Finds the students of a given course.
      *
      * @param course course to find the students for
@@ -256,6 +266,16 @@ public class University implements Serializable {
      */
     public List<Teacher> getTeachers(Department department) {
         return teachers.findBy(teacher -> teacher.getDepartment() == department);
+    }
+
+    /**
+     * Finds the teachers of a given faculty.
+     *
+     * @param faculty faculty to find the teachers for
+     * @return list of teachers in the faculty
+     */
+    public List<Teacher> getTeachers(Faculty faculty) {
+        return teachers.findBy(teacher -> teacher.getFaculty() == faculty);
     }
     /**
      * Sets the full name of the university.
