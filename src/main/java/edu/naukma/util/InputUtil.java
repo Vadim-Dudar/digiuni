@@ -27,6 +27,22 @@ public class InputUtil {
         }
     }
 
+    public static int readCourse(String prompt) {
+        while (true) {
+            try {
+                System.out.println(prompt);
+                int result = Integer.parseInt(scanner.nextLine());
+                if (result < 1 || result > 6) {
+                    System.out.print("Please enter a 1-6 number: ");
+                    continue;
+                }
+                return result;
+            } catch (NumberFormatException e) {
+                System.out.print("Please enter valid number: ");
+            }
+        }
+    }
+
     /**
      * Safely reads an integer from console input with a prompt.
      *

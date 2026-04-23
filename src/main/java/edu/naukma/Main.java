@@ -6,8 +6,11 @@ import edu.naukma.ui.cli.MenuInterface;
 import edu.naukma.ui.cli.MenuItem;
 import edu.naukma.domain.*;
 import edu.naukma.service.*;
+import edu.naukma.util.InputUtil;
 import lombok.extern.slf4j.Slf4j;
 
+import java.awt.*;
+import java.util.Comparator;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -123,15 +126,58 @@ public class Main {
                     ));
         }, UserRole.EXPLORER);
 
+        MenuItem teacherFullNameSearch = new MenuItem(4, "Search teacher by full name", () -> new FindTeacherByFullNameAction(university.getTeachersRepository()).execute(), UserRole.EXPLORER);
+        MenuItem studentFullNameSearch = new MenuItem(5, "Search student by full name", () -> new FindStudentByFullNameAction(university.getStudentsRepository()).execute(), UserRole.EXPLORER);
+        MenuItem studentsByCourse = new MenuItem(6, "Search students by course", () -> new FindStudentByCourseAction(university.getStudentsRepository()).execute(), UserRole.EXPLORER);
+        MenuItem studentsByCourseInDep = new MenuItem(8, "Students in Department by Course", () -> {
+            Department chosenDept = DepartmentService.chooseDepartment(university.getDepartments());
+            int course = InputUtil.readCourse("Enter course number (1-6): ");
+            System.out.println("--- Students of " + chosenDept.getName() + " | Course: " + course + " ---");
+            university.getStudents().stream()
+                    .filter(s -> s.getDepartment().getId() == chosenDept.getId())
+                    .filter(s -> s.getCourse() == course)
+                    .toList()
+                    .forEach(info -> System.out.println(
+                            "id: " + info.getId() + " | Name: " + info.getFullName() + " | phone number: " + info.getPhone()
+                    ));
+        }, UserRole.EXPLORER);
+
+        MenuItem studentsByGroup = new MenuItem(8, "Search students by group", () -> new FindStudentByGroupAction(university.getStudentsRepository()).execute(), UserRole.EXPLORER);
         reports.addMenuItem(studentsInFacultyReport);
         reports.addMenuItem(studentStatusReport);
         reports.addMenuItem(facultyReport);
+        reports.addMenuItem(teacherFullNameSearch);
+        reports.addMenuItem(studentFullNameSearch);
+        reports.addMenuItem(studentsByCourse);
+        reports.addMenuItem(studentsByCourseInDep);
+        reports.addMenuItem(studentsByGroup);
+
 
         // --- SORTING BRANCH ---
         sorting.addMenuItem(new MenuItem(1, "Sort Students by Course", () -> StudentService.listStudents(StudentService.sortByCourse(university.getStudents())), UserRole.EXPLORER));
         sorting.addMenuItem(new MenuItem(2, "Sort Students by Group", () -> StudentService.listStudents(StudentService.sortByGroup(university.getStudents())), UserRole.EXPLORER));
         sorting.addMenuItem(new MenuItem(3, "Sort Teachers by Surname", () -> TeacherService.listTeachers(TeacherService.sortByName(university.getTeachers())), UserRole.EXPLORER));
         sorting.addMenuItem(new MenuItem(4, "Sort Teachers by Surname in Department", () -> TeacherService.listTeachers(TeacherService.sortByName(university.getTeachers(DepartmentService.chooseDepartment(university.getDepartments())))), UserRole.EXPLORER));
+        sorting.addMenuItem(new MenuItem(5, "Sort Students by Surname in Department", () -> StudentService.listStudents(StudentService.sortByName(university.getStudents(DepartmentService.chooseDepartment(university.getDepartments())))), UserRole.EXPLORER));
+        sorting.addMenuItem(new MenuItem(6, "Sort Students by Course in Department", () -> StudentService.listStudents(StudentService.sortByCourse(university.getStudents(DepartmentService.chooseDepartment(university.getDepartments())))), UserRole.EXPLORER));
+        sorting.addMenuItem(new MenuItem(7, "Sort Teachers by Surname in Faculty", () -> TeacherService.listTeachers(TeacherService.sortByName(university.getTeachers(FacultyService.chooseFaculty(university.getFaculties())))), UserRole.EXPLORER));
+        sorting.addMenuItem(new MenuItem(8, "Sort Students by Surname in Faculty", () -> StudentService.listStudents(StudentService.sortByName(university.getStudents(FacultyService.chooseFaculty(university.getFaculties())))), UserRole.EXPLORER));
+
+        MenuItem studentsByCourseInDepBySurname = new MenuItem(9, "Students in Department by Course by Surname", () -> {
+            Department chosenDept = DepartmentService.chooseDepartment(university.getDepartments());
+            int course = InputUtil.readCourse("Enter course number (1-6): ");
+            System.out.println("--- Students of " + chosenDept.getName() + " | Course: " + course + " ---");
+            university.getStudents().stream()
+                    .filter(s -> s.getDepartment().getId() == chosenDept.getId())
+                    .filter(s -> s.getCourse() == course)
+                    .sorted(Comparator.comparing(Student::getFullName))
+                    .toList()
+                    .forEach(info -> System.out.println(
+                            "id: " + info.getId() + " | Name: " + info.getFullName() + " | phone number: " + info.getPhone()
+                    ));
+        }, UserRole.EXPLORER);
+        sorting.addMenuItem(studentsByCourseInDepBySurname);
+
 
         // Add menu items to Users branch
         users.addMenuItem(new MenuItem(1, "List Users", () -> UserService.listUsers(menuInterface.getUsers()), UserRole.TECH_ADMIN));

@@ -18,7 +18,7 @@ public class FindStudentByCourseAction implements Action {
     public void execute() {
         int course;
         while (true) {
-            course = InputUtil.readInt("Enter student's group: ");
+            course = InputUtil.readInt("Enter student's course: ");
             if (course > 0 && course <= 6) break;
             System.out.println("Course must be between 1 and 6. Please try again.");
         }
