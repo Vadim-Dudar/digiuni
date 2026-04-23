@@ -10,6 +10,7 @@ import edu.naukma.util.InputUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.awt.*;
+import java.util.Comparator;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -162,6 +163,20 @@ public class Main {
         sorting.addMenuItem(new MenuItem(7, "Sort Teachers by Surname in Faculty", () -> TeacherService.listTeachers(TeacherService.sortByName(university.getTeachers(FacultyService.chooseFaculty(university.getFaculties())))), UserRole.EXPLORER));
         sorting.addMenuItem(new MenuItem(8, "Sort Students by Surname in Faculty", () -> StudentService.listStudents(StudentService.sortByName(university.getStudents(FacultyService.chooseFaculty(university.getFaculties())))), UserRole.EXPLORER));
 
+        MenuItem studentsByCourseInDepBySurname = new MenuItem(9, "Students in Department by Course by Surname", () -> {
+            Department chosenDept = DepartmentService.chooseDepartment(university.getDepartments());
+            int course = InputUtil.readCourse("Enter course number (1-6): ");
+            System.out.println("--- Students of " + chosenDept.getName() + " | Course: " + course + " ---");
+            university.getStudents().stream()
+                    .filter(s -> s.getDepartment().getId() == chosenDept.getId())
+                    .filter(s -> s.getCourse() == course)
+                    .sorted(Comparator.comparing(Student::getFullName))
+                    .toList()
+                    .forEach(info -> System.out.println(
+                            "id: " + info.getId() + " | Name: " + info.getFullName() + " | phone number: " + info.getPhone()
+                    ));
+        }, UserRole.EXPLORER);
+        sorting.addMenuItem(studentsByCourseInDepBySurname);
 
 
         // Add menu items to Users branch
