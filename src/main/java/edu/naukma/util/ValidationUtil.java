@@ -6,6 +6,13 @@ import edu.naukma.annotations.ValidPhone;
 import java.lang.reflect.Field;
 
 public class ValidationUtil {
+
+    /**
+     * Validates the fields of the given object based on custom annotations.
+     *
+     * @param obj the object to validate
+     * @throws IllegalArgumentException if any validation constraint is violated
+     */
     public static void validate(Object obj) {
         if (obj == null) return;
         Class<?> clazz = obj.getClass();

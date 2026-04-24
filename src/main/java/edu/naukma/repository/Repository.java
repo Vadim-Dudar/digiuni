@@ -57,6 +57,12 @@ public class Repository<T extends Identifiable> implements Serializable {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Retrieves an item by its ID.
+     *
+     * @param id the ID of the item to retrieve
+     * @return an Optional containing the item if found, or empty if not found
+     */
     public Optional<T> getById(int id) {
         return Optional.ofNullable(items.get(id));
     }

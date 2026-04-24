@@ -71,7 +71,7 @@ public class Main {
         faculties.addMenuItem(new MenuItem(1, "List Faculties", () -> FacultyService.listFaculties(university.getFaculties()), UserRole.EXPLORER));
         faculties.addMenuItem(new MenuItem(2, "Add Faculty", new AddFacultyAction(university.getFacultiesRepository()), UserRole.ADMIN));
         faculties.addMenuItem(new MenuItem(3, "Delete Faculty", () -> FacultyService.deleteFaculty(university.getFacultiesRepository()), UserRole.ADMIN));
-        faculties.addMenuItem(new MenuItem(4, "Edit Faculty", new EditFacultyAction(university.getFaculties(), university.getTeachers()), UserRole.ADMIN));
+        faculties.addMenuItem(new MenuItem(4, "Edit Faculty", new EditFacultyAction(university.getFacultiesRepository(), university.getTeachersRepository()), UserRole.ADMIN));
 
         // Add menu items to Departments branch
         departments.addMenuItem(new MenuItem(1, "List Departments", () -> DepartmentService.listDepartments(university.getDepartments()), UserRole.EXPLORER));
@@ -184,6 +184,24 @@ public class Main {
         users.addMenuItem(new MenuItem(2, "Create User", () -> UserService.createUser(menuInterface.getUsers()), UserRole.TECH_ADMIN));
         users.addMenuItem(new MenuItem(3, "Change Password", () -> UserService.changePassword(menuInterface.getUsers()), UserRole.TECH_ADMIN));
         users.addMenuItem(new MenuItem(5, "Delete User", () -> UserService.deleteUser(menuInterface.getUsers()), UserRole.TECH_ADMIN));
+
+        // Add thread for autosaving university data every minute
+        Thread autoSaveThread = new Thread(() -> {
+            while (!Thread.currentThread().isInterrupted()) {
+                try {
+                    Thread.sleep(60000); // 60 seconds
+                    DataService.saveUniversity(university);
+                    log.debug("University data auto-saved.");
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    break;
+                } catch (Exception e) {
+                    log.error("Auto-save error {}", e.getMessage());
+                }
+            }
+        });
+        autoSaveThread.setDaemon(true);
+        autoSaveThread.start();
 
         mainBanner();
         menuInterface.run();
